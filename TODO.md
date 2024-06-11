@@ -126,18 +126,18 @@ The actual TODO list.
 
 ### Final Doom: TNT Evilution
 - N/A
-    - [ ] MAP01: System Control
-    - [ ] MAP02: Human BBQ
+    - [ ] MAP01: System Control (I have some screenshots, just need to upload them) 
+    - [ ] MAP02: Human BBQ (I have some screenshos, just need to upload them) 
     - [ ] MAP03: Power Control
-    - [ ] MAP04: Wormhole
+    - [ ] MAP04: Wormhole (I have some screenshots, just need to upload them) 
     - [ ] MAP05: Hanger
     - [ ] MAP06: Open Season
     - [ ] MAP07: Prison
     - [ ] MAP08: Metal
-    - [ ] MAP09: Stronghold
+    - [ ] MAP09: Stronghold (I have very few screenshots, so I won't mark this as done after I upload mine) 
     - [ ] MAP10: Redemption
     - [ ] MAP11: Storage Facility
-    - [ ] MAP12: Crater"
+    - [ ] MAP12: Crater
     - [ ] MAP13: Nukage Processing
     - [ ] MAP14: Steel Works
     - [ ] MAP15: Dead Zone
@@ -155,7 +155,7 @@ The actual TODO list.
     - [ ] MAP27: Mount Pain
     - [ ] MAP28: Heck
     - [ ] MAP29: River Styx
-    - [ ] MAP30: Last Call
+    - [X] MAP30: Last Call **(thanks, Norb!)**
     - [ ] MAP31: Pharaoh
     - [ ] MAP32: Caribbean
 
@@ -196,7 +196,7 @@ The actual TODO list.
 
 ### Doom 64 *(must be the 2020 re-release cuz of LOST LEVELS and higher quality!!!!)*
 - Main Campaign
-    - [ ] MAP01: Staging Area
+    - [ ] MAP01: Staging Area (I have some screenshots, just need to upload them) 
     - [ ] MAP02: The Terraformer
     - [ ] MAP03: Main Engineering
     - [ ] MAP04: Holding Area
@@ -227,16 +227,16 @@ The actual TODO list.
     - [ ] MAP29: Outpost Omega
     - [ ] MAP30: The Lair
     - [ ] MAP31: In The Void
-    - [ ] MAP32: Hectic
+    - [ ] MAP32: Hectic (I have some screenshots, just need to upload them) 
 
 - The Lost Levels
-    - [ ] MAP34: Plant Ops
+    - [ ] MAP34: Plant Ops (not many, but I have some screenshots, just need to upload them) 
     - [ ] MAP35: Evil Sacrifice
     - [ ] MAP36: Cold Grounds
     - [ ] MAP37: Wretched Vats
     - [ ] MAP38: Thy Glory
     - [ ] MAP39: Final Judgement
-    - [ ] MAP40: Panic
+    - [ ] MAP40: Panic (I have enough screenshots for this level, just need to upload them)
 
 ### No Rest for the Living
 - N/A
