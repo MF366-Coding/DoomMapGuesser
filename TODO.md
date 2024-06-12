@@ -15,13 +15,18 @@ What I mean by tagging is just saying, when sharing the screenshot:
 - The episode (if none, use N/A)
 - The map (if you respected all the other tags, then you can just say E1M1 or MAP01, not the entire map thing)
 
+## About closed screenshot submissions
+No more screenshots are needed for the levels marked with a tick.
+
+Unless there's a good reason not to, screenshot submissions for those levels won't be accepted. 
+
 ## List
 The actual TODO list.
 
 *And yes, I know I have a lot to do... :)*
 
 ### Doom (1993)/The Ultimate Doom
-- Episode 1: Knee-Deep in the Dead
+- Episode 1: Knee-Deep in the Dead **(thanks, Zeca70!)**
     - [X] E1M1: Hangar
     - [X] E1M2: Nuclear Plant
     - [X] E1M3: Toxin Refinery
@@ -32,7 +37,7 @@ The actual TODO list.
     - [X] E1M8: Phobos Anomaly
     - [X] E1M9: Military Base
 
-- Episode 2: Shores of Hell
+- Episode 2: Shores of Hell **(thanks, Zeca70!)**
     - [X] E2M1: Deimos Anomaly
     - [X] E2M2: Containment Area
     - [X] E2M3: Refinery
@@ -43,7 +48,7 @@ The actual TODO list.
     - [X] E2M8: Tower of Babel
     - [X] E2M9: Fortress of Mystery
 
-- Episode 3: Inferno
+- Episode 3: Inferno **(not needed; available on the Doom Wiki)**
     - [ ] E3M1: Hell Keep
     - [ ] E3M2: Slough of Despair
     - [ ] E3M3: Pandemonium
@@ -54,7 +59,7 @@ The actual TODO list.
     - [ ] E3M8: Dis
     - [ ] E3M9: Warrens
 
-- Episode 4: Thy Flesh Consumed
+- Episode 4: Thy Flesh Consumed **(not needed; available on the Doom Wiki)**
     - [ ] E4M1: Hell Beneath
     - [ ] E4M2: Perfect Hatred
     - [ ] E4M3: Sever the Wicked
@@ -126,15 +131,15 @@ The actual TODO list.
 
 ### Final Doom: TNT Evilution
 - N/A
-    - [ ] MAP01: System Control (I have some screenshots, just need to upload them) 
-    - [ ] MAP02: Human BBQ (I have some screenshos, just need to upload them) 
-    - [ ] MAP03: Power Control
-    - [ ] MAP04: Wormhole **(no more screenshots needed, I have dozens I'll upload)**
-    - [ ] MAP05: Hanger
+    - [X] MAP01: System Control
+    - [X] MAP02: Human BBQ
+    - [X] MAP03: Power Control
+    - [X] MAP04: Wormhole
+    - [X] MAP05: Hanger
     - [ ] MAP06: Open Season
     - [ ] MAP07: Prison
     - [ ] MAP08: Metal
-    - [ ] MAP09: Stronghold (I have very few screenshots, so I won't mark this as done after I upload mine) 
+    - [X] MAP09: Stronghold
     - [ ] MAP10: Redemption
     - [ ] MAP11: Storage Facility
     - [ ] MAP12: Crater
