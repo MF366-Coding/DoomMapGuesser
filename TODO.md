@@ -129,7 +129,7 @@ The actual TODO list.
     - [ ] MAP01: System Control (I have some screenshots, just need to upload them) 
     - [ ] MAP02: Human BBQ (I have some screenshos, just need to upload them) 
     - [ ] MAP03: Power Control
-    - [ ] MAP04: Wormhole (I have some screenshots, just need to upload them) 
+    - [ ] MAP04: Wormhole **(no more screenshots needed, I have dozens I'll upload)**
     - [ ] MAP05: Hanger
     - [ ] MAP06: Open Season
     - [ ] MAP07: Prison
