@@ -1,6 +1,8 @@
 # TODO list for DoomMapGuesser
 > Sadly, the [DoomWiki](https://doomwiki.org) doesn't have screenshots for some maps, making it a bit tougher to me. Therefore, help is specially important for **Doom II: Master Levels**, **Final Doom: TNT Evilution**, **Final Doom: The Plutonia Experiment** and **No Rest for the Living** screenshots.
 
+> I must start working in the GUI because I'll lose a lot of time if I go for having all the screenshots first.
+
 If anyone wants to help me out filling these gaps, your help would be appreciated.
 
 **Thank you, everyone!**
@@ -152,7 +154,7 @@ The actual TODO list.
     - [ ] MAP19: Shipping/Respawning
     - [ ] MAP20: Central Processing
     - [ ] MAP21: Administration Center
-    - [ ] MAP22: Habitat
+    - [X] MAP22: Habitat **(thanks, Norb!)**
     - [ ] MAP23: Lunar Mining Project
     - [ ] MAP24: Quarry
     - [ ] MAP25: Baron's Den
@@ -166,7 +168,7 @@ The actual TODO list.
 
 ### Final Doom: The Plutonia Experiment
 - N/A
-    - [ ] MAP01: Congo
+    - [X] MAP01: Congo **(thanks, Norb!)**
     - [ ] MAP02: Well of Souls
     - [ ] MAP03: Aztec
     - [ ] MAP04: Caged
