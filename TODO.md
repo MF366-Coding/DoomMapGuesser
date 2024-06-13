@@ -1,4 +1,7 @@
 # TODO list for DoomMapGuesser
+
+# I MADE A MISTAKE! I ACCIDENTLY PLACED A WORMHOLE SCREENSHOT IN HANGER (TNT). I'M GONNA FIX THIS! 👈
+
 > Sadly, the [DoomWiki](https://doomwiki.org) doesn't have screenshots for some maps, making it a bit tougher to me. Therefore, help is specially important for **Doom II: Master Levels**, **Final Doom: TNT Evilution**, **Final Doom: The Plutonia Experiment** and **No Rest for the Living** screenshots.
 
 > I must start working in the GUI because I'll lose a lot of time if I go for having all the screenshots first.
