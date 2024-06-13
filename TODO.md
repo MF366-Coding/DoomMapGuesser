@@ -203,7 +203,7 @@ The actual TODO list.
 
 ### Doom 64 *(must be the 2020 re-release cuz of LOST LEVELS and higher quality!!!!)*
 - Main Campaign
-    - [ ] MAP01: Staging Area (I have some screenshots, just need to upload them) 
+    - [X] MAP01: Staging Area
     - [ ] MAP02: The Terraformer
     - [ ] MAP03: Main Engineering
     - [ ] MAP04: Holding Area
@@ -232,18 +232,18 @@ The actual TODO list.
     - [ ] MAP27: Playground
     - [ ] MAP28: The Absolution
     - [ ] MAP29: Outpost Omega
-    - [ ] MAP30: The Lair
-    - [ ] MAP31: In The Void
-    - [ ] MAP32: Hectic (I have some screenshots, just need to upload them) 
+    - [ ] MAP30: The Lair **(more screenshots needed)**
+    - [ ] MAP31: In The Void **(more screenshots needed)**
+    - [X] MAP32: Hectic 
 
 - The Lost Levels
-    - [ ] MAP34: Plant Ops (not many, but I have some screenshots, just need to upload them) 
+    - [X] MAP34: Plant Ops
     - [ ] MAP35: Evil Sacrifice
     - [ ] MAP36: Cold Grounds
     - [ ] MAP37: Wretched Vats
     - [ ] MAP38: Thy Glory
     - [ ] MAP39: Final Judgement
-    - [ ] MAP40: Panic (I have enough screenshots for this level, just need to upload them)
+    - [X] MAP40: Panic
 
 ### No Rest for the Living
 - N/A
