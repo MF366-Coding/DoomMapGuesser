@@ -1,10 +1,7 @@
 # TODO list for DoomMapGuesser
-
-# I MADE A MISTAKE! I ACCIDENTLY PLACED A WORMHOLE SCREENSHOT IN HANGER (TNT). I'M GONNA FIX THIS! 👈
-
 > Sadly, the [DoomWiki](https://doomwiki.org) doesn't have screenshots for some maps, making it a bit tougher to me. Therefore, help is specially important for **Doom II: Master Levels**, **Final Doom: TNT Evilution**, **Final Doom: The Plutonia Experiment** and **No Rest for the Living** screenshots.
 
-> I must start working in the GUI because I'll lose a lot of time if I go for having all the screenshots first.
+> I really need screenshots.
 
 If anyone wants to help me out filling these gaps, your help would be appreciated.
 
@@ -172,7 +169,7 @@ The actual TODO list.
 ### Final Doom: The Plutonia Experiment
 - N/A
     - [X] MAP01: Congo **(thanks, Norb!)**
-    - [ ] MAP02: Well of Souls
+    - [X] MAP02: Well of Souls **(thanks, Norb!)**
     - [ ] MAP03: Aztec
     - [ ] MAP04: Caged
     - [ ] MAP05: Ghost Town
@@ -201,8 +198,8 @@ The actual TODO list.
     - [ ] MAP28: The Sewers
     - [ ] MAP29: Odyssey of Noises
     - [ ] MAP30: The Gateway to Hell
-    - [ ] MAP31: Cyberden
-    - [ ] MAP32: Go 2 It
+    - [X] MAP31: Cyberden
+    - [ ] MAP32: Go 2 It **(I'll take the screenshots)**
 
 ### Doom 64 *(must be the 2020 re-release cuz of LOST LEVELS and higher quality!!!!)*
 - Main Campaign
