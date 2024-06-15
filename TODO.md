@@ -104,7 +104,7 @@ The actual TODO list.
     - [ ] MAP28: The Spirit World
     - [ ] MAP29: The Living End
     - [ ] MAP30: Icon of Sin
-    - [ ] MAP31: Wolfenstein **(looking for higher quality screenshots unlike the ones I have right now that aren't ingame stuff)**
+    - [X] MAP31: Wolfenstein
     - [ ] MAP32: Grosse
 
 ### Doom II: The Master Levels
@@ -138,9 +138,9 @@ The actual TODO list.
     - [X] MAP03: Power Control
     - [X] MAP04: Wormhole
     - [X] MAP05: Hanger
-    - [ ] MAP06: Open Season **(Just gotta upload)**
-    - [ ] MAP07: Prison
-    - [ ] MAP08: Metal
+    - [X] MAP06: Open Season
+    - [X] MAP07: Prison
+    - [X] MAP08: Metal
     - [X] MAP09: Stronghold
     - [ ] MAP10: Redemption
     - [ ] MAP11: Storage Facility
@@ -170,8 +170,8 @@ The actual TODO list.
 - N/A
     - [X] MAP01: Congo **(thanks, Norb!)**
     - [X] MAP02: Well of Souls **(thanks, Norb!)**
-    - [ ] MAP03: Aztec
-    - [ ] MAP04: Caged
+    - [X] MAP03: Aztec **(thanks, Norb!)**
+    - [X] MAP04: Caged **(thanks, Norb!)**
     - [ ] MAP05: Ghost Town
     - [ ] MAP06: Baron's Lair
     - [ ] MAP07: Caughtyard
@@ -199,7 +199,7 @@ The actual TODO list.
     - [ ] MAP29: Odyssey of Noises
     - [ ] MAP30: The Gateway to Hell
     - [X] MAP31: Cyberden
-    - [ ] MAP32: Go 2 It **(I'll take the screenshots)**
+    - [X] MAP32: Go 2 It
 
 ### Doom 64 *(must be the 2020 re-release cuz of LOST LEVELS and higher quality!!!!)*
 - Main Campaign
@@ -227,9 +227,9 @@ The actual TODO list.
     - [ ] MAP22: Burnt Offerings
     - [ ] MAP23: Unholy Temple
     - [ ] MAP24: No Escape
-    - [ ] MAP25: Cat And Mouse
-    - [ ] MAP26: HardCore
-    - [ ] MAP27: Playground
+    - [X] MAP25: Cat And Mouse
+    - [X] MAP26: HardCore
+    - [X] MAP27: Playground
     - [ ] MAP28: The Absolution
     - [ ] MAP29: Outpost Omega
     - [ ] MAP30: The Lair **(more screenshots needed)**
