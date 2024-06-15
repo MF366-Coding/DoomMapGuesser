@@ -138,7 +138,7 @@ The actual TODO list.
     - [X] MAP03: Power Control
     - [X] MAP04: Wormhole
     - [X] MAP05: Hanger
-    - [ ] MAP06: Open Season
+    - [ ] MAP06: Open Season **(Just gotta upload)**
     - [ ] MAP07: Prison
     - [ ] MAP08: Metal
     - [X] MAP09: Stronghold
