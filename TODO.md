@@ -1,7 +1,9 @@
 # TODO list for DoomMapGuesser
 > Sadly, the [DoomWiki](https://doomwiki.org) doesn't have screenshots for some maps, making it a bit tougher to me. Therefore, help is specially important for **Doom II: Master Levels**, **Final Doom: TNT Evilution**, **Final Doom: The Plutonia Experiment** and **No Rest for the Living** screenshots.
 
-> I really need screenshots.
+> Certain Doom II maps didn't quite get the same screenshot love as others by Doom Wiki. Therefore, maps such as MAP27 and MAP30 of Doom II are begging for some screenshots. 
+
+> I really need screenshots, so you'll find **(!!!)** near the most needed ones.
 
 If anyone wants to help me out filling these gaps, your help would be appreciated.
 
@@ -17,6 +19,8 @@ What I mean by tagging is just saying, when sharing the screenshot:
 - The episode (if none, use N/A)
 - The map (if you respected all the other tags, then you can just say E1M1 or MAP01, not the entire map thing)
 
+**Screenshot limit per map (at least, until I release the app):** 15
+
 ## About closed screenshot submissions
 No more screenshots are needed for the levels marked with a tick.
 
@@ -27,7 +31,7 @@ The actual TODO list.
 
 *And yes, I know I have a lot to do... :)*
 
-### Doom (1993)/The Ultimate Doom
+### Doom (1993)/The Ultimate Doom *(NOT A PRIORITY, AS DOOM WIKI IS GENEROUS WITH THE AMOUNT OF SCREENSHOTS FOR ULTIMATE DOOM)*
 - Episode 1: Knee-Deep in the Dead **(thanks, Zeca70!)**
     - [X] E1M1: Hangar
     - [X] E1M2: Nuclear Plant
@@ -77,12 +81,12 @@ The actual TODO list.
     - [X] MAP01: Entryway
     - [X] MAP02: Underhalls
     - [X] MAP03: The Gantlet
-    - [ ] MAP04: The Focus
-    - [ ] MAP05: The Waste Tunnels
-    - [ ] MAP06: The Crusher
-    - [ ] MAP07: Dead Simple
-    - [ ] MAP08: Tricks and Traps
-    - [ ] MAP09: The Pit
+    - [ ] MAP04: The Focus **(I have Doom Wiki links, just need to update the database)**
+    - [ ] MAP05: The Waste Tunnels **(I have Doom Wiki links, just need to update the database)** 
+    - [ ] MAP06: The Crusher **(I have Doom Wiki links, just need to update the database)**
+    - [ ] MAP07: Dead Simple **(I have Doom Wiki links, just need to update the database)**
+    - [ ] MAP08: Tricks and Traps **(I have Doom Wiki links and some screenshots of my own, just need to update the database)**
+    - [ ] MAP09: The Pit **(!!!)**
     - [ ] MAP10: Refueling Base
     - [ ] MAP11: Circle of Death / 'O' of Destruction
     - [ ] MAP12: The Factory
@@ -100,10 +104,10 @@ The actual TODO list.
     - [ ] MAP24: The Chasm
     - [ ] MAP25: Bloodfalls
     - [ ] MAP26: The Abandoned Mines
-    - [ ] MAP27: Monster Condo
+    - [ ] MAP27: Monster Condo **(!!!)** 
     - [ ] MAP28: The Spirit World
     - [ ] MAP29: The Living End
-    - [ ] MAP30: Icon of Sin
+    - [ ] MAP30: Icon of Sin **(!!!)**
     - [X] MAP31: Wolfenstein
     - [ ] MAP32: Grosse
 
@@ -126,10 +130,10 @@ The actual TODO list.
     - [ ] MAP15: Mephisto's Maosoleum
     - [ ] MAP16: Nessus
     - [ ] MAP17: Geryon
-    - [ ] MAP18: Vesperas
-    - [ ] MAP19: Black Tower
-    - [ ] MAP20: The Express Elevator to Hell
-    - [ ] MAP21: Bad Dream
+    - [ ] MAP18: Vésperas **(!!!)**
+    - [ ] MAP19: Black Tower **(!!!)**
+    - [ ] MAP20: The Express Elevator to Hell **(!!!)**
+    - [ ] MAP21: Bad Dream **(I have screenshots, just need to upload them)**
 
 ### Final Doom: TNT Evilution
 - N/A
@@ -140,10 +144,10 @@ The actual TODO list.
     - [X] MAP05: Hanger
     - [X] MAP06: Open Season
     - [X] MAP07: Prison
-    - [X] MAP08: Metal
-    - [X] MAP09: Stronghold
-    - [ ] MAP10: Redemption
-    - [ ] MAP11: Storage Facility
+    - [X] MAP08: Metal **(I have even more screenshots)**
+    - [X] MAP09: Stronghold **(I have some more screenshots)**
+    - [ ] MAP10: Redemption **(I have screenshots)**
+    - [ ] MAP11: Storage Facility **(Leave this one to me, already half way there with screenshots on this level)**
     - [ ] MAP12: Crater
     - [ ] MAP13: Nukage Processing
     - [ ] MAP14: Steel Works
@@ -197,7 +201,7 @@ The actual TODO list.
     - [ ] MAP27: Anti-Christ
     - [ ] MAP28: The Sewers
     - [ ] MAP29: Odyssey of Noises
-    - [ ] MAP30: The Gateway to Hell
+    - [ ] MAP30: The Gateway to Hell **(!!!)**
     - [X] MAP31: Cyberden
     - [X] MAP32: Go 2 It
 
@@ -254,5 +258,5 @@ The actual TODO list.
     - [ ] MAP05: Vivisection
     - [ ] MAP06: Inferno of Blood
     - [ ] MAP07: Baron's Banquet
-    - [ ] MAP08: Tomb of Malevolence
+    - [ ] MAP08: Tomb of Malevolence **(I have some screenshots, just need to upload them)**
     - [ ] MAP09: March of the Demons
