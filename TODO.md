@@ -76,61 +76,61 @@ The actual TODO list.
     - [ ] E4M8: Unto the Cruel
     - [ ] E4M9: Fear
 
-### Doom II
+### Doom II *(some needed, others not, please refer to the !!!)*
 - Hell on Earth
     - [X] MAP01: Entryway
     - [X] MAP02: Underhalls
     - [X] MAP03: The Gantlet
-    - [ ] MAP04: The Focus **(I have Doom Wiki links, just need to update the database)**
-    - [ ] MAP05: The Waste Tunnels **(I have Doom Wiki links, just need to update the database)** 
-    - [ ] MAP06: The Crusher **(I have Doom Wiki links, just need to update the database)**
-    - [ ] MAP07: Dead Simple **(I have Doom Wiki links, just need to update the database)**
-    - [ ] MAP08: Tricks and Traps **(I have Doom Wiki links and some screenshots of my own, just need to update the database)**
+    - [X] MAP04: The Focus
+    - [X] MAP05: The Waste Tunnels
+    - [X] MAP06: The Crusher
+    - [X] MAP07: Dead Simple
+    - [ ] MAP08: Tricks and Traps **(I have some screenshots of my own, just need to upload them)**
     - [ ] MAP09: The Pit **(!!!)**
     - [ ] MAP10: Refueling Base
-    - [ ] MAP11: Circle of Death / 'O' of Destruction
-    - [ ] MAP12: The Factory
-    - [ ] MAP13: Downtown
-    - [ ] MAP14: The Inmost Dens
-    - [ ] MAP15: Industrial Zone
-    - [ ] MAP16: Suburbs
-    - [ ] MAP17: Tenements
-    - [ ] MAP18: The Courtyard
-    - [ ] MAP19: The Citadel
-    - [ ] MAP20: Gotcha!
-    - [ ] MAP21: Nirvana
-    - [ ] MAP22: The Catacombs
-    - [ ] MAP23: Barrels o'Fun
-    - [ ] MAP24: The Chasm
-    - [ ] MAP25: Bloodfalls
-    - [ ] MAP26: The Abandoned Mines
+    - [ ] MAP11: Circle of Death / 'O' of Destruction **(!!!)**
+    - [ ] MAP12: The Factory **(!!!)**
+    - [ ] MAP13: Downtown **(!!!)**
+    - [ ] MAP14: The Inmost Dens **(!!!)**
+    - [ ] MAP15: Industrial Zone **(!!!)**
+    - [ ] MAP16: Suburbs **(!!!)**
+    - [ ] MAP17: Tenements **(!!!)**
+    - [ ] MAP18: The Courtyard **(!!!, the single one screenshot in DoomWiki is explaining a texture bug :|)**
+    - [ ] MAP19: The Citadel **(!!!, screenshots? DoomWiki has none of this level)**
+    - [ ] MAP20: Gotcha! **(!!!)**
+    - [ ] MAP21: Nirvana **(!!!, again the single screenshot is a texture bug :|)**
+    - [ ] MAP22: The Catacombs **(!!!, no screenshots on DoomWiki)**
+    - [ ] MAP23: Barrels o'Fun **(!!!, not many screenshots on DoomWiki)**
+    - [ ] MAP24: The Chasm **(hell yeah, DoomWiki has enough screenshots on this one, won't have to play it :D )**
+    - [ ] MAP25: Bloodfalls **(!!!, imagine only screenshotting the exit AND because of a texture bug)**
+    - [ ] MAP26: The Abandoned Mines **(!!!)**
     - [ ] MAP27: Monster Condo **(!!!)** 
-    - [ ] MAP28: The Spirit World
-    - [ ] MAP29: The Living End
-    - [ ] MAP30: Icon of Sin **(!!!)**
+    - [ ] MAP28: The Spirit World **(!!!)**
+    - [ ] MAP29: The Living End **(!!!, there could be some more...)**
+    - [ ] MAP30: Icon of Sin **(!!!, maybe 2 more will do)**
     - [X] MAP31: Wolfenstein
-    - [ ] MAP32: Grosse
+    - [ ] MAP32: Grosse **(!!!, the only screenshot on DoomWiki is again, of the exit)**
 
 ### Doom II: The Master Levels
 - N/A
     - [ ] MAP01: Attack
-    - [ ] MAP02: Canyon
+    - [ ] MAP02: Canyon **(!!!)**
     - [ ] MAP03: The Catwalk
     - [ ] MAP04: The Combine
     - [ ] MAP05: The Fistula
-    - [ ] MAP06: The Garrison
-    - [ ] MAP07: Titan Manor
-    - [ ] MAP08: Paradox
-    - [ ] MAP09: Subspace
-    - [ ] MAP10: Subterra
-    - [ ] MAP11: Trapped on Titan
+    - [ ] MAP06: The Garrison **(!!!)**
+    - [ ] MAP07: Titan Manor **(!!!)**
+    - [ ] MAP08: Paradox **(!!!)**
+    - [ ] MAP09: Subspace **(!!!)**
+    - [ ] MAP10: Subterra **(!!!)**
+    - [ ] MAP11: Trapped on Titan **(!!!)**
     - [ ] MAP12: Virgil's Lead
     - [ ] MAP13: Minos' Judgement
-    - [ ] MAP14: Bloodsea Keep
-    - [ ] MAP15: Mephisto's Maosoleum
+    - [ ] MAP14: Bloodsea Keep **(!!!)**
+    - [ ] MAP15: Mephisto's Maosoleum **(!!!)**
     - [ ] MAP16: Nessus
-    - [ ] MAP17: Geryon
-    - [ ] MAP18: Vésperas **(!!!)**
+    - [ ] MAP17: Geryon **(!!!)**
+    - [ ] MAP18: Vesperas
     - [ ] MAP19: Black Tower **(!!!)**
     - [ ] MAP20: The Express Elevator to Hell **(!!!)**
     - [ ] MAP21: Bad Dream **(I have screenshots, just need to upload them)**
@@ -182,7 +182,7 @@ The actual TODO list.
     - [ ] MAP08: Realm
     - [ ] MAP09: Abattoire
     - [ ] MAP10: Onslaught
-    - [ ] MAP11: Hunted
+    - [ ] MAP11: Hunted **(!!!)**
     - [ ] MAP12: Speed
     - [ ] MAP13: The Crypt
     - [ ] MAP14: Genesis
@@ -251,12 +251,12 @@ The actual TODO list.
 
 ### No Rest for the Living
 - N/A
-    - [ ] MAP01: The Earth Base
-    - [ ] MAP02: The Pain Labs
-    - [ ] MAP03: Canyon of the Dead
-    - [ ] MAP04: Hell Mountain
-    - [ ] MAP05: Vivisection
-    - [ ] MAP06: Inferno of Blood
-    - [ ] MAP07: Baron's Banquet
+    - [ ] MAP01: The Earth Base **(!!!)**
+    - [ ] MAP02: The Pain Labs **(!!!)**
+    - [ ] MAP03: Canyon of the Dead **(!!!)**
+    - [ ] MAP04: Hell Mountain **(!!!)**
+    - [ ] MAP05: Vivisection **(!!!)**
+    - [ ] MAP06: Inferno of Blood **(!!!)**
+    - [ ] MAP07: Baron's Banquet **(!!!)**
     - [ ] MAP08: Tomb of Malevolence **(I have some screenshots, just need to upload them)**
     - [ ] MAP09: March of the Demons
