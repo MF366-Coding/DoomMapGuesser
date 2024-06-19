@@ -85,7 +85,7 @@ The actual TODO list.
     - [X] MAP05: The Waste Tunnels
     - [X] MAP06: The Crusher
     - [X] MAP07: Dead Simple
-    - [ ] MAP08: Tricks and Traps **(I have some screenshots of my own, just need to upload them)**
+    - [X] MAP08: Tricks and Traps
     - [ ] MAP09: The Pit **(!!!)**
     - [ ] MAP10: Refueling Base
     - [ ] MAP11: Circle of Death / 'O' of Destruction **(!!!)**
@@ -133,7 +133,7 @@ The actual TODO list.
     - [ ] MAP18: Vesperas
     - [ ] MAP19: Black Tower **(!!!)**
     - [ ] MAP20: The Express Elevator to Hell **(!!!)**
-    - [ ] MAP21: Bad Dream **(I have screenshots, just need to upload them)**
+    - [X] MAP21: Bad Dream
 
 ### Final Doom: TNT Evilution
 - N/A
@@ -144,15 +144,15 @@ The actual TODO list.
     - [X] MAP05: Hanger
     - [X] MAP06: Open Season
     - [X] MAP07: Prison
-    - [X] MAP08: Metal **(I have even more screenshots)**
-    - [X] MAP09: Stronghold **(I have some more screenshots)**
-    - [ ] MAP10: Redemption **(I have screenshots)**
-    - [ ] MAP11: Storage Facility **(Leave this one to me, already half way there with screenshots on this level)**
-    - [ ] MAP12: Crater
-    - [ ] MAP13: Nukage Processing
-    - [ ] MAP14: Steel Works
-    - [ ] MAP15: Dead Zone
-    - [ ] MAP16: Deepest Reaches
+    - [X] MAP08: Metal
+    - [X] MAP09: Stronghold
+    - [X] MAP10: Redemption
+    - [X] MAP11: Storage Facility
+    - [ ] MAP12: Crater **(I have screenshots)**
+    - [ ] MAP13: Nukage Processing **(I have screenshots)**
+    - [ ] MAP14: Steel Works **(I have screenshots)**
+    - [ ] MAP15: Dead Zone **(I have screenshots)**
+    - [ ] MAP16: Deepest Reaches **(Gonna do this level next)**
     - [ ] MAP17: Processing Area
     - [ ] MAP18: Mill
     - [ ] MAP19: Shipping/Respawning
@@ -258,5 +258,5 @@ The actual TODO list.
     - [ ] MAP05: Vivisection **(!!!)**
     - [ ] MAP06: Inferno of Blood **(!!!)**
     - [ ] MAP07: Baron's Banquet **(!!!)**
-    - [ ] MAP08: Tomb of Malevolence **(I have some screenshots, just need to upload them)**
+    - [X] MAP08: Tomb of Malevolence
     - [ ] MAP09: March of the Demons
