@@ -11,7 +11,7 @@ If anyone wants to help me out filling these gaps, your help would be appreciate
 
 **Help via:** [Discord](https://discord.gg/HZnBRYTqvC) or GitHub's Issues feature
 
-**Screenshots shared either via Discord or this repository's Issues MUST be high quality, UNMODDED and TAGGED.** (see below)
+**Screenshots shared either via Discord or this repository's Issues MUST be high quality, UNMODDED, ULTRA-VIOLENCE and TAGGED.** (see below)
 
 ## How to tag a screenshot?
 What I mean by tagging is just saying, when sharing the screenshot:
@@ -55,7 +55,7 @@ The actual TODO list.
     - [X] E2M9: Fortress of Mystery
 
 - Episode 3: Inferno **(not needed; available on the Doom Wiki)**
-    - [ ] E3M1: Hell Keep
+    - [X] E3M1: Hell Keep
     - [ ] E3M2: Slough of Despair
     - [ ] E3M3: Pandemonium
     - [ ] E3M4: House of Pain
@@ -63,7 +63,7 @@ The actual TODO list.
     - [ ] E3M6: Mt. Erebus
     - [ ] E3M7: Limbo
     - [ ] E3M8: Dis
-    - [ ] E3M9: Warrens
+    - [X] E3M9: Warrens
 
 - Episode 4: Thy Flesh Consumed **(not needed; available on the Doom Wiki)**
     - [ ] E4M1: Hell Beneath

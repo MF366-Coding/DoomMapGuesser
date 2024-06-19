@@ -296,6 +296,25 @@
         "https://doomwiki.org/w/images/8/84/E2M9_keys.png",
         "https://doomwiki.org/w/images/6/67/E2M9_exit.png"
     ],
+    "19": [
+        "https://doomwiki.org/w/images/f/fd/E3m1_exit.PNG",
+        "https://doomwiki.org/w/images/a/aa/E3M1_starting_switch.png",
+        "https://doomwiki.org/w/images/1/18/E3M1_keep_entrance.png",
+        "https://doomwiki.org/w/images/9/98/E3m1_infighting.PNG",
+        "https://doomwiki.org/w/images/5/5f/E3m1_shotgun.PNG",
+        "https://doomwiki.org/w/images/7/77/E3m1_outside.PNG",
+        "https://doomwiki.org/w/images/f/fc/E3m1_demons.PNG",
+        "https://doomwiki.org/w/images/d/d3/E3m1_room.PNG"
+    ],
+    "27": [
+        "https://doomwiki.org/w/images/a/a0/E3m9_arena.PNG",
+	    "https://doomwiki.org/w/images/e/e9/E3m9_demons.PNG",
+	    "https://doomwiki.org/w/images/0/0e/E3m9_baron.PNG",
+	    "https://doomwiki.org/w/images/e/ed/E3m9_cacodemons.PNG",
+	    "https://doomwiki.org/w/images/c/ce/E3m9_room.PNG",
+	    "https://doomwiki.org/w/images/7/70/E3m9_trap.PNG",
+	    "https://doomwiki.org/w/images/7/78/E3m9_secret.PNG"
+    ],
     "37": [
         "https://doomwiki.org/w/images/b/bc/MAP01_start.png",
         "https://doomwiki.org/w/images/f/f0/Doom_II_MAP01_chainsaw.png",
