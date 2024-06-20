@@ -104,7 +104,7 @@ The actual TODO list.
     - [ ] MAP15: Industrial Zone **(!!!)**
     - [ ] MAP16: Suburbs **(!!!)**
     - [ ] MAP17: Tenements **(!!!)**
-    - [ ] MAP18: The Courtyard **(!!!, the single one screenshot in DoomWiki is explaining a texture bug :|)**
+    - [ ] MAP18: The Courtyard **(Nightmare Sent me some screenshots, will upload ASAP)**
     - [ ] MAP19: The Citadel **(!!!, screenshots? DoomWiki has none of this level)**
     - [ ] MAP20: Gotcha! **(!!!)**
     - [ ] MAP21: Nirvana **(!!!, again the single screenshot is a texture bug :|)**
@@ -116,9 +116,9 @@ The actual TODO list.
     - [ ] MAP27: Monster Condo **(!!!)** 
     - [ ] MAP28: The Spirit World **(!!!)**
     - [ ] MAP29: The Living End **(!!!, there could be some more...)**
-    - [ ] MAP30: Icon of Sin **(!!!, maybe 2 more will do)**
+    - [ ] MAP30: Icon of Sin **(Nightmare Sent me screenshots)**
     - [X] MAP31: Wolfenstein
-    - [ ] MAP32: Grosse **(!!!, the only screenshot on DoomWiki is again, of the exit)**
+    - [ ] MAP32: Grosse **(Nightmare Sent me screenshots)**
 
 ### Doom II: The Master Levels
 - N/A
@@ -191,7 +191,7 @@ The actual TODO list.
     - [ ] MAP08: Realm **(!!!)**
     - [ ] MAP09: Abattoire **(!!!)**
     - [ ] MAP10: Onslaught **(!!!)**
-    - [ ] MAP11: Hunted **(!!!)**
+    - [ ] MAP11: Hunted **(Nightmare Sent me screenshots)**
     - [ ] MAP12: Speed **(!!!)**
     - [ ] MAP13: The Crypt **(!!!)**
     - [ ] MAP14: Genesis **(!!!)**
@@ -210,7 +210,7 @@ The actual TODO list.
     - [ ] MAP27: Anti-Christ **(!!!)**
     - [ ] MAP28: The Sewers **(!!!)**
     - [ ] MAP29: Odyssey of Noises **(!!!)**
-    - [ ] MAP30: The Gateway to Hell **(!!!)**
+    - [ ] MAP30: The Gateway to Hell **(Nightmare Sent me screenshots)**
     - [X] MAP31: Cyberden
     - [X] MAP32: Go 2 It
 
