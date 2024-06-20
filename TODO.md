@@ -185,31 +185,31 @@ The actual TODO list.
     - [X] MAP02: Well of Souls **(thanks, Norb!)**
     - [X] MAP03: Aztec **(thanks, Norb!)**
     - [X] MAP04: Caged **(thanks, Norb!)**
-    - [ ] MAP05: Ghost Town
-    - [ ] MAP06: Baron's Lair
-    - [ ] MAP07: Caughtyard
-    - [ ] MAP08: Realm
-    - [ ] MAP09: Abattoire
-    - [ ] MAP10: Onslaught
+    - [ ] MAP05: Ghost Town **(!!!)**
+    - [ ] MAP06: Baron's Lair **(!!!)** 
+    - [ ] MAP07: Caughtyard **(!!!)**
+    - [ ] MAP08: Realm **(!!!)**
+    - [ ] MAP09: Abattoire **(!!!)**
+    - [ ] MAP10: Onslaught **(!!!)**
     - [ ] MAP11: Hunted **(!!!)**
-    - [ ] MAP12: Speed
-    - [ ] MAP13: The Crypt
-    - [ ] MAP14: Genesis
-    - [ ] MAP15: The Twilight
-    - [ ] MAP16: The Omen
-    - [ ] MAP17: Compound
-    - [ ] MAP18: Neurosphere
-    - [ ] MAP19: NME
-    - [ ] MAP20: The Death Domain
-    - [ ] MAP21: Slayer
-    - [ ] MAP22: Impossible Mission
-    - [ ] MAP23: Tombstone
-    - [ ] MAP24: The Final Frontier
-    - [ ] MAP25: The Temple of Darkness
-    - [ ] MAP26: Bunker
-    - [ ] MAP27: Anti-Christ
-    - [ ] MAP28: The Sewers
-    - [ ] MAP29: Odyssey of Noises
+    - [ ] MAP12: Speed **(!!!)**
+    - [ ] MAP13: The Crypt **(!!!)**
+    - [ ] MAP14: Genesis **(!!!)**
+    - [ ] MAP15: The Twilight **(!!!)**
+    - [ ] MAP16: The Omen **(!!!)**
+    - [ ] MAP17: Compound **(!!!)**
+    - [ ] MAP18: Neurosphere **(!!!)**
+    - [ ] MAP19: NME **(!!!)**
+    - [ ] MAP20: The Death Domain **(!!!)**
+    - [ ] MAP21: Slayer **(!!!)**
+    - [ ] MAP22: Impossible Mission **(!!!)**
+    - [ ] MAP23: Tombstone **(!!!)**
+    - [ ] MAP24: The Final Frontier **(!!!)**
+    - [ ] MAP25: The Temple of Darkness **(!!!)**
+    - [ ] MAP26: Bunker **(!!!)**
+    - [ ] MAP27: Anti-Christ **(!!!)**
+    - [ ] MAP28: The Sewers **(!!!)**
+    - [ ] MAP29: Odyssey of Noises **(!!!)**
     - [ ] MAP30: The Gateway to Hell **(!!!)**
     - [X] MAP31: Cyberden
     - [X] MAP32: Go 2 It
@@ -217,45 +217,45 @@ The actual TODO list.
 ### Doom 64 *(must be the 2020 re-release cuz of LOST LEVELS and higher quality!!!!)*
 - Main Campaign
     - [X] MAP01: Staging Area
-    - [ ] MAP02: The Terraformer
-    - [ ] MAP03: Main Engineering
-    - [ ] MAP04: Holding Area
-    - [ ] MAP05: Tech Center
-    - [ ] MAP06: Alpha Quadrant
-    - [ ] MAP07: Research Lab
-    - [ ] MAP08: Final Outpost
-    - [ ] MAP09: Even Simpler
-    - [ ] MAP10: The Bleeding
-    - [ ] MAP11: Terror Core
-    - [ ] MAP12: Altar Of Pain
-    - [ ] MAP13: Dark Citadel
-    - [ ] MAP14: Eye Of The Storm
-    - [ ] MAP15: Dark Entries
-    - [ ] MAP16: Blood Keep
-    - [ ] MAP17: Watch Your Step
-    - [ ] MAP18: Spawned Fear
-    - [ ] MAP19: The Spiral
-    - [ ] MAP20: Breakdown
-    - [ ] MAP21: Pitfalls
-    - [ ] MAP22: Burnt Offerings
-    - [ ] MAP23: Unholy Temple
-    - [ ] MAP24: No Escape
+    - [ ] MAP02: The Terra former **(!!!)**
+    - [ ] MAP03: Main Engineering **(!!!)**
+    - [ ] MAP04: Holding Área **(!!!)**
+    - [ ] MAP05: Tech Enter **(!!!)**
+    - [ ] MAP06: Alpha Quadrant **(!!!)**
+    - [ ] MAP07: Research Lab **(!!!)**
+    - [ ] MAP08: Final Outpost **(!!!)**
+    - [ ] MAP09: Even Simpler **(!!!)**
+    - [ ] MAP10: The Bleeding **(!!!)**
+    - [ ] MAP11: Terror Core **(!!!)**
+    - [ ] MAP12: Altar Of Pain **(!!!)**
+    - [ ] MAP13: Dark Citadel **(!!!)**
+    - [ ] MAP14: Eye Of The Storm **(!!!)**
+    - [ ] MAP15: Dark Entries **(!!!)**
+    - [ ] MAP16: Blood Keep **(!!!)**
+    - [ ] MAP17: Watch Your Step **(!!!)**
+    - [ ] MAP18: Spawned Fear **(!!!)**
+    - [ ] MAP19: The Spiral **(!!!)**
+    - [ ] MAP20: Breakdown **(!!!)**
+    - [ ] MAP21: Pitfalls **(!!!)**
+    - [ ] MAP22: Burnt Offering **(!!!)**
+    - [ ] MAP23: Unholy Temple **(!!!)**
+    - [ ] MAP24: No Escape **(!!!)**
     - [X] MAP25: Cat And Mouse
     - [X] MAP26: HardCore
     - [X] MAP27: Playground
-    - [ ] MAP28: The Absolution
-    - [ ] MAP29: Outpost Omega
-    - [ ] MAP30: The Lair **(more screenshots needed)**
-    - [ ] MAP31: In The Void **(more screenshots needed)**
+    - [ ] MAP28: The Absolution **(!!!)**
+    - [ ] MAP29: Outpost Omega **(!!!)**
+    - [ ] MAP30: The Lair **(!!!, more screenshots needed)**
+    - [ ] MAP31: In The Void **(!!!, more screenshots needed)**
     - [X] MAP32: Hectic 
 
 - The Lost Levels
     - [X] MAP34: Plant Ops
-    - [ ] MAP35: Evil Sacrifice
-    - [ ] MAP36: Cold Grounds
-    - [ ] MAP37: Wretched Vats
-    - [ ] MAP38: Thy Glory
-    - [ ] MAP39: Final Judgement
+    - [ ] MAP35: Evil Sacrifice **(!!!)**
+    - [ ] MAP36: Cold Rounds **(!!!)**
+    - [ ] MAP37: Wretched Vats **(!!!)**
+    - [ ] MAP38: Thy Glory **(!!!)**
+    - [ ] MAP39: Final Judgement **(!!!)**
     - [X] MAP40: Panic
 
 ### No Rest for the Living
