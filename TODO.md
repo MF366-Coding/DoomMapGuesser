@@ -26,6 +26,15 @@ No more screenshots are needed for the levels marked with a tick.
 
 Unless there's a good reason not to, screenshot submissions for those levels won't be accepted. 
 
+## Progress Summary
+- **The Ultimate Doom:** ~55% done
+- **Doom II:** ~28% done
+- **Master Levels for Doom II:** ~4% done
+- **Final Doom: TNT Evilution:** ~40% done
+- **Final Doom: The Plutonia Experiment:** ~18% done
+- **Doom 64:** ~17% done
+- **No Rest for The Living:** ~11% done
+
 ## List
 The actual TODO list.
 
@@ -86,7 +95,7 @@ The actual TODO list.
     - [X] MAP06: The Crusher
     - [X] MAP07: Dead Simple
     - [X] MAP08: Tricks and Traps
-    - [ ] MAP09: The Pit **(!!!)**
+    - [ ] MAP09: The Pit **(I have screenshots)**
     - [ ] MAP10: Refueling Base
     - [ ] MAP11: Circle of Death / 'O' of Destruction **(!!!)**
     - [ ] MAP12: The Factory **(!!!)**
