@@ -27,13 +27,13 @@ No more screenshots are needed for the levels marked with a tick.
 Unless there's a good reason not to, screenshot submissions for those levels won't be accepted. 
 
 ## Progress Summary
-- **The Ultimate Doom:** ~55% done
-- **Doom II:** ~28% done
-- **Master Levels for Doom II:** ~4% done
-- **Final Doom: TNT Evilution:** ~40% done
-- **Final Doom: The Plutonia Experiment:** ~18% done
-- **Doom 64:** ~17% done
-- **No Rest for The Living:** ~11% done
+- **The Ultimate Doom:** ~55% done - 20/36 levels
+- **Doom II:** ~40% done - 13/32 levels
+- **Master Levels for Doom II:** ~4% done - 1/21 levels
+- **Final Doom: TNT Evilution:** ~56% done - 18/32 levels (I'm doing this one)
+- **Final Doom: The Plutonia Experiment:** ~25% done - 8/32 levels
+- **Doom 64:** ~17% done - 7/39 levels
+- **No Rest for The Living:** ~11% done - 1/9 levels
 
 ## List
 The actual TODO list.
@@ -95,7 +95,7 @@ The actual TODO list.
     - [X] MAP06: The Crusher
     - [X] MAP07: Dead Simple
     - [X] MAP08: Tricks and Traps
-    - [ ] MAP09: The Pit **(I have screenshots)**
+    - [X] MAP09: The Pit
     - [ ] MAP10: Refueling Base
     - [ ] MAP11: Circle of Death / 'O' of Destruction **(!!!)**
     - [ ] MAP12: The Factory **(!!!)**
@@ -104,7 +104,7 @@ The actual TODO list.
     - [ ] MAP15: Industrial Zone **(!!!)**
     - [ ] MAP16: Suburbs **(!!!)**
     - [ ] MAP17: Tenements **(!!!)**
-    - [ ] MAP18: The Courtyard **(Nightmare Sent me some screenshots, will upload ASAP)**
+    - [X] MAP18: The Courtyard **(thanks, Nightmare!)**
     - [ ] MAP19: The Citadel **(!!!, screenshots? DoomWiki has none of this level)**
     - [ ] MAP20: Gotcha! **(!!!)**
     - [ ] MAP21: Nirvana **(!!!, again the single screenshot is a texture bug :|)**
@@ -116,9 +116,9 @@ The actual TODO list.
     - [ ] MAP27: Monster Condo **(!!!)** 
     - [ ] MAP28: The Spirit World **(!!!)**
     - [ ] MAP29: The Living End **(!!!, there could be some more...)**
-    - [ ] MAP30: Icon of Sin **(Nightmare Sent me screenshots)**
+    - [X] MAP30: Icon of Sin **(thanks, Nightmare!)**
     - [X] MAP31: Wolfenstein
-    - [ ] MAP32: Grosse **(Nightmare Sent me screenshots)**
+    - [X] MAP32: Grosse **(thanks, Nightmare!)**
 
 ### Doom II: The Master Levels
 - N/A
@@ -157,12 +157,12 @@ The actual TODO list.
     - [X] MAP09: Stronghold
     - [X] MAP10: Redemption
     - [X] MAP11: Storage Facility
-    - [ ] MAP12: Crater **(I have screenshots)**
-    - [ ] MAP13: Nukage Processing **(I have screenshots)**
-    - [ ] MAP14: Steel Works **(I have screenshots)**
-    - [ ] MAP15: Dead Zone **(I have screenshots)**
-    - [ ] MAP16: Deepest Reaches **(Gonna do this level next)**
-    - [ ] MAP17: Processing Area
+    - [X] MAP12: Crater
+    - [X] MAP13: Nukage Processing
+    - [X] MAP14: Steel Works
+    - [X] MAP15: Dead Zone
+    - [X] MAP16: Deepest Reaches
+    - [ ] MAP17: Processing Area **(Will do this level next)**
     - [ ] MAP18: Mill
     - [ ] MAP19: Shipping/Respawning
     - [ ] MAP20: Central Processing
@@ -191,7 +191,7 @@ The actual TODO list.
     - [ ] MAP08: Realm **(!!!)**
     - [ ] MAP09: Abattoire **(!!!)**
     - [ ] MAP10: Onslaught **(!!!)**
-    - [ ] MAP11: Hunted **(Nightmare Sent me screenshots)**
+    - [X] MAP11: Hunted **(thanks, Nightmare!)**
     - [ ] MAP12: Speed **(!!!)**
     - [ ] MAP13: The Crypt **(!!!)**
     - [ ] MAP14: Genesis **(!!!)**
@@ -210,7 +210,7 @@ The actual TODO list.
     - [ ] MAP27: Anti-Christ **(!!!)**
     - [ ] MAP28: The Sewers **(!!!)**
     - [ ] MAP29: Odyssey of Noises **(!!!)**
-    - [ ] MAP30: The Gateway to Hell **(Nightmare Sent me screenshots)**
+    - [X] MAP30: The Gateway to Hell **(thanks, Nightmare!)**
     - [X] MAP31: Cyberden
     - [X] MAP32: Go 2 It
 
