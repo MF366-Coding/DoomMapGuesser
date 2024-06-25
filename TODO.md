@@ -5,6 +5,8 @@
 
 > I really need screenshots, so you'll find **(!!!)** near the most needed ones.
 
+> Almost done with TNT, nice!
+
 If anyone wants to help me out filling these gaps, your help would be appreciated.
 
 **Thank you, everyone!**
@@ -171,13 +173,13 @@ The actual TODO list.
     - [ ] MAP23: Lunar Mining Project **(I have screenshots)**
     - [ ] MAP24: Quarry **(I have screenshots)**
     - [ ] MAP25: Baron's Den **(I have screenshots)**
-    - [ ] MAP26: Ballistyx **(Gonna do this level next)**
-    - [ ] MAP27: Mount Pain
-    - [ ] MAP28: Heck
-    - [ ] MAP29: River Styx
+    - [ ] MAP26: Ballistyx **(I have screenshots)**
+    - [ ] MAP27: Mount Pain **(I have screenshots)**
+    - [ ] MAP28: Heck **(I have screenshots)**
+    - [ ] MAP29: River Styx **(I have screenshots)**
     - [X] MAP30: Last Call **(thanks, Norb!)**
-    - [ ] MAP31: Pharaoh
-    - [ ] MAP32: Caribbean
+    - [ ] MAP31: Pharaoh **(gonna do this level next)**
+    - [ ] MAP32: Caribbean **(gonna do this level next)**
 
 ### Final Doom: The Plutonia Experiment
 - N/A
