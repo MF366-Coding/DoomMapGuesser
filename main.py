@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox as mb
+from tkinter import font
 import random
 import os
 import sys
@@ -8,6 +9,32 @@ import simple_webbrowser
 from PIL import ImageTk, Image
 from core import level_db, scrapper
 import sv_ttk
+import ctypes
+import math
+import io
+
+# pylint: disable=E1101
+# pylint: disable=W0718
+# pylint: disable=W0603
+
+# [*] Enable high DPI scaling on Windows
+if sys.platform == 'win32':
+    try:
+        ctypes.windll.shcore.SetProcessDpiAwareness(1)
+    
+    except Exception as e:
+        print(f"Failed to set DPI awareness: {e}")
+
+    # [*] Path to the font file
+    font_path = os.path.join(os.path.dirname(__file__), 'assets', 'font.ttf')
+
+    # [*] Verify that the font file exists
+    if not os.path.exists(font_path):
+        print(f"Font file '{font_path}' does not exist.")
+        exit(1)
+
+    # [*] Load the font
+    ctypes.windll.gdi32.AddFontResourceW(str(font_path))
 
 VERSION = 'v0.0.1 BETA'
 
@@ -25,6 +52,9 @@ root.resizable(True, False)
 
 if sys.platform == 'win32':
     root.iconbitmap(ICON_PATH)
+
+sv_ttk.set_theme('dark', root)
+style = ttk.Style(root)
 
 f1 = ttk.Frame(root)
 f2 = ttk.Frame(f1)
@@ -56,6 +86,21 @@ maps_var = tk.Variable(f4, list(database[cur_selections[0]][cur_selections[1]].k
 number_of_secrets_var = tk.StringVar(f4, '0')
 
 
+def get_width_height_of_image(image: bytes, ratio: tuple[int, int] = (16, 9)):
+    # [*] total number of pixels
+    pixels: int = len(image) // 4
+
+    # calculate height and width
+    height: float = math.sqrt((ratio[1] / ratio[0]) * pixels)
+    width: float = (ratio[0] / ratio[1]) * height
+
+    # round to nearest integer
+    height = round(height)
+    width = round(width)
+    
+    return width, height
+
+
 def choose_game_window(origin: ttk.Button, master: tk.Tk | tk.Toplevel = root):
     def _save_changes():
         try:
@@ -70,8 +115,8 @@ def choose_game_window(origin: ttk.Button, master: tk.Tk | tk.Toplevel = root):
             
             game_choice_win.destroy()
             
-        except tk.TclError as e:
-            mb.showerror("Doom Map Guesser - Error #1", f"You must select a game/WAD before hitting 'Comfirm'.\n{e}")
+        except tk.TclError as exc:
+            mb.showerror("Doom Map Guesser - Error #1", f"You must select a game/WAD before hitting 'Comfirm'.\n{exc}")
            
     game_choice_win = tk.Toplevel(master)
     game_choice_win.focus_set()
@@ -86,7 +131,7 @@ def choose_game_window(origin: ttk.Button, master: tk.Tk | tk.Toplevel = root):
     accept_butt = ttk.Button(game_choice_win, text='Confirm', command=_save_changes)
         
     game_listbox.pack()
-    accept_butt.pack()
+    accept_butt.pack(pady=5)
 
 
 def choose_episode_window(origin: ttk.Button, master: tk.Tk | tk.Toplevel = root):
@@ -104,8 +149,8 @@ def choose_episode_window(origin: ttk.Button, master: tk.Tk | tk.Toplevel = root
             
             episode_choice_win.destroy()
             
-        except tk.TclError as e:
-            mb.showerror("Doom Map Guesser - Error #1", f"You must select a game/WAD before hitting 'Comfirm'.\n{e}")
+        except tk.TclError as exc:
+            mb.showerror("Doom Map Guesser - Error #1", f"You must select a game/WAD before hitting 'Comfirm'.\n{exc}")
            
     episode_choice_win = tk.Toplevel(master)
     episode_choice_win.focus_set()
@@ -120,7 +165,7 @@ def choose_episode_window(origin: ttk.Button, master: tk.Tk | tk.Toplevel = root
     accept_butt = ttk.Button(episode_choice_win, text='Confirm', command=_save_changes)
         
     episode_listbox.pack()
-    accept_butt.pack()
+    accept_butt.pack(pady=5)
     
 
 def choose_map_window(origin: ttk.Button, master: tk.Tk | tk.Toplevel = root):
@@ -137,8 +182,8 @@ def choose_map_window(origin: ttk.Button, master: tk.Tk | tk.Toplevel = root):
             
             map_choice_win.destroy()
             
-        except tk.TclError as e:
-            mb.showerror("Doom Map Guesser - Error #1", f"You must select a game/WAD before hitting 'Comfirm'.\n{e}")
+        except tk.TclError as exc:
+            mb.showerror("Doom Map Guesser - Error #1", f"You must select a game/WAD before hitting 'Comfirm'.\n{exc}")
            
     map_choice_win = tk.Toplevel(master)
     map_choice_win.focus_set()
@@ -153,7 +198,7 @@ def choose_map_window(origin: ttk.Button, master: tk.Tk | tk.Toplevel = root):
     accept_butt = ttk.Button(map_choice_win, text='Confirm', command=_save_changes)
         
     maps_listbox.pack()
-    accept_butt.pack()
+    accept_butt.pack(pady=5)
 
 
 choose_game_butt = ttk.Button(f4, text=cur_selections[0], command=lambda:
@@ -187,6 +232,9 @@ def pick_new_screenshot(map_id: int, current_screenshot_link: str, attempts: int
         if map_id not in screenshot_database.keys():
             return False # [i] no screenshots for given map
         
+        if screenshot_database[map_id] == []:
+            return False
+        
         new_screenshot: str = random.choice(screenshot_database[map_id])
         
         if new_screenshot == current_screenshot_link:
@@ -207,7 +255,7 @@ def display_intro(master: tk.Tk | tk.Toplevel = root):
         intro_win.iconbitmap(ICON_PATH)
     
     logo = Image.open(LOGO_PATH)
-    intro_win.tk_logo = ImageTk.PhotoImage(logo, (100, 100))
+    intro_win.tk_logo = ImageTk.PhotoImage(logo, (50, 50))
     logo_label = ttk.Label(intro_win, image=intro_win.tk_logo)
     
     about_1 = ttk.Label(intro_win, text=f"Doom Map Guesser {VERSION} is the GeoGuesser of the DOOM series.")
@@ -222,21 +270,34 @@ def display_intro(master: tk.Tk | tk.Toplevel = root):
     butt_buy_coffee = ttk.Button(intro_win, text="Donate <3", command=lambda:
         simple_webbrowser.website("https://buymeacoffee.com/mf366/"))
         
-    logo_label.pack()
-    about_1.pack()
-    about_2.pack()
-    about_3.pack()
-    about_4.pack()
-    butt_github.pack()
-    butt_discord.pack()
-    butt_buy_coffee.pack()
-    
-    # sv_ttk.set_theme
+    logo_label.pack(pady=2)
+    about_1.pack(pady=2)
+    about_2.pack(pady=2)
+    about_3.pack(pady=2)
+    about_4.pack(pady=2)
+    butt_github.pack(pady=5)
+    butt_discord.pack(pady=5)
+    butt_buy_coffee.pack(pady=5)
 
 
 def display_screenshot(screenshot_link: str):
-    img = Image.frombytes("RGBA", (350, 250), scrapper.scrape_byte_contents(screenshot_link))
-    f3.tk_img = ImageTk.PhotoImage(img)
+    # [!] I am assuming all screenshots are 16:9 which is NOT true
+    
+    print(screenshot_link)
+    
+    image_data = scrapper.scrape_byte_contents(screenshot_link)
+    image_data_io = io.BytesIO(image_data)
+    
+    img = Image.open(image_data_io, "r")
+    
+    # [*] Resizing
+    new_width = 500
+    original_width, original_height = img.size
+    aspect_ratio = original_height / original_width
+    new_height = int(new_width * aspect_ratio)  # [i] Calculate the height based on the original aspect ratio
+    img_resized = img.resize((new_width, new_height), Image.LANCZOS)
+    
+    f3.tk_img = ImageTk.PhotoImage(img_resized)
     img_label.configure(text='', image=f3.tk_img)
 
 
@@ -259,7 +320,7 @@ secrets_minus_butt = ttk.Button(f4, text='-', command=lambda:
     change_secret_amount_by_1(False))
 
 
-def generate_new_game():
+def generate_new_game(attempts: int = 10):
     global cur_screenshot, cur_selections, cur_settings
     
     game = pick_new_game_wad()
@@ -272,9 +333,16 @@ def generate_new_game():
     
     cur_screenshot = False
     
-    while cur_screenshot is False:
-        cur_screenshot = pick_new_screenshot(map_id, cur_screenshot)
+    for _ in range(attempts):
+        if cur_screenshot is not False:
+            break
+        
+        cur_screenshot = pick_new_screenshot(map_id, cur_screenshot, attempts)
     
+    if cur_screenshot is False:
+        mb.showerror('DoomMapGuesser', f"Couldn't load a screenshot in {attempts * 2} attempts.")
+        return
+        
     cur_settings = [game, episode, map_name, number_of_secrets]
     cur_selections = [GAME_PH, EPISODE_PH, MAP_PH, SECRETS_PH]
     number_of_secrets_var.set('0')
@@ -283,6 +351,8 @@ def generate_new_game():
     choose_episode_butt.configure(text=cur_selections[1])
     choose_map_butt.configure(text=cur_selections[2])
 
+    print(cur_screenshot)
+    
     display_screenshot(cur_screenshot)
     
 
@@ -312,29 +382,30 @@ leave_butt = ttk.Button(f5, text='Exit', command=prevent_from_leaving)
 # [*] packing the rest of the elements
 img_label.pack()
 
-choose_game_butt.pack()
-choose_episode_butt.pack()
-choose_map_butt.pack()
+choose_game_butt.pack(pady=2)
+choose_episode_butt.pack(pady=2)
+choose_map_butt.pack(pady=2)
 
-secrets_plus_butt.pack()
-secrets_label.pack()
-secrets_minus_butt.pack()
+secrets_plus_butt.pack(pady=2)
+secrets_label.pack(pady=2)
+secrets_minus_butt.pack(pady=2)
 
-generate_butt.pack()
-guess_butt.pack()
-leave_butt.pack()
+generate_butt.pack(pady=2)
+guess_butt.pack(pady=2)
+leave_butt.pack(pady=2)
 
-f3.grid(column=0, row=0)
-f4.grid(column=1, row=0)
+f3.grid(column=0, row=0, padx=5, pady=2)
+f4.grid(column=1, row=0, padx=5, pady=2)
 
-f2.pack()
-f5.pack()
+f2.pack(pady=2)
+f5.pack(pady=2)
 
-f1.pack()
+f1.pack(pady=2)
 
 display_intro()
 
-sv_ttk.set_theme('dark', root)
+style.configure("TButton", font=font.Font(root, family="Roboto", size=13, weight='normal', slant='roman'))
+style.configure('TLabel', font=font.Font(root, family='Roboto', size=14, weight='bold', slant='roman'))
 
 root.protocol("WM_DELETE_WINDOW", prevent_from_leaving)
 
