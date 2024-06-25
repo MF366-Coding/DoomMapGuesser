@@ -27,9 +27,9 @@ No more screenshots are needed for the levels marked with a tick.
 Unless there's a good reason not to, screenshot submissions for those levels won't be accepted. 
 
 ## Progress Summary
-- **The Ultimate Doom:** ~55% done - 20/36 levels
-- **Doom II:** ~40% done - 13/32 levels
-- **Master Levels for Doom II:** ~4% done - 1/21 levels
+- **The Ultimate Doom:** ~63% done - 23/36 levels
+- **Doom II:** ~56% done - 18/32 levels
+- **Master Levels for Doom II:** ~9% done - 2/21 levels
 - **Final Doom: TNT Evilution:** ~56% done - 18/32 levels (I'm doing this one)
 - **Final Doom: The Plutonia Experiment:** ~25% done - 8/32 levels
 - **Doom 64:** ~17% done - 7/39 levels
@@ -65,9 +65,9 @@ The actual TODO list.
 
 - Episode 3: Inferno **(not needed; available on the Doom Wiki)**
     - [X] E3M1: Hell Keep
-    - [ ] E3M2: Slough of Despair
-    - [ ] E3M3: Pandemonium
-    - [ ] E3M4: House of Pain
+    - [X] E3M2: Slough of Despair
+    - [X] E3M3: Pandemonium
+    - [X] E3M4: House of Pain
     - [ ] E3M5: Unholy Cathedral
     - [ ] E3M6: Mt. Erebus
     - [ ] E3M7: Limbo
@@ -96,21 +96,21 @@ The actual TODO list.
     - [X] MAP07: Dead Simple
     - [X] MAP08: Tricks and Traps
     - [X] MAP09: The Pit
-    - [ ] MAP10: Refueling Base
-    - [ ] MAP11: Circle of Death / 'O' of Destruction **(!!!)**
-    - [ ] MAP12: The Factory **(!!!)**
+    - [X] MAP10: Refueling Base
+    - [X] MAP11: Circle of Death / 'O' of Destruction
+    - [X] MAP12: The Factory
     - [ ] MAP13: Downtown **(!!!)**
     - [ ] MAP14: The Inmost Dens **(!!!)**
     - [ ] MAP15: Industrial Zone **(!!!)**
     - [ ] MAP16: Suburbs **(!!!)**
     - [ ] MAP17: Tenements **(!!!)**
     - [X] MAP18: The Courtyard **(thanks, Nightmare!)**
-    - [ ] MAP19: The Citadel **(!!!, screenshots? DoomWiki has none of this level)**
+    - [X] MAP19: The Citadel
     - [ ] MAP20: Gotcha! **(!!!)**
     - [ ] MAP21: Nirvana **(!!!, again the single screenshot is a texture bug :|)**
     - [ ] MAP22: The Catacombs **(!!!, no screenshots on DoomWiki)**
     - [ ] MAP23: Barrels o'Fun **(!!!, not many screenshots on DoomWiki)**
-    - [ ] MAP24: The Chasm **(hell yeah, DoomWiki has enough screenshots on this one, won't have to play it :D )**
+    - [X] MAP24: The Chasm
     - [ ] MAP25: Bloodfalls **(!!!, imagine only screenshotting the exit AND because of a texture bug)**
     - [ ] MAP26: The Abandoned Mines **(!!!)**
     - [ ] MAP27: Monster Condo **(!!!)** 
@@ -122,7 +122,7 @@ The actual TODO list.
 
 ### Doom II: The Master Levels
 - N/A
-    - [ ] MAP01: Attack
+    - [X] MAP01: Attack
     - [ ] MAP02: Canyon **(!!!)**
     - [ ] MAP03: The Catwalk
     - [ ] MAP04: The Combine
@@ -162,16 +162,16 @@ The actual TODO list.
     - [X] MAP14: Steel Works
     - [X] MAP15: Dead Zone
     - [X] MAP16: Deepest Reaches
-    - [ ] MAP17: Processing Area **(Will do this level next)**
-    - [ ] MAP18: Mill
-    - [ ] MAP19: Shipping/Respawning
-    - [ ] MAP20: Central Processing
-    - [ ] MAP21: Administration Center
-    - [X] MAP22: Habitat **(thanks, Norb!)**
-    - [ ] MAP23: Lunar Mining Project
-    - [ ] MAP24: Quarry
-    - [ ] MAP25: Baron's Den
-    - [ ] MAP26: Ballistyx
+    - [ ] MAP17: Processing Area **(I have screenshots)**
+    - [ ] MAP18: Mill **(I have screenshots)**
+    - [ ] MAP19: Shipping/Respawning **(I have screenshots)**
+    - [ ] MAP20: Central Processing **(I have screenshots)**
+    - [ ] MAP21: Administration Center **(I have screenshots)**
+    - [X] MAP22: Habitat **(thanks, Norb!; I have 3 more of a secret area)**
+    - [ ] MAP23: Lunar Mining Project **(I have screenshots)**
+    - [ ] MAP24: Quarry **(I have screenshots)**
+    - [ ] MAP25: Baron's Den **(I have screenshots)**
+    - [ ] MAP26: Ballistyx **(Gonna do this level next)**
     - [ ] MAP27: Mount Pain
     - [ ] MAP28: Heck
     - [ ] MAP29: River Styx
