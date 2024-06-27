@@ -29,7 +29,7 @@ No more screenshots are needed for the levels marked with a tick.
 Unless there's a good reason not to, screenshot submissions for those levels won't be accepted. 
 
 ## Progress Summary
-- **The Ultimate Doom:** ~63% done - 23/36 levels
+- **The Ultimate Doom:** ~75% done - 27/36 levels
 - **Doom II:** ~56% done - 18/32 levels
 - **Master Levels for Doom II:** ~9% done - 2/21 levels
 - **Final Doom: TNT Evilution:** 100% done - 32/32 levels *(screenshot submission closed)*
@@ -65,15 +65,15 @@ The actual TODO list.
     - [X] E2M8: Tower of Babel
     - [X] E2M9: Fortress of Mystery
 
-- Episode 3: Inferno **(not needed; available on the Doom Wiki)**
+- Episode 3: Inferno
     - [X] E3M1: Hell Keep
     - [X] E3M2: Slough of Despair
     - [X] E3M3: Pandemonium
     - [X] E3M4: House of Pain
-    - [ ] E3M5: Unholy Cathedral
-    - [ ] E3M6: Mt. Erebus
-    - [ ] E3M7: Limbo
-    - [ ] E3M8: Dis
+    - [X] E3M5: Unholy Cathedral
+    - [X] E3M6: Mt. Erebus
+    - [X] E3M7: Limbo
+    - [X] E3M8: Dis
     - [X] E3M9: Warrens
 
 - Episode 4: Thy Flesh Consumed **(not needed; available on the Doom Wiki)**

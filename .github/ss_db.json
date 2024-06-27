@@ -372,6 +372,40 @@
         "https://doomwiki.org/w/images/a/ac/E3M5_exit.png",
         "https://doomwiki.org/w/images/4/49/E3m5_secret1.PNG"
     ],
+    "24": [
+        "https://doomwiki.org/w/images/8/81/E3M6_start.png",
+        "https://doomwiki.org/w/images/5/57/E3m6_protected.PNG",
+        "https://doomwiki.org/w/images/5/5a/E3m6_optional.PNG",
+        "https://doomwiki.org/w/images/b/b9/E3m6_attack.PNG",
+        "https://doomwiki.org/w/images/e/eb/E3m6_marble.PNG",
+        "https://doomwiki.org/w/images/9/95/E3m6_inside.PNG",
+        "https://doomwiki.org/w/images/6/68/E3m6_key.PNG",
+        "https://doomwiki.org/w/images/7/7c/E3m6_wood.PNG",
+        "https://doomwiki.org/w/images/9/9b/E3m6_three.PNG",
+        "https://doomwiki.org/w/images/1/1f/E3m6_water.PNG",
+        "https://doomwiki.org/w/images/9/93/E3M6_regular_exit.png"
+    ],
+    "25": [
+        "https://doomwiki.org/w/images/4/43/E3m7_start.PNG",
+        "https://doomwiki.org/w/images/d/d8/E3m7_key.PNG",
+        "https://doomwiki.org/w/images/b/bf/E3m7_pentagram.PNG",
+        "https://doomwiki.org/w/images/8/81/E3m7_center.PNG",
+        "https://doomwiki.org/w/images/b/b6/E3m7_north.PNG",
+        "https://doomwiki.org/w/images/9/9d/E3m7_reddoor.PNG",
+        "https://doomwiki.org/w/images/1/15/E3m7_bridge.PNG",
+        "https://doomwiki.org/w/images/c/c4/E3m7_bloodystairs.PNG",
+        "https://doomwiki.org/w/images/f/fd/E3m7_BFG.PNG",
+        "https://doomwiki.org/w/images/2/29/E3m7_yellow.PNG",
+        "https://doomwiki.org/w/images/5/56/E3m7_exit.PNG",
+        "https://doomwiki.org/w/images/7/71/E3M7_exit_door.png"
+    ],
+    "26": [
+        "https://doomwiki.org/w/images/c/cd/E3m8_start.PNG",
+        "https://doomwiki.org/w/images/6/6a/E3m8_boss.PNG",
+        "https://doomwiki.org/w/images/b/b5/E3m8_megaarmor.PNG",
+        "https://doomwiki.org/w/images/2/2e/E3m8_corner.PNG",
+        "https://doomwiki.org/w/images/5/58/E3M8_boss_dying.png"
+    ],
     "27": [
         "https://doomwiki.org/w/images/a/a0/E3m9_arena.PNG",
 	    "https://doomwiki.org/w/images/e/e9/E3m9_demons.PNG",
