@@ -47,7 +47,7 @@ SECRETS_PH = 0
 
 root = tk.Tk()
 root.title(f"Doom Map Guesser by MF366 - The GeoGuesser of DOOM ({VERSION})")
-root.geometry('800x600')
+root.geometry('1000x700')
 root.resizable(True, False)
 
 if sys.platform == 'win32':
@@ -83,7 +83,7 @@ cur_selections = [GAME_PH, EPISODE_PH, MAP_PH, SECRETS_PH]
 game_var = tk.Variable(f4, list(database.keys()))
 episode_var = tk.Variable(f4, list(database[cur_selections[0]].keys()))
 maps_var = tk.Variable(f4, list(database[cur_selections[0]][cur_selections[1]].keys()))
-number_of_secrets_var = tk.StringVar(f4, '0')
+number_of_secrets_var = tk.StringVar(f4, '0 Secrets')
 
 
 def get_width_height_of_image(image: bytes, ratio: tuple[int, int] = (16, 9)):
@@ -115,19 +115,19 @@ def choose_game_window(origin: ttk.Button, master: tk.Tk | tk.Toplevel = root):
             
             game_choice_win.destroy()
             
-        except tk.TclError as exc:
+        except (tk.TclError, IndexError) as exc:
             mb.showerror("Doom Map Guesser - Error #1", f"You must select a game/WAD before hitting 'Comfirm'.\n{exc}")
            
     game_choice_win = tk.Toplevel(master)
     game_choice_win.focus_set()
-    game_choice_win.geometry('800x600')
+    game_choice_win.geometry('400x400')
     game_choice_win.resizable(False, False)
     game_choice_win.title("Choose the correct game/WAD")
     
     if sys.platform == 'win32':
         game_choice_win.iconbitmap(ICON_PATH)
     
-    game_listbox = tk.Listbox(game_choice_win, listvariable=game_var, bg='dark blue', fg='yellow', selectmode=tk.SINGLE, width=100, height=20)
+    game_listbox = tk.Listbox(game_choice_win, listvariable=game_var, bg='dark blue', fg='yellow', selectmode=tk.SINGLE, width=50, height=20)
     accept_butt = ttk.Button(game_choice_win, text='Confirm', command=_save_changes)
         
     game_listbox.pack()
@@ -154,14 +154,14 @@ def choose_episode_window(origin: ttk.Button, master: tk.Tk | tk.Toplevel = root
            
     episode_choice_win = tk.Toplevel(master)
     episode_choice_win.focus_set()
-    episode_choice_win.geometry('800x600')
+    episode_choice_win.geometry('400x400')
     episode_choice_win.resizable(False, False)
     episode_choice_win.title(f"Choose the correct episode for {cur_selections[0]}")
     
     if sys.platform == 'win32':
         episode_choice_win.iconbitmap(ICON_PATH)
     
-    episode_listbox = tk.Listbox(episode_choice_win, listvariable=episode_var, bg='dark blue', fg='yellow', selectmode=tk.SINGLE, width=100, height=20)
+    episode_listbox = tk.Listbox(episode_choice_win, listvariable=episode_var, bg='dark blue', fg='yellow', selectmode=tk.SINGLE, width=50, height=20)
     accept_butt = ttk.Button(episode_choice_win, text='Confirm', command=_save_changes)
         
     episode_listbox.pack()
@@ -187,14 +187,14 @@ def choose_map_window(origin: ttk.Button, master: tk.Tk | tk.Toplevel = root):
            
     map_choice_win = tk.Toplevel(master)
     map_choice_win.focus_set()
-    map_choice_win.geometry('800x600')
+    map_choice_win.geometry('400x400')
     map_choice_win.resizable(False, False)
     map_choice_win.title(f"Choose the correct map for {cur_selections[1]}")
     
     if sys.platform == 'win32':
         map_choice_win.iconbitmap(ICON_PATH)
     
-    maps_listbox = tk.Listbox(map_choice_win, listvariable=maps_var, bg='dark blue', fg='yellow', selectmode=tk.SINGLE, width=100, height=20)
+    maps_listbox = tk.Listbox(map_choice_win, listvariable=maps_var, bg='dark blue', fg='yellow', selectmode=tk.SINGLE, width=50, height=20)
     accept_butt = ttk.Button(map_choice_win, text='Confirm', command=_save_changes)
         
     maps_listbox.pack()
@@ -255,7 +255,15 @@ def display_intro(master: tk.Tk | tk.Toplevel = root):
         intro_win.iconbitmap(ICON_PATH)
     
     logo = Image.open(LOGO_PATH)
-    intro_win.tk_logo = ImageTk.PhotoImage(logo, (50, 50))
+    
+    # [*] Resizing
+    new_width = 250
+    original_width, original_height = logo.size
+    aspect_ratio = original_height / original_width
+    new_height = int(new_width * aspect_ratio)  # [i] Calculate the height based on the original aspect ratio
+    resized_logo = logo.resize((new_width, new_height), Image.LANCZOS)
+    
+    intro_win.tk_logo = ImageTk.PhotoImage(resized_logo)
     logo_label = ttk.Label(intro_win, image=intro_win.tk_logo)
     
     about_1 = ttk.Label(intro_win, text=f"Doom Map Guesser {VERSION} is the GeoGuesser of the DOOM series.")
@@ -301,16 +309,19 @@ def display_screenshot(screenshot_link: str):
     img_label.configure(text='', image=f3.tk_img)
 
 
-def change_secret_amount_by_1(positive: bool):   
-    # [!] i need to implement limits for this feature
-    
+def change_secret_amount_by_1(positive: bool):       
     if positive:
         a = 1
         
     else:
         a = -1
     
-    number_of_secrets_var.set(str(int(number_of_secrets_var.get()) + a))
+    num = number_of_secrets_var.get().split(' ')[0]        
+    number_of_secrets_var.set(f"{int(num) + a} Secrets")
+
+
+def reset_secret_amount():          
+    number_of_secrets_var.set("0 Secrets")
 
 
 secrets_label = ttk.Label(f4, textvariable=number_of_secrets_var)
@@ -318,6 +329,7 @@ secrets_plus_butt = ttk.Button(f4, text='+', command=lambda:
     change_secret_amount_by_1(True))
 secrets_minus_butt = ttk.Button(f4, text='-', command=lambda:
     change_secret_amount_by_1(False))
+secrets_reset_butt = ttk.Button(f4, text='Reset secrets', command=reset_secret_amount)
 
 
 def generate_new_game(attempts: int = 10):
@@ -340,12 +352,12 @@ def generate_new_game(attempts: int = 10):
         cur_screenshot = pick_new_screenshot(map_id, cur_screenshot, attempts)
     
     if cur_screenshot is False:
-        mb.showerror('DoomMapGuesser', f"Couldn't load a screenshot in {attempts * 2} attempts.")
+        mb.showerror('DoomMapGuesser - Error #3', f"Couldn't load a screenshot in {attempts * 2} attempts.")
         return
         
     cur_settings = [game, episode, map_name, number_of_secrets]
     cur_selections = [GAME_PH, EPISODE_PH, MAP_PH, SECRETS_PH]
-    number_of_secrets_var.set('0')
+    number_of_secrets_var.set('0 Secrets')
     
     choose_game_butt.configure(text=cur_selections[0])
     choose_episode_butt.configure(text=cur_selections[1])
@@ -356,27 +368,34 @@ def generate_new_game(attempts: int = 10):
     display_screenshot(cur_screenshot)
     
 
-def guess_screenshot():
+def guess_screenshot(attempts: int = 10):
     correct_guesses = 0
     
-    cur_selections[3] = int(number_of_secrets_var.get())
+    num = number_of_secrets_var.get().split(' ')[0]
+    cur_selections[3] = int(num)
+    
+    if cur_selections[3] < 0 or cur_selections[3] > 1000:
+        mb.showerror('DoomMapGuesser - Error #2', "The number of secrets cannot be lower than 0 or greater than 1000.")
+        return
     
     for index, setting in enumerate(cur_settings, 0):
         if cur_selections[index] == setting:
             correct_guesses += 1
     
-    mb.showwarning("Final Results", f"Correct guesses: {correct_guesses}/4")
+    mb.showinfo("DoomMapGuesser - Final Results", f"Correct guesses: {correct_guesses}/4")
+    
+    generate_new_game(attempts)
 
 
 def prevent_from_leaving(master: tk.Tk | tk.Toplevel = root):
-    leave_confirmation = mb.askyesno("Doom Map Guesser by MF366", "Leaving already :(... Please stay a little longer... Will you?")
+    leave_confirmation = mb.askyesno("DoomMapGuesser by MF366", "Leaving already :(... Please stay a little longer... Will you?")
 
     if not leave_confirmation:
         master.destroy()
 
 
-generate_butt = ttk.Button(f5, text="Generate new screenshot (WON'T ASK FOR CONFIRMATION!)", command=generate_new_game)
-guess_butt = ttk.Button(f5, text="Confirm guess (WON'T ASK FOR CONFIRMATION!)", command=guess_screenshot)
+generate_butt = ttk.Button(f5, text="Generate new screenshot", command=generate_new_game)
+guess_butt = ttk.Button(f5, text="Confirm guess", command=guess_screenshot)
 leave_butt = ttk.Button(f5, text='Exit', command=prevent_from_leaving)
 
 # [*] packing the rest of the elements
@@ -389,6 +408,7 @@ choose_map_butt.pack(pady=2)
 secrets_plus_butt.pack(pady=2)
 secrets_label.pack(pady=2)
 secrets_minus_butt.pack(pady=2)
+secrets_reset_butt.pack(pady=2)
 
 generate_butt.pack(pady=2)
 guess_butt.pack(pady=2)

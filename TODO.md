@@ -5,7 +5,7 @@
 
 > I really need screenshots, so you'll find **(!!!)** near the most needed ones.
 
-> Almost done with TNT, nice!
+> One WAD has been fully screenshotted (TNT)!!!
 
 If anyone wants to help me out filling these gaps, your help would be appreciated.
 
@@ -32,9 +32,9 @@ Unless there's a good reason not to, screenshot submissions for those levels won
 - **The Ultimate Doom:** ~63% done - 23/36 levels
 - **Doom II:** ~56% done - 18/32 levels
 - **Master Levels for Doom II:** ~9% done - 2/21 levels
-- **Final Doom: TNT Evilution:** ~56% done - 18/32 levels (I'm doing this one)
+- **Final Doom: TNT Evilution:** 100% done - 32/32 levels *(screenshot submission closed)*
 - **Final Doom: The Plutonia Experiment:** ~25% done - 8/32 levels
-- **Doom 64:** ~17% done - 7/39 levels
+- **Doom 64:** ~17% done - 7/39 levels (will do this next)
 - **No Rest for The Living:** ~11% done - 1/9 levels
 
 ## List
@@ -164,22 +164,22 @@ The actual TODO list.
     - [X] MAP14: Steel Works
     - [X] MAP15: Dead Zone
     - [X] MAP16: Deepest Reaches
-    - [ ] MAP17: Processing Area **(I have screenshots)**
-    - [ ] MAP18: Mill **(I have screenshots)**
-    - [ ] MAP19: Shipping/Respawning **(I have screenshots)**
-    - [ ] MAP20: Central Processing **(I have screenshots)**
-    - [ ] MAP21: Administration Center **(I have screenshots)**
-    - [X] MAP22: Habitat **(thanks, Norb!; I have 3 more of a secret area)**
-    - [ ] MAP23: Lunar Mining Project **(I have screenshots)**
-    - [ ] MAP24: Quarry **(I have screenshots)**
-    - [ ] MAP25: Baron's Den **(I have screenshots)**
-    - [ ] MAP26: Ballistyx **(I have screenshots)**
-    - [ ] MAP27: Mount Pain **(I have screenshots)**
-    - [ ] MAP28: Heck **(I have screenshots)**
-    - [ ] MAP29: River Styx **(I have screenshots)**
+    - [X] MAP17: Processing Area
+    - [X] MAP18: Mill
+    - [X] MAP19: Shipping/Respawning
+    - [X] MAP20: Central Processing
+    - [X] MAP21: Administration Center
+    - [X] MAP22: Habitat **(thanks, Norb!)**
+    - [X] MAP23: Lunar Mining Project
+    - [X] MAP24: Quarry
+    - [X] MAP25: Baron's Den
+    - [X] MAP26: Ballistyx
+    - [X] MAP27: Mount Pain
+    - [X] MAP28: Heck
+    - [X] MAP29: River Styx
     - [X] MAP30: Last Call **(thanks, Norb!)**
-    - [ ] MAP31: Pharaoh **(gonna do this level next)**
-    - [ ] MAP32: Caribbean **(gonna do this level next)**
+    - [X] MAP31: Pharaoh
+    - [X] MAP32: Caribbean
 
 ### Final Doom: The Plutonia Experiment
 - N/A
