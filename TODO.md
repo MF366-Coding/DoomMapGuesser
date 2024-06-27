@@ -29,9 +29,10 @@ No more screenshots are needed for the levels marked with a tick.
 Unless there's a good reason not to, screenshot submissions for those levels won't be accepted. 
 
 ## Progress Summary
+- **TOTAL PROGRESS:** 48% done - 98/201 levels (103 levels to go)
 - **The Ultimate Doom:** ~75% done - 27/36 levels
 - **Doom II:** ~56% done - 18/32 levels
-- **Master Levels for Doom II:** ~9% done - 2/21 levels
+- **Master Levels for Doom II:** ~23% done - 5/21 levels
 - **Final Doom: TNT Evilution:** 100% done - 32/32 levels *(screenshot submission closed)*
 - **Final Doom: The Plutonia Experiment:** ~25% done - 8/32 levels
 - **Doom 64:** ~17% done - 7/39 levels (will do this next)
@@ -126,9 +127,9 @@ The actual TODO list.
 - N/A
     - [X] MAP01: Attack
     - [ ] MAP02: Canyon **(!!!)**
-    - [ ] MAP03: The Catwalk
-    - [ ] MAP04: The Combine
-    - [ ] MAP05: The Fistula
+    - [X] MAP03: The Catwalk
+    - [X] MAP04: The Combine
+    - [X] MAP05: The Fistula
     - [ ] MAP06: The Garrison **(!!!)**
     - [ ] MAP07: Titan Manor **(!!!)**
     - [ ] MAP08: Paradox **(!!!)**
