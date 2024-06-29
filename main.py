@@ -38,6 +38,7 @@ if sys.platform == 'win32':
 
 VERSION = 'v0.0.1 BETA'
 
+CONFIG_PATH: str = os.path.join(os.path.dirname(__file__), ".config")
 LOGO_PATH: str = os.path.join(os.path.dirname(__file__), "assets", "full_logo.png")
 ICON_PATH: str = os.path.join(os.path.dirname(__file__), "assets", "full_logo.ico")
 GAME_PH = 'Doom (1993) / The Ultimate Doom'
@@ -45,15 +46,19 @@ EPISODE_PH = 'E1: Knee-Deep in the Dead'
 MAP_PH = 'E1M1: Hangar'
 SECRETS_PH = 0
 
+with open(CONFIG_PATH, 'r', encoding='utf-8') as f:
+    cache = f.read()
+    cache = cache.split('\n')
+
 root = tk.Tk()
 root.title(f"Doom Map Guesser by MF366 - The GeoGuesser of DOOM ({VERSION})")
-root.geometry('1000x700')
+root.geometry(f'{int(cache[0])}x{int(cache[1])}')
 root.resizable(True, False)
 
 if sys.platform == 'win32':
     root.iconbitmap(ICON_PATH)
 
-sv_ttk.set_theme('dark', root)
+sv_ttk.set_theme(cache[2], root)
 style = ttk.Style(root)
 
 f1 = ttk.Frame(root)
@@ -61,6 +66,7 @@ f2 = ttk.Frame(f1)
 f3 = ttk.Frame(f2)
 f4 = ttk.Frame(f2)
 f5 = ttk.Frame(f1)
+f6 = ttk.Frame(f1)
 
 img_label = ttk.Label(f3, text='Image not available.')
 
@@ -84,6 +90,8 @@ game_var = tk.Variable(f4, list(database.keys()))
 episode_var = tk.Variable(f4, list(database[cur_selections[0]].keys()))
 maps_var = tk.Variable(f4, list(database[cur_selections[0]][cur_selections[1]].keys()))
 number_of_secrets_var = tk.StringVar(f4, '0 Secrets')
+points_var = tk.IntVar(root, 0)
+max_points_var = tk.IntVar(root, 0)
 
 
 def get_width_height_of_image(image: bytes, ratio: tuple[int, int] = (16, 9)):
@@ -120,14 +128,14 @@ def choose_game_window(origin: ttk.Button, master: tk.Tk | tk.Toplevel = root):
            
     game_choice_win = tk.Toplevel(master)
     game_choice_win.focus_set()
-    game_choice_win.geometry('400x400')
+    game_choice_win.geometry(f'{int(cache[3])}x{int(cache[4])}')
     game_choice_win.resizable(False, False)
     game_choice_win.title("Choose the correct game/WAD")
     
     if sys.platform == 'win32':
         game_choice_win.iconbitmap(ICON_PATH)
     
-    game_listbox = tk.Listbox(game_choice_win, listvariable=game_var, bg='dark blue', fg='yellow', selectmode=tk.SINGLE, width=50, height=20)
+    game_listbox = tk.Listbox(game_choice_win, listvariable=game_var, bg='dark blue', fg='yellow', selectmode=tk.SINGLE, width=int(cache[5]), height=int(cache[6]))
     accept_butt = ttk.Button(game_choice_win, text='Confirm', command=_save_changes)
         
     game_listbox.pack()
@@ -154,14 +162,14 @@ def choose_episode_window(origin: ttk.Button, master: tk.Tk | tk.Toplevel = root
            
     episode_choice_win = tk.Toplevel(master)
     episode_choice_win.focus_set()
-    episode_choice_win.geometry('400x400')
+    episode_choice_win.geometry(f'{int(cache[3])}x{int(cache[4])}')
     episode_choice_win.resizable(False, False)
     episode_choice_win.title(f"Choose the correct episode for {cur_selections[0]}")
     
     if sys.platform == 'win32':
         episode_choice_win.iconbitmap(ICON_PATH)
     
-    episode_listbox = tk.Listbox(episode_choice_win, listvariable=episode_var, bg='dark blue', fg='yellow', selectmode=tk.SINGLE, width=50, height=20)
+    episode_listbox = tk.Listbox(episode_choice_win, listvariable=episode_var, bg='dark blue', fg='yellow', selectmode=tk.SINGLE, width=int(cache[5]), height=int(cache[6]))
     accept_butt = ttk.Button(episode_choice_win, text='Confirm', command=_save_changes)
         
     episode_listbox.pack()
@@ -187,14 +195,14 @@ def choose_map_window(origin: ttk.Button, master: tk.Tk | tk.Toplevel = root):
            
     map_choice_win = tk.Toplevel(master)
     map_choice_win.focus_set()
-    map_choice_win.geometry('400x400')
+    map_choice_win.geometry(f'{int(cache[3])}x{int(cache[4])}')
     map_choice_win.resizable(False, False)
     map_choice_win.title(f"Choose the correct map for {cur_selections[1]}")
     
     if sys.platform == 'win32':
         map_choice_win.iconbitmap(ICON_PATH)
     
-    maps_listbox = tk.Listbox(map_choice_win, listvariable=maps_var, bg='dark blue', fg='yellow', selectmode=tk.SINGLE, width=50, height=20)
+    maps_listbox = tk.Listbox(map_choice_win, listvariable=maps_var, bg='dark blue', fg='yellow', selectmode=tk.SINGLE, width=int(cache[5]), height=int(cache[6]))
     accept_butt = ttk.Button(map_choice_win, text='Confirm', command=_save_changes)
         
     maps_listbox.pack()
@@ -257,7 +265,7 @@ def display_intro(master: tk.Tk | tk.Toplevel = root):
     logo = Image.open(LOGO_PATH)
     
     # [*] Resizing
-    new_width = 250
+    new_width = int(cache[8])
     original_width, original_height = logo.size
     aspect_ratio = original_height / original_width
     new_height = int(new_width * aspect_ratio)  # [i] Calculate the height based on the original aspect ratio
@@ -299,7 +307,7 @@ def display_screenshot(screenshot_link: str):
     img = Image.open(image_data_io, "r")
     
     # [*] Resizing
-    new_width = 500
+    new_width = int(cache[9])
     original_width, original_height = img.size
     aspect_ratio = original_height / original_width
     new_height = int(new_width * aspect_ratio)  # [i] Calculate the height based on the original aspect ratio
@@ -363,7 +371,9 @@ def generate_new_game(attempts: int = 10):
     choose_episode_butt.configure(text=cur_selections[1])
     choose_map_butt.configure(text=cur_selections[2])
 
-    print(cur_screenshot)
+    # /-/ print(cur_screenshot)
+    
+    max_points_var.set(max_points_var.get() + 4)
     
     display_screenshot(cur_screenshot)
     
@@ -384,6 +394,8 @@ def guess_screenshot(attempts: int = 10):
     
     mb.showinfo("DoomMapGuesser - Final Results", f"Correct guesses: {correct_guesses}/4")
     
+    points_var.set(points_var.get() + correct_guesses)
+    
     generate_new_game(attempts)
 
 
@@ -394,11 +406,21 @@ def prevent_from_leaving(master: tk.Tk | tk.Toplevel = root):
         master.destroy()
 
 
-generate_butt = ttk.Button(f5, text="Generate new screenshot", command=generate_new_game)
-guess_butt = ttk.Button(f5, text="Confirm guess", command=guess_screenshot)
+generate_butt = ttk.Button(f5, text="Generate new screenshot", command=lambda:
+    generate_new_game(int(cache[7])))
+guess_butt = ttk.Button(f5, text="Confirm guess", command=lambda:
+    guess_screenshot(int(cache[7])))
 leave_butt = ttk.Button(f5, text='Exit', command=prevent_from_leaving)
 
+points_label = ttk.Label(f6, textvariable=points_var)
+slash = ttk.Label(f6, text='/')
+max_points_label = ttk.Label(f6, textvariable=max_points_var)
+
 # [*] packing the rest of the elements
+points_label.grid(column=0, row=0)
+slash.grid(column=1, row=0)
+max_points_label.grid(column=2, row=0)
+
 img_label.pack()
 
 choose_game_butt.pack(pady=2)
@@ -413,6 +435,8 @@ secrets_reset_butt.pack(pady=2)
 generate_butt.pack(pady=2)
 guess_butt.pack(pady=2)
 leave_butt.pack(pady=2)
+
+f6.pack()
 
 f3.grid(column=0, row=0, padx=5, pady=2)
 f4.grid(column=1, row=0, padx=5, pady=2)
