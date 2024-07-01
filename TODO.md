@@ -5,7 +5,7 @@
 
 > I really need screenshots, so you'll find **(!!!)** near the most needed ones.
 
-> One WAD has been fully screenshotted (TNT)!!!
+> Two WADs have been fully screenshotted (TNT and The Ultimate Doom)!!!
 
 If anyone wants to help me out filling these gaps, your help would be appreciated.
 
@@ -29,8 +29,8 @@ No more screenshots are needed for the levels marked with a tick.
 Unless there's a good reason not to, screenshot submissions for those levels won't be accepted. 
 
 ## Progress Summary
-- **TOTAL PROGRESS:** 48% done - 98/201 levels (103 levels to go)
-- **The Ultimate Doom:** ~75% done - 27/36 levels
+- **TOTAL PROGRESS:** 53% done - 107/201 levels (94 levels to go - **less than 100 levels to screenshot, nice!**)
+- **The Ultimate Doom:** ~100% done - 36/36 levels *(screenshot submission closed)*
 - **Doom II:** ~56% done - 18/32 levels
 - **Master Levels for Doom II:** ~23% done - 5/21 levels
 - **Final Doom: TNT Evilution:** 100% done - 32/32 levels *(screenshot submission closed)*
@@ -43,7 +43,7 @@ The actual TODO list.
 
 *And yes, I know I have a lot to do... :)*
 
-### Doom (1993)/The Ultimate Doom *(NOT A PRIORITY, AS DOOM WIKI IS GENEROUS WITH THE AMOUNT OF SCREENSHOTS FOR ULTIMATE DOOM)*
+### Doom (1993)/The Ultimate Doom
 - Episode 1: Knee-Deep in the Dead **(thanks, Zeca70!)**
     - [X] E1M1: Hangar
     - [X] E1M2: Nuclear Plant
@@ -77,16 +77,16 @@ The actual TODO list.
     - [X] E3M8: Dis
     - [X] E3M9: Warrens
 
-- Episode 4: Thy Flesh Consumed **(not needed; available on the Doom Wiki)**
-    - [ ] E4M1: Hell Beneath
-    - [ ] E4M2: Perfect Hatred
-    - [ ] E4M3: Sever the Wicked
-    - [ ] E4M4: Unruly Evil
-    - [ ] E4M5: They Will Repent
-    - [ ] E4M6: Against Thee Wickedly
-    - [ ] E4M7: And Hell Followed
-    - [ ] E4M8: Unto the Cruel
-    - [ ] E4M9: Fear
+- Episode 4: Thy Flesh Consumed **(thanks, Zeca70!)**
+    - [X] E4M1: Hell Beneath
+    - [X] E4M2: Perfect Hatred
+    - [X] E4M3: Sever the Wicked
+    - [X] E4M4: Unruly Evil
+    - [X] E4M5: They Will Repent
+    - [X] E4M6: Against Thee Wickedly
+    - [X] E4M7: And Hell Followed
+    - [X] E4M8: Unto the Cruel
+    - [X] E4M9: Fear
 
 ### Doom II *(some needed, others not, please refer to the !!!)*
 - Hell on Earth
