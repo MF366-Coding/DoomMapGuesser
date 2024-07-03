@@ -1,17 +1,15 @@
 # TODO list for DoomMapGuesser
-> Sadly, the [DoomWiki](https://doomwiki.org) doesn't have screenshots for some maps, making it a bit tougher to me. Therefore, help is specially important for **Doom II: Master Levels**, **Final Doom: TNT Evilution**, **Final Doom: The Plutonia Experiment** and **No Rest for the Living** screenshots.
-
-> Certain Doom II maps didn't quite get the same screenshot love as others by Doom Wiki. Therefore, maps such as MAP27 and MAP30 of Doom II are begging for some screenshots. 
+> Sadly, the [DoomWiki](https://doomwiki.org) doesn't have screenshots for some maps, making it a bit tougher to me. Therefore, help is specially important for **Doom II: Master Levels**, ~~Final Doom: TNT Evilution~~, **Final Doom: The Plutonia Experiment** and **No Rest for the Living** screenshots.
 
 > I really need screenshots, so you'll find **(!!!)** near the most needed ones.
 
-> Two WADs have been fully screenshotted (TNT and The Ultimate Doom)!!!
+> 3 WADs have been fully screenshotted (TNT, The Ultimate Doom, Doom II)!!!
 
 If anyone wants to help me out filling these gaps, your help would be appreciated.
 
 **Thank you, everyone!**
 
-**Help via:** [Discord](https://discord.gg/HZnBRYTqvC) or GitHub's Issues feature
+**Help via:** [Discord](https://discord.com/invite/HZnBRYTqvC) or GitHub's Issues feature
 
 **Screenshots shared either via Discord or this repository's Issues MUST be high quality, UNMODDED, ULTRA-VIOLENCE and TAGGED.** (see below)
 
@@ -24,14 +22,14 @@ What I mean by tagging is just saying, when sharing the screenshot:
 **Screenshot limit per map (at least, until I release the app):** 15
 
 ## About closed screenshot submissions
-No more screenshots are needed for the levels marked with a tick.
+No more screenshots are needed for the levels marked with a tick or "I have screenshots".
 
 Unless there's a good reason not to, screenshot submissions for those levels won't be accepted. 
 
 ## Progress Summary
-- **TOTAL PROGRESS:** 53% done - 107/201 levels (94 levels to go - **less than 100 levels to screenshot, nice!**)
+- **TOTAL PROGRESS:** 60% done - 121/201 levels (80 levels to go - **less than 100 levels to screenshot, nice!**)
 - **The Ultimate Doom:** ~100% done - 36/36 levels *(screenshot submission closed)*
-- **Doom II:** ~56% done - 18/32 levels
+- **Doom II:** ~100% done - 32/32 levels *(screenshot submission closed)*
 - **Master Levels for Doom II:** ~23% done - 5/21 levels
 - **Final Doom: TNT Evilution:** 100% done - 32/32 levels *(screenshot submission closed)*
 - **Final Doom: The Plutonia Experiment:** ~25% done - 8/32 levels
@@ -41,7 +39,7 @@ Unless there's a good reason not to, screenshot submissions for those levels won
 ## List
 The actual TODO list.
 
-*And yes, I know I have a lot to do... :)*
+*And yes, I know I have a lot to do... :|*
 
 ### Doom (1993)/The Ultimate Doom
 - Episode 1: Knee-Deep in the Dead **(thanks, Zeca70!)**
@@ -88,7 +86,7 @@ The actual TODO list.
     - [X] E4M8: Unto the Cruel
     - [X] E4M9: Fear
 
-### Doom II *(some needed, others not, please refer to the !!!)*
+### Doom II
 - Hell on Earth
     - [X] MAP01: Entryway
     - [X] MAP02: Underhalls
@@ -102,23 +100,23 @@ The actual TODO list.
     - [X] MAP10: Refueling Base
     - [X] MAP11: Circle of Death / 'O' of Destruction
     - [X] MAP12: The Factory
-    - [ ] MAP13: Downtown **(!!!)**
-    - [ ] MAP14: The Inmost Dens **(!!!)**
-    - [ ] MAP15: Industrial Zone **(!!!)**
-    - [ ] MAP16: Suburbs **(!!!)**
-    - [ ] MAP17: Tenements **(!!!)**
+    - [X] MAP13: Downtown **(thanks, MaybeHawk!)**
+    - [X] MAP14: The Inmost Dens **(thanks, MaybeHawk!)**
+    - [X] MAP15: Industrial Zone **(thanks, MaybeHawk!)**
+    - [X] MAP16: Suburbs **(thanks, MaybeHawk!)**
+    - [X] MAP17: Tenements **(thanks, MaybeHawk!)**
     - [X] MAP18: The Courtyard **(thanks, Nightmare!)**
     - [X] MAP19: The Citadel
-    - [ ] MAP20: Gotcha! **(!!!)**
-    - [ ] MAP21: Nirvana **(!!!, again the single screenshot is a texture bug :|)**
-    - [ ] MAP22: The Catacombs **(!!!, no screenshots on DoomWiki)**
-    - [ ] MAP23: Barrels o'Fun **(!!!, not many screenshots on DoomWiki)**
+    - [X] MAP20: Gotcha! **(thanks, MaybeHawk!)**
+    - [X] MAP21: Nirvana **(thanks, MaybeHawk!)**
+    - [X] MAP22: The Catacombs **(thanks, MaybeHawk!)**
+    - [X] MAP23: Barrels o'Fun **(thanks, MaybeHawk!)**
     - [X] MAP24: The Chasm
-    - [ ] MAP25: Bloodfalls **(!!!, imagine only screenshotting the exit AND because of a texture bug)**
-    - [ ] MAP26: The Abandoned Mines **(!!!)**
-    - [ ] MAP27: Monster Condo **(!!!)** 
-    - [ ] MAP28: The Spirit World **(!!!)**
-    - [ ] MAP29: The Living End **(!!!, there could be some more...)**
+    - [X] MAP25: Bloodfalls **(thanks, MaybeHawk!)**
+    - [X] MAP26: The Abandoned Mines **(thanks, MaybeHawk!)**
+    - [X] MAP27: Monster Condo **(thanks, MaybeHawk!)** 
+    - [X] MAP28: The Spirit World **(thanks, MaybeHawk!)**
+    - [X] MAP29: The Living End **(thanks, MaybeHawk!)**
     - [X] MAP30: Icon of Sin **(thanks, Nightmare!)**
     - [X] MAP31: Wolfenstein
     - [X] MAP32: Grosse **(thanks, Nightmare!)**
@@ -188,11 +186,11 @@ The actual TODO list.
     - [X] MAP02: Well of Souls **(thanks, Norb!)**
     - [X] MAP03: Aztec **(thanks, Norb!)**
     - [X] MAP04: Caged **(thanks, Norb!)**
-    - [ ] MAP05: Ghost Town **(!!!)**
-    - [ ] MAP06: Baron's Lair **(!!!)** 
-    - [ ] MAP07: Caughtyard **(!!!)**
-    - [ ] MAP08: Realm **(!!!)**
-    - [ ] MAP09: Abattoire **(!!!)**
+    - [ ] MAP05: Ghost Town **(I have screenshots)**
+    - [ ] MAP06: Baron's Lair **(I have screenshots)** 
+    - [ ] MAP07: Caughtyard **(I have screenshots)**
+    - [ ] MAP08: Realm **(I have screenshots)**
+    - [ ] MAP09: Abattoire **(I have screenshots)**
     - [ ] MAP10: Onslaught **(!!!)**
     - [X] MAP11: Hunted **(thanks, Nightmare!)**
     - [ ] MAP12: Speed **(!!!)**
@@ -220,15 +218,15 @@ The actual TODO list.
 ### Doom 64 *(must be the 2020 re-release cuz of LOST LEVELS and higher quality!!!!)*
 - Main Campaign
     - [X] MAP01: Staging Area
-    - [ ] MAP02: The Terra former **(!!!)**
-    - [ ] MAP03: Main Engineering **(!!!)**
-    - [ ] MAP04: Holding Área **(!!!)**
-    - [ ] MAP05: Tech Enter **(!!!)**
-    - [ ] MAP06: Alpha Quadrant **(!!!)**
-    - [ ] MAP07: Research Lab **(!!!)**
-    - [ ] MAP08: Final Outpost **(!!!)**
-    - [ ] MAP09: Even Simpler **(!!!)**
-    - [ ] MAP10: The Bleeding **(!!!)**
+    - [ ] MAP02: The Terra former **(I have screenshots)**
+    - [ ] MAP03: Main Engineering **(I have screenshots)**
+    - [ ] MAP04: Holding Área **(I have screenshots)**
+    - [ ] MAP05: Tech Enter **(I have screenshots)**
+    - [ ] MAP06: Alpha Quadrant **(I have screenshots)**
+    - [ ] MAP07: Research Lab **(I have screenshots)**
+    - [ ] MAP08: Final Outpost **(I have screenshots)**
+    - [ ] MAP09: Even Simpler **(I have screenshots)**
+    - [ ] MAP10: The Bleeding **(I have screenshots)**
     - [ ] MAP11: Terror Core **(!!!)**
     - [ ] MAP12: Altar Of Pain **(!!!)**
     - [ ] MAP13: Dark Citadel **(!!!)**
@@ -247,8 +245,8 @@ The actual TODO list.
     - [X] MAP26: HardCore
     - [X] MAP27: Playground
     - [ ] MAP28: The Absolution **(!!!)**
-    - [ ] MAP29: Outpost Omega **(!!!)**
-    - [ ] MAP30: The Lair **(!!!, more screenshots needed)**
+    - [ ] MAP29: Outpost Omega **(I have screenshots)**
+    - [ ] MAP30: The Lair **(I have screenshots)**
     - [ ] MAP31: In The Void **(!!!, more screenshots needed)**
     - [X] MAP32: Hectic 
 
@@ -272,3 +270,6 @@ The actual TODO list.
     - [ ] MAP07: Baron's Banquet **(!!!)**
     - [X] MAP08: Tomb of Malevolence
     - [ ] MAP09: March of the Demons
+
+## Outdated Notes
+> ~~Certain Doom II maps didn't quite get the same screenshot love as others by Doom Wiki. Therefore, maps such as MAP27 and MAP30 of Doom II are begging for some screenshots.~~
