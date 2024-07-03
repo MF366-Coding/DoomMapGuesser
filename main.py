@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox as mb
-from tkinter import font
+from tkextrafont import Font
 import random
 import os
 import sys
@@ -9,7 +9,6 @@ import simple_webbrowser
 from PIL import ImageTk, Image
 from core import level_db, scrapper
 import sv_ttk
-import ctypes
 import math
 import io
 
@@ -17,30 +16,13 @@ import io
 # pylint: disable=W0718
 # pylint: disable=W0603
 
-# [*] Enable high DPI scaling on Windows
-if sys.platform == 'win32':
-    try:
-        ctypes.windll.shcore.SetProcessDpiAwareness(1)
-    
-    except Exception as e:
-        print(f"Failed to set DPI awareness: {e}")
-
-    # [*] Path to the font file
-    font_path = os.path.join(os.path.dirname(__file__), 'assets', 'font.ttf')
-
-    # [*] Verify that the font file exists
-    if not os.path.exists(font_path):
-        print(f"Font file '{font_path}' does not exist.")
-        exit(1)
-
-    # [*] Load the font
-    ctypes.windll.gdi32.AddFontResourceW(str(font_path))
-
 VERSION = 'v0.0.1 BETA'
 
 CONFIG_PATH: str = os.path.join(os.path.dirname(__file__), ".config")
 LOGO_PATH: str = os.path.join(os.path.dirname(__file__), "assets", "full_logo.png")
 ICON_PATH: str = os.path.join(os.path.dirname(__file__), "assets", "full_logo.ico")
+FONT_PATH: str = os.path.join(os.path.dirname(__file__), 'assets', 'font.ttf')
+
 GAME_PH = 'Doom (1993) / The Ultimate Doom'
 EPISODE_PH = 'E1: Knee-Deep in the Dead'
 MAP_PH = 'E1M1: Hangar'
@@ -57,6 +39,9 @@ root.resizable(True, False)
 
 if sys.platform == 'win32':
     root.iconbitmap(ICON_PATH)
+
+font_regular = Font(file=FONT_PATH, family=cache[10], size=int(cache[11]))
+font_huge = Font(family=cache[10], size=int(cache[12]))
 
 sv_ttk.set_theme(cache[2], root)
 style = ttk.Style(root)
@@ -92,6 +77,42 @@ maps_var = tk.Variable(f4, list(database[cur_selections[0]][cur_selections[1]].k
 number_of_secrets_var = tk.StringVar(f4, '0 Secrets')
 points_var = tk.IntVar(root, 0)
 max_points_var = tk.IntVar(root, 0)
+
+
+def show_size_warning(root_win: tk.Tk | tk.Toplevel = root):
+    dialog = tk.Toplevel(root_win)
+    dialog.title('DoomMapGuesser - Warning')
+    dialog.resizable(False, False)
+    
+    dialog.focus_set()
+    
+    title = ttk.Label(dialog, text='!!! WARNING !!!', foreground='red', font=font_huge)
+    description = ttk.Label(dialog, text="It seems like there's a .github folder in DoomMapGuesser's directory. Unless you'd like to contribute to the project using GitHub, I'd recommend deleting that folder as it takes up a lot of space. If you want to keep this directory but would like to disable this warning, change the last config entry to 1.", wraplength=400, justify='center', font=font_regular)
+
+    title.pack()
+    description.pack()
+    
+
+def show_correct_guesses(correct_guesses: int, root_win: tk.Tk | tk.Toplevel = root):
+    dialog = tk.Toplevel(root_win)
+    dialog.title('DoomMapGuesser - Correct Guesses')
+    dialog.resizable(False, False)
+    
+    dialog.focus_set()
+    
+    colors = [
+        'red',
+        'yellow',
+        'yellow',
+        'green',
+        'blue'
+    ]
+    
+    guesses_label = ttk.Label(dialog, text=' - Correct Guesses - ')
+    result_label = ttk.Label(dialog, text=f"{correct_guesses} / 4", foreground=colors[correct_guesses], font=font_huge)
+
+    guesses_label.pack()
+    result_label.pack()
 
 
 def get_width_height_of_image(image: bytes, ratio: tuple[int, int] = (16, 9)):
@@ -135,7 +156,7 @@ def choose_game_window(origin: ttk.Button, master: tk.Tk | tk.Toplevel = root):
     if sys.platform == 'win32':
         game_choice_win.iconbitmap(ICON_PATH)
     
-    game_listbox = tk.Listbox(game_choice_win, listvariable=game_var, bg='dark blue', fg='yellow', selectmode=tk.SINGLE, width=int(cache[5]), height=int(cache[6]))
+    game_listbox = tk.Listbox(game_choice_win, listvariable=game_var, bg='dark blue', fg='yellow', selectmode=tk.SINGLE, width=int(cache[5]), height=int(cache[6]), font=font_regular)
     accept_butt = ttk.Button(game_choice_win, text='Confirm', command=_save_changes)
         
     game_listbox.pack()
@@ -169,7 +190,7 @@ def choose_episode_window(origin: ttk.Button, master: tk.Tk | tk.Toplevel = root
     if sys.platform == 'win32':
         episode_choice_win.iconbitmap(ICON_PATH)
     
-    episode_listbox = tk.Listbox(episode_choice_win, listvariable=episode_var, bg='dark blue', fg='yellow', selectmode=tk.SINGLE, width=int(cache[5]), height=int(cache[6]))
+    episode_listbox = tk.Listbox(episode_choice_win, listvariable=episode_var, bg='dark blue', fg='yellow', selectmode=tk.SINGLE, width=int(cache[5]), height=int(cache[6]), font=font_regular)
     accept_butt = ttk.Button(episode_choice_win, text='Confirm', command=_save_changes)
         
     episode_listbox.pack()
@@ -202,7 +223,7 @@ def choose_map_window(origin: ttk.Button, master: tk.Tk | tk.Toplevel = root):
     if sys.platform == 'win32':
         map_choice_win.iconbitmap(ICON_PATH)
     
-    maps_listbox = tk.Listbox(map_choice_win, listvariable=maps_var, bg='dark blue', fg='yellow', selectmode=tk.SINGLE, width=int(cache[5]), height=int(cache[6]))
+    maps_listbox = tk.Listbox(map_choice_win, listvariable=maps_var, bg='dark blue', fg='yellow', selectmode=tk.SINGLE, width=int(cache[5]), height=int(cache[6]), font=font_regular)
     accept_butt = ttk.Button(map_choice_win, text='Confirm', command=_save_changes)
         
     maps_listbox.pack()
@@ -392,11 +413,10 @@ def guess_screenshot(attempts: int = 10):
         if cur_selections[index] == setting:
             correct_guesses += 1
     
-    mb.showinfo("DoomMapGuesser - Final Results", f"Correct guesses: {correct_guesses}/4")
-    
     points_var.set(points_var.get() + correct_guesses)
-    
     generate_new_game(attempts)
+    
+    show_correct_guesses(correct_guesses)
 
 
 def prevent_from_leaving(master: tk.Tk | tk.Toplevel = root):
@@ -412,14 +432,16 @@ guess_butt = ttk.Button(f5, text="Confirm guess", command=lambda:
     guess_screenshot(int(cache[7])))
 leave_butt = ttk.Button(f5, text='Exit', command=prevent_from_leaving)
 
+points_indicator_label = ttk.Label(f6, text='Points: ')
 points_label = ttk.Label(f6, textvariable=points_var)
 slash = ttk.Label(f6, text='/')
 max_points_label = ttk.Label(f6, textvariable=max_points_var)
 
 # [*] packing the rest of the elements
-points_label.grid(column=0, row=0)
-slash.grid(column=1, row=0)
-max_points_label.grid(column=2, row=0)
+points_indicator_label.grid(column=0, row=0)
+points_label.grid(column=1, row=0)
+slash.grid(column=2, row=0)
+max_points_label.grid(column=3, row=0)
 
 img_label.pack()
 
@@ -448,8 +470,11 @@ f1.pack(pady=2)
 
 display_intro()
 
-style.configure("TButton", font=font.Font(root, family="Roboto", size=13, weight='normal', slant='roman'))
-style.configure('TLabel', font=font.Font(root, family='Roboto', size=14, weight='bold', slant='roman'))
+if os.path.exists(os.path.join(os.path.dirname(__file__), '.github')) and int(cache[13]) < 1:
+    show_size_warning()
+
+style.configure("TButton", font=font_regular)
+style.configure('TLabel', font=font_regular)
 
 root.protocol("WM_DELETE_WINDOW", prevent_from_leaving)
 

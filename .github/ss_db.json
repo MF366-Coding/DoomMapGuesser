@@ -15,7 +15,6 @@
         "https://doomwiki.org/w/images/1/1d/E1M1_courtyard.png",
         "https://doomwiki.org/w/images/1/1f/E1M1_shotgun.png",
         "https://doomwiki.org/w/images/6/66/E1M1_zigzag_2.png"
-
     ],
     "1": [
         "https://doomwiki.org/w/images/7/72/E1M2_start.png",
@@ -777,6 +776,31 @@
         "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP12/doom2_12_2.png",
         "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP12/doom2_12_3.png"
     ],
+    "49": [
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP13/doom2_13_0.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP13/doom2_13_1.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP13/doom2_13_2.PNG"
+    ],
+    "50": [
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP14/doom2_14_0.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP14/doom2_14_1.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP14/doom2_14_2.PNG"
+    ],
+    "51": [
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP15/doom2_15_0.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP15/doom2_15_1.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP15/doom2_15_2.PNG"
+    ],
+    "52": [
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP16/doom2_16_0.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP16/doom2_16_1.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP16/doom2_16_2.PNG"
+    ],
+    "53": [
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP17/doom2_17_0.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP17/doom2_17_1.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP17/doom2_17_2.PNG"
+    ],
     "54": [
         "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP18/doom2_18_0.png",
         "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP18/doom2_18_1.png",
@@ -805,6 +829,26 @@
         "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP19/doom2_19_14.png",
         "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP19/doom2_19_15.png"
     ],
+    "56": [
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP20/doom2_20_0.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP20/doom2_20_1.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP20/doom2_20_2.PNG"
+    ],
+    "57": [
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP21/doom2_21_0.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP21/doom2_21_1.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP21/doom2_21_2.PNG"
+    ],
+    "58": [
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP22/doom2_22_0.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP22/doom2_22_1.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP22/doom2_22_2.PNG"
+    ],
+    "59": [
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP23/doom2_23_0.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP23/doom2_23_1.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP23/doom2_23_2.PNG"
+    ],
     "60": [
         "https://doomwiki.org/w/images/c/c8/MAP24_start.png",
         "https://doomwiki.org/w/images/a/aa/MAP24_cacotrap.png",
@@ -813,6 +857,31 @@
         "https://doomwiki.org/w/images/3/3d/MAP24_cross.png",
         "https://doomwiki.org/w/images/f/ff/MAP24_blueroom.png",
         "https://doomwiki.org/w/images/8/82/MAP24_end.png"
+    ],
+    "61": [
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP25/doom2_25_0.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP25/doom2_25_1.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP25/doom2_25_2.PNG"
+    ],
+    "62": [
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP26/doom2_26_0.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP26/doom2_26_1.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP26/doom2_26_2.PNG"
+    ],
+    "63": [
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP27/doom2_27_0.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP27/doom2_27_1.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP27/doom2_27_2.PNG"
+    ],
+    "64": [
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP28/doom2_28_0.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP28/doom2_28_1.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP28/doom2_28_2.PNG"
+    ],
+    "65": [
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP29/doom2_29_0.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP29/doom2_29_1.PNG",
+        "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP29/doom2_29_2.PNG"
     ],
     "66": [
         "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/doom_ss/Doom_II/MAP30/doom2_30_0.png",
