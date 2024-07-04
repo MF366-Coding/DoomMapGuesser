@@ -191,10 +191,10 @@ The actual TODO list.
     - [ ] MAP07: Caughtyard **(I have screenshots)**
     - [ ] MAP08: Realm **(I have screenshots)**
     - [ ] MAP09: Abattoire **(I have screenshots)**
-    - [ ] MAP10: Onslaught **(!!!)**
+    - [ ] MAP10: Onslaught **(I have screenshots)** 
     - [X] MAP11: Hunted **(thanks, Nightmare!)**
-    - [ ] MAP12: Speed **(!!!)**
-    - [ ] MAP13: The Crypt **(!!!)**
+    - [ ] MAP12: Speed **(I have screenshots)**
+    - [ ] MAP13: The Crypt **(I have screenshots)**
     - [ ] MAP14: Genesis **(!!!)**
     - [ ] MAP15: The Twilight **(!!!)**
     - [ ] MAP16: The Omen **(!!!)**
