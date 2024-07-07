@@ -27,14 +27,14 @@ No more screenshots are needed for the levels marked with a tick or "I have scre
 Unless there's a good reason not to, screenshot submissions for those levels won't be accepted. 
 
 ## Progress Summary
-- **TOTAL PROGRESS:** 60% done - 121/201 levels (80 levels to go - **less than 100 levels to screenshot, nice!**)
+- **TOTAL PROGRESS:** 68% done - 138/201 levels (63 levels to go - **less than 100 levels to screenshot, nice!**)
 - **The Ultimate Doom:** ~100% done - 36/36 levels *(screenshot submission closed)*
 - **Doom II:** ~100% done - 32/32 levels *(screenshot submission closed)*
 - **Master Levels for Doom II:** ~23% done - 5/21 levels
 - **Final Doom: TNT Evilution:** 100% done - 32/32 levels *(screenshot submission closed)*
-- **Final Doom: The Plutonia Experiment:** ~25% done - 8/32 levels
-- **Doom 64:** ~17% done - 7/39 levels (will do this next)
-- **No Rest for The Living:** ~11% done - 1/9 levels
+- **Final Doom: The Plutonia Experiment:** ~34% done - 11/32 levels
+- **Doom 64:** ~51% done - 20/39 levels (will do this next)
+- **No Rest for The Living:** ~22% done - 2/9 levels
 
 ## List
 The actual TODO list.
@@ -186,9 +186,9 @@ The actual TODO list.
     - [X] MAP02: Well of Souls **(thanks, Norb!)**
     - [X] MAP03: Aztec **(thanks, Norb!)**
     - [X] MAP04: Caged **(thanks, Norb!)**
-    - [ ] MAP05: Ghost Town **(I have screenshots)**
-    - [ ] MAP06: Baron's Lair **(I have screenshots)** 
-    - [ ] MAP07: Caughtyard **(I have screenshots)**
+    - [X] MAP05: Ghost Town
+    - [X] MAP06: Baron's Lair
+    - [X] MAP07: Caughtyard
     - [ ] MAP08: Realm **(I have screenshots)**
     - [ ] MAP09: Abattoire **(I have screenshots)**
     - [ ] MAP10: Onslaught **(I have screenshots)** 
@@ -218,17 +218,17 @@ The actual TODO list.
 ### Doom 64 *(must be the 2020 re-release cuz of LOST LEVELS and higher quality!!!!)*
 - Main Campaign
     - [X] MAP01: Staging Area
-    - [ ] MAP02: The Terra former **(I have screenshots)**
-    - [ ] MAP03: Main Engineering **(I have screenshots)**
-    - [ ] MAP04: Holding Área **(I have screenshots)**
-    - [ ] MAP05: Tech Enter **(I have screenshots)**
-    - [ ] MAP06: Alpha Quadrant **(I have screenshots)**
-    - [ ] MAP07: Research Lab **(I have screenshots)**
-    - [ ] MAP08: Final Outpost **(I have screenshots)**
-    - [ ] MAP09: Even Simpler **(I have screenshots)**
-    - [ ] MAP10: The Bleeding **(I have screenshots)**
-    - [ ] MAP11: Terror Core **(!!!)**
-    - [ ] MAP12: Altar Of Pain **(!!!)**
+    - [X] MAP02: The Terraformer
+    - [X] MAP03: Main Engineering
+    - [X] MAP04: Holding Area
+    - [X] MAP05: Tech Enter
+    - [X] MAP06: Alpha Quadrant
+    - [X] MAP07: Research Lab
+    - [X] MAP08: Final Outpost
+    - [X] MAP09: Even Simpler
+    - [X] MAP10: The Bleeding
+    - [X] MAP11: Terror Core
+    - [X] MAP12: Altar Of Pain
     - [ ] MAP13: Dark Citadel **(!!!)**
     - [ ] MAP14: Eye Of The Storm **(!!!)**
     - [ ] MAP15: Dark Entries **(!!!)**
@@ -245,8 +245,8 @@ The actual TODO list.
     - [X] MAP26: HardCore
     - [X] MAP27: Playground
     - [ ] MAP28: The Absolution **(!!!)**
-    - [ ] MAP29: Outpost Omega **(I have screenshots)**
-    - [ ] MAP30: The Lair **(I have screenshots)**
+    - [X] MAP29: Outpost Omega
+    - [X] MAP30: The Lair
     - [ ] MAP31: In The Void **(!!!, more screenshots needed)**
     - [X] MAP32: Hectic 
 
@@ -261,7 +261,7 @@ The actual TODO list.
 
 ### No Rest for the Living
 - N/A
-    - [ ] MAP01: The Earth Base **(!!!)**
+    - [X] MAP01: The Earth Base
     - [ ] MAP02: The Pain Labs **(!!!)**
     - [ ] MAP03: Canyon of the Dead **(!!!)**
     - [ ] MAP04: Hell Mountain **(!!!)**
