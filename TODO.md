@@ -1,5 +1,5 @@
 # TODO list for DoomMapGuesser
-> Sadly, the [DoomWiki](https://doomwiki.org) doesn't have screenshots for some maps, making it a bit tougher to me. Therefore, help is specially important for **Doom II: Master Levels**, ~~Final Doom: TNT Evilution~~, **Final Doom: The Plutonia Experiment** and **No Rest for the Living** screenshots.
+> Sadly, the [DoomWiki](https://doomwiki.org) doesn't have screenshots for some maps, making it a bit tougher to me. Therefore, help is specially important for ~~**Doom II: Master Levels**~~, ~~Final Doom: TNT Evilution~~, **Final Doom: The Plutonia Experiment** and **No Rest for the Living** screenshots.
 
 > I really need screenshots, so you'll find **(!!!)** near the most needed ones.
 
@@ -124,24 +124,24 @@ The actual TODO list.
 ### Doom II: The Master Levels
 - N/A
     - [X] MAP01: Attack
-    - [ ] MAP02: Canyon **(!!!)**
+    - [ ] MAP02: Canyon **(I have screenshots)** 
     - [X] MAP03: The Catwalk
     - [X] MAP04: The Combine
     - [X] MAP05: The Fistula
-    - [ ] MAP06: The Garrison **(!!!)**
-    - [ ] MAP07: Titan Manor **(!!!)**
-    - [ ] MAP08: Paradox **(!!!)**
-    - [ ] MAP09: Subspace **(!!!)**
-    - [ ] MAP10: Subterra **(!!!)**
-    - [ ] MAP11: Trapped on Titan **(!!!)**
+    - [ ] MAP06: The Garrison **(I have screenshots)**
+    - [ ] MAP07: Titan Manor **(I have screenshots)**
+    - [ ] MAP08: Paradox **(I have screenshots)**
+    - [ ] MAP09: Subspace **(I have screenshots)**
+    - [ ] MAP10: Subterra **(I have screenshots)**
+    - [ ] MAP11: Trapped on Titan **(I have screenshots)**
     - [ ] MAP12: Virgil's Lead
     - [ ] MAP13: Minos' Judgement
-    - [ ] MAP14: Bloodsea Keep **(!!!)**
-    - [ ] MAP15: Mephisto's Maosoleum **(!!!)**
+    - [ ] MAP14: Bloodsea Keep **(I have screenshots)**
+    - [ ] MAP15: Mephisto's Maosoleum **(I have screenshots)**
     - [ ] MAP16: Nessus
-    - [ ] MAP17: Geryon **(!!!)**
+    - [ ] MAP17: Geryon **(I have screenshots)**
     - [ ] MAP18: Vesperas
-    - [ ] MAP19: Black Tower **(!!!)**
+    - [ ] MAP19: Black Tower **(I have screenshots)**
     - [ ] MAP20: The Express Elevator to Hell **(!!!)**
     - [X] MAP21: Bad Dream
 
@@ -229,7 +229,7 @@ The actual TODO list.
     - [X] MAP10: The Bleeding
     - [X] MAP11: Terror Core
     - [X] MAP12: Altar Of Pain
-    - [ ] MAP13: Dark Citadel **(!!!)**
+    - [ ] MAP13: Dark Citadel **(Will do this next)**
     - [ ] MAP14: Eye Of The Storm **(!!!)**
     - [ ] MAP15: Dark Entries **(!!!)**
     - [ ] MAP16: Blood Keep **(!!!)**
