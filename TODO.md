@@ -27,12 +27,12 @@ No more screenshots are needed for the levels marked with a tick or "I have scre
 Unless there's a good reason not to, screenshot submissions for those levels won't be accepted. 
 
 ## Progress Summary
-- **TOTAL PROGRESS:** 77% done - 156/201 levels (45 levels to go - **less than 50 levels to screenshot, nice!**)
+- **TOTAL PROGRESS:** 78% done - 157/201 levels (44 levels to go - **less than 50 levels to screenshot, nice!**)
 - **The Ultimate Doom:** ~100% done - 36/36 levels *(screenshot submission closed)*
 - **Doom II:** ~100% done - 32/32 levels *(screenshot submission closed)*
 - **Master Levels for Doom II:** ~80% done - 17/21 levels
 - **Final Doom: TNT Evilution:** 100% done - 32/32 levels *(screenshot submission closed)*
-- **Final Doom: The Plutonia Experiment:** ~50% done - 16/32 levels
+- **Final Doom: The Plutonia Experiment:** ~53% done - 17/32 levels
 - **Doom 64:** ~53% done - 21/39 levels (will do this next)
 - **No Rest for The Living:** ~22% done - 2/9 levels
 
@@ -195,7 +195,7 @@ The actual TODO list.
     - [X] MAP11: Hunted **(thanks, Nightmare!)**
     - [X] MAP12: Speed
     - [X] MAP13: The Crypt
-    - [ ] MAP14: Genesis **(!!!)**
+    - [X] MAP14: Genesis
     - [ ] MAP15: The Twilight **(!!!)**
     - [ ] MAP16: The Omen **(!!!)**
     - [ ] MAP17: Compound **(!!!)**
