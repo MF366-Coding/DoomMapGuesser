@@ -27,13 +27,13 @@ No more screenshots are needed for the levels marked with a tick or "I have scre
 Unless there's a good reason not to, screenshot submissions for those levels won't be accepted. 
 
 ## Progress Summary
-- **TOTAL PROGRESS:** 68% done - 138/201 levels (63 levels to go - **less than 100 levels to screenshot, nice!**)
+- **TOTAL PROGRESS:** 77% done - 156/201 levels (45 levels to go - **less than 50 levels to screenshot, nice!**)
 - **The Ultimate Doom:** ~100% done - 36/36 levels *(screenshot submission closed)*
 - **Doom II:** ~100% done - 32/32 levels *(screenshot submission closed)*
-- **Master Levels for Doom II:** ~23% done - 5/21 levels
+- **Master Levels for Doom II:** ~80% done - 17/21 levels
 - **Final Doom: TNT Evilution:** 100% done - 32/32 levels *(screenshot submission closed)*
-- **Final Doom: The Plutonia Experiment:** ~34% done - 11/32 levels
-- **Doom 64:** ~51% done - 20/39 levels (will do this next)
+- **Final Doom: The Plutonia Experiment:** ~50% done - 16/32 levels
+- **Doom 64:** ~53% done - 21/39 levels (will do this next)
 - **No Rest for The Living:** ~22% done - 2/9 levels
 
 ## List
@@ -124,25 +124,25 @@ The actual TODO list.
 ### Doom II: The Master Levels
 - N/A
     - [X] MAP01: Attack
-    - [ ] MAP02: Canyon **(I have screenshots)** 
+    - [X] MAP02: Canyon 
     - [X] MAP03: The Catwalk
     - [X] MAP04: The Combine
     - [X] MAP05: The Fistula
-    - [ ] MAP06: The Garrison **(I have screenshots)**
-    - [ ] MAP07: Titan Manor **(I have screenshots)**
-    - [ ] MAP08: Paradox **(I have screenshots)**
-    - [ ] MAP09: Subspace **(I have screenshots)**
-    - [ ] MAP10: Subterra **(I have screenshots)**
-    - [ ] MAP11: Trapped on Titan **(I have screenshots)**
+    - [X] MAP06: The Garrison
+    - [X] MAP07: Titan Manor
+    - [X] MAP08: Paradox
+    - [X] MAP09: Subspace
+    - [X] MAP10: Subterra
+    - [X] MAP11: Trapped on Titan
     - [ ] MAP12: Virgil's Lead
     - [ ] MAP13: Minos' Judgement
-    - [ ] MAP14: Bloodsea Keep **(I have screenshots)**
-    - [ ] MAP15: Mephisto's Maosoleum **(I have screenshots)**
+    - [X] MAP14: Bloodsea Keep
+    - [X] MAP15: Mephisto's Maosoleum
     - [ ] MAP16: Nessus
-    - [ ] MAP17: Geryon **(I have screenshots)**
+    - [X] MAP17: Geryon
     - [ ] MAP18: Vesperas
-    - [ ] MAP19: Black Tower **(I have screenshots)**
-    - [ ] MAP20: The Express Elevator to Hell **(!!!)**
+    - [X] MAP19: Black Tower
+    - [X] MAP20: The Express Elevator to Hell
     - [X] MAP21: Bad Dream
 
 ### Final Doom: TNT Evilution
@@ -189,12 +189,12 @@ The actual TODO list.
     - [X] MAP05: Ghost Town
     - [X] MAP06: Baron's Lair
     - [X] MAP07: Caughtyard
-    - [ ] MAP08: Realm **(I have screenshots)**
-    - [ ] MAP09: Abattoire **(I have screenshots)**
-    - [ ] MAP10: Onslaught **(I have screenshots)** 
+    - [X] MAP08: Realm
+    - [X] MAP09: Abattoire
+    - [X] MAP10: Onslaught
     - [X] MAP11: Hunted **(thanks, Nightmare!)**
-    - [ ] MAP12: Speed **(I have screenshots)**
-    - [ ] MAP13: The Crypt **(I have screenshots)**
+    - [X] MAP12: Speed
+    - [X] MAP13: The Crypt
     - [ ] MAP14: Genesis **(!!!)**
     - [ ] MAP15: The Twilight **(!!!)**
     - [ ] MAP16: The Omen **(!!!)**
@@ -229,7 +229,7 @@ The actual TODO list.
     - [X] MAP10: The Bleeding
     - [X] MAP11: Terror Core
     - [X] MAP12: Altar Of Pain
-    - [ ] MAP13: Dark Citadel **(Will do this next)**
+    - [X] MAP13: Dark Citadel
     - [ ] MAP14: Eye Of The Storm **(!!!)**
     - [ ] MAP15: Dark Entries **(!!!)**
     - [ ] MAP16: Blood Keep **(!!!)**
