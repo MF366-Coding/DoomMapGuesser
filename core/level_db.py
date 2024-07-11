@@ -277,6 +277,6 @@ no_rest_for_the_living: dict[str, dict[str, list[int]]] = {
         "MAP07: Baron's Banquet": [198, 11],
         "MAP08: Tomb of Malevolence": [199, 3],
         "MAP09: March of the Demons": [200, 5]
-        # [!?] still can't believe this ends in 200 exactly LMAO
+        # [i] still can't believe this ends in 200 exactly LMAO
     }
 }

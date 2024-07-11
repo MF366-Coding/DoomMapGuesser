@@ -11,12 +11,29 @@ from core import level_db, scrapper
 import sv_ttk
 import math
 import io
+import requests
+import json
 
 # pylint: disable=E1101
 # pylint: disable=W0718
 # pylint: disable=W0603
 
-VERSION = 'v0.0.1 BETA'
+VERSION = 'v1.0.0'
+LATEST = None
+
+
+def check_for_updates():
+    global LATEST
+    
+    if LATEST is None:
+        try:
+            response = requests.get('https://api.github.com/repos/MF366-Coding/DoomMapGuesser/releases/latest', timeout=1)
+            data = json.loads(response.text)
+            LATEST = str(data['tag_name'])
+
+        except requests.RequestException:
+            LATEST = 'Unknown'
+
 
 CONFIG_PATH: str = os.path.join(os.path.dirname(__file__), ".config")
 LOGO_PATH: str = os.path.join(os.path.dirname(__file__), "assets", "full_logo.png")
@@ -110,7 +127,7 @@ def show_correct_guesses(correct_guesses: int, root_win: tk.Tk | tk.Toplevel = r
     
     guesses_label = ttk.Label(dialog, text=' - Correct Guesses - ')
     result_label = ttk.Label(dialog, text=f"{correct_guesses} / 4", foreground=colors[correct_guesses], font=font_huge)
-
+    
     guesses_label.pack()
     result_label.pack()
 
@@ -299,6 +316,7 @@ def display_intro(master: tk.Tk | tk.Toplevel = root):
     about_2 = ttk.Label(intro_win, text="Enjoy this little game made by MF366! :D")
     about_3 = ttk.Label(intro_win, text="Small note about what is considered a secret:")
     about_4 = ttk.Label(intro_win, text="The number of secrets are the number of sectors with Effect 9, whether they're acessible or not.")
+    about_5 = ttk.Label(intro_win, text="DoomMapGuesser is up-to-date!" if LATEST == VERSION else "Your DoomMapGuesser is either outdated or there is no release data available.", foreground="green" if LATEST == VERSION else 'red')
     
     butt_github = ttk.Button(intro_win, text='GitHub', command=lambda:
         simple_webbrowser.website("https://github.com/MF366-Coding/DoomMapGuesser"))
@@ -312,6 +330,7 @@ def display_intro(master: tk.Tk | tk.Toplevel = root):
     about_2.pack(pady=2)
     about_3.pack(pady=2)
     about_4.pack(pady=2)
+    about_5.pack(pady=2)
     butt_github.pack(pady=5)
     butt_discord.pack(pady=5)
     butt_buy_coffee.pack(pady=5)
@@ -413,10 +432,10 @@ def guess_screenshot(attempts: int = 10):
         if cur_selections[index] == setting:
             correct_guesses += 1
     
+    show_correct_guesses(correct_guesses)
+    
     points_var.set(points_var.get() + correct_guesses)
     generate_new_game(attempts)
-    
-    show_correct_guesses(correct_guesses)
 
 
 def prevent_from_leaving(master: tk.Tk | tk.Toplevel = root):
