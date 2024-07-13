@@ -5,7 +5,6 @@ The GeoGuesser of DOOM. Guess the game/WAD, episode, map and number of secrets.
 
 [![Latest Version](https://img.shields.io/github/v/tag/MF366-Coding/DoomMapGuesser?color=%23000184)](https://github.com/MF366-Coding/DoomMapGuesser/releases/latest)
 [![License](https://img.shields.io/github/license/MF366-Coding/DoomMapGuesser)](https://raw.githubusercontent.com/MF366-Coding/DommMapGuesser/main/LICENSE)
-<!-- [![Documentation](https://img.shields.io/badge/old-now?label=docs%20status&color=%23000085)](https://mf366-coding.github.io/writerclassic.html#docs) -->
 
 ## Find this project on
 * [**itch.io**](https://mf366.itch.io/doommapguesser)

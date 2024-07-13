@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox as mb
-from tkextrafont import Font
 import random
 import os
 import sys
@@ -13,6 +12,11 @@ import math
 import io
 import requests
 import json
+import importlib
+from tkinter.font import Font
+
+if sys.platform == 'win32':
+    tkextrafont = importlib.import_module('tkextrafont') # [i] only compatible with windows for some reason?
 
 # pylint: disable=E1101
 # pylint: disable=W0718
@@ -33,6 +37,8 @@ def check_for_updates():
 
         except requests.RequestException:
             LATEST = 'Unknown'
+            
+    print(LATEST)
 
 
 CONFIG_PATH: str = os.path.join(os.path.dirname(__file__), ".config")
@@ -57,9 +63,13 @@ root.resizable(True, False)
 if sys.platform == 'win32':
     root.iconbitmap(ICON_PATH)
 
-font_regular = Font(file=FONT_PATH, family=cache[10], size=int(cache[11]))
-font_huge = Font(family=cache[10], size=int(cache[12]))
+font_huge = Font(family=cache[10], size=int(cache[12]), weight='bold')
+font_regular = Font(family=cache[10], size=int(cache[11]), weight='normal')
 
+if sys.platform == 'win32': # [i] again, custom font only on Windows
+    font_regular = tkextrafont.Font(file=FONT_PATH, family=cache[10], size=int(cache[11]))
+    font_huge = tkextrafont.Font(family=cache[10], size=int(cache[12]))
+    
 sv_ttk.set_theme(cache[2], root)
 style = ttk.Style(root)
 
@@ -292,6 +302,8 @@ def pick_new_screenshot(map_id: int, current_screenshot_link: str, attempts: int
 
 
 def display_intro(master: tk.Tk | tk.Toplevel = root):
+    check_for_updates()
+    
     intro_win = tk.Toplevel(master)
     intro_win.focus_set()
     intro_win.resizable(False, False)
@@ -339,7 +351,7 @@ def display_intro(master: tk.Tk | tk.Toplevel = root):
 def display_screenshot(screenshot_link: str):
     # [!] I am assuming all screenshots are 16:9 which is NOT true
     
-    print(screenshot_link)
+    # /-/ print(screenshot_link) oops forgot to comment this ma bad
     
     image_data = scrapper.scrape_byte_contents(screenshot_link)
     image_data_io = io.BytesIO(image_data)
@@ -492,8 +504,9 @@ display_intro()
 if os.path.exists(os.path.join(os.path.dirname(__file__), '.github')) and int(cache[13]) < 1:
     show_size_warning()
 
-style.configure("TButton", font=font_regular)
-style.configure('TLabel', font=font_regular)
+if sys.platform == 'win32':
+    style.configure("TButton", font=font_regular)
+    style.configure('TLabel', font=font_regular)
 
 root.protocol("WM_DELETE_WINDOW", prevent_from_leaving)
 
