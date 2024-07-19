@@ -1,15 +1,15 @@
 # TODO list for DoomMapGuesser
-> Sadly, the [DoomWiki](https://doomwiki.org) doesn't have screenshots for some maps, making it a bit tougher to me. Therefore, help is specially important for ~~**Doom II: Master Levels**~~, ~~Final Doom: TNT Evilution~~, **Final Doom: The Plutonia Experiment** and **No Rest for the Living** screenshots.
+> Sadly, the [DoomWiki](https://doomwiki.org) doesn't have screenshots for some maps, making it a bit tougher to me. Therefore, help is specially important for ~~Doom II: Master Levels~~, ~~Final Doom: TNT Evilution~~, **Final Doom: The Plutonia Experiment** and **No Rest for the Living** screenshots.
 
 > I really need screenshots, so you'll find **(!!!)** near the most needed ones.
 
-> 3 WADs have been fully screenshotted (TNT, The Ultimate Doom, Doom II)!!!
+> 5 WADs/games have been fully screenshotted (TNT, The Ultimate Doom, Doom II, Doom 64, The Master Levels for Doom 2)!!!
 
 If anyone wants to help me out filling these gaps, your help would be appreciated.
 
 **Thank you, everyone!**
 
-**Help via:** [Discord](https://discord.com/invite/HZnBRYTqvC) or GitHub's Issues feature
+**Help via:** [Discord](https://discord.com/invite/HZnBRYTqvC) or GitHub's Issue/PR feature
 
 **Screenshots shared either via Discord or this repository's Issues MUST be high quality, UNMODDED, ULTRA-VIOLENCE and TAGGED.** (see below)
 
@@ -27,14 +27,17 @@ No more screenshots are needed for the levels marked with a tick or "I have scre
 Unless there's a good reason not to, screenshot submissions for those levels won't be accepted. 
 
 ## Progress Summary
-- **TOTAL PROGRESS:** 78% done - 157/201 levels (44 levels to go - **less than 50 levels to screenshot, nice!**)
-- **The Ultimate Doom:** ~100% done - 36/36 levels *(screenshot submission closed)*
-- **Doom II:** ~100% done - 32/32 levels *(screenshot submission closed)*
-- **Master Levels for Doom II:** ~80% done - 17/21 levels
+- **TOTAL PROGRESS:** ~89% done - 180/201 levels (21 levels to go - **less than 30 levels to screenshot, nice!**)
+
+---
+
+- **The Ultimate Doom:** 100% done - 36/36 levels *(screenshot submission closed)*
+- **Doom II:** 100% done - 32/32 levels *(screenshot submission closed)*
+- **Master Levels for Doom II:** 100% done - 21/21 levels *(screenshot submission closed)*
 - **Final Doom: TNT Evilution:** 100% done - 32/32 levels *(screenshot submission closed)*
 - **Final Doom: The Plutonia Experiment:** ~53% done - 17/32 levels
-- **Doom 64:** ~53% done - 21/39 levels (will do this next)
-- **No Rest for The Living:** ~22% done - 2/9 levels
+- **Doom 64:** 100% done - 39/39 levels *(screenshot submission closed)*
+- **No Rest for The Living:** ~33% done - 3/9 levels
 
 ## List
 The actual TODO list.
@@ -134,13 +137,13 @@ The actual TODO list.
     - [X] MAP09: Subspace
     - [X] MAP10: Subterra
     - [X] MAP11: Trapped on Titan
-    - [ ] MAP12: Virgil's Lead
-    - [ ] MAP13: Minos' Judgement
+    - [X] MAP12: Virgil's Lead **(thanks, Zeca70!)**
+    - [X] MAP13: Minos' Judgement **(thanks, Zeca70!)**
     - [X] MAP14: Bloodsea Keep
     - [X] MAP15: Mephisto's Maosoleum
-    - [ ] MAP16: Nessus
+    - [X] MAP16: Nessus **(thanks, Zeca70!)**
     - [X] MAP17: Geryon
-    - [ ] MAP18: Vesperas
+    - [X] MAP18: Vesperas **(thanks, Zeca70!)**
     - [X] MAP19: Black Tower
     - [X] MAP20: The Express Elevator to Hell
     - [X] MAP21: Bad Dream
@@ -230,33 +233,33 @@ The actual TODO list.
     - [X] MAP11: Terror Core
     - [X] MAP12: Altar Of Pain
     - [X] MAP13: Dark Citadel
-    - [ ] MAP14: Eye Of The Storm **(!!!)**
-    - [ ] MAP15: Dark Entries **(!!!)**
-    - [ ] MAP16: Blood Keep **(!!!)**
-    - [ ] MAP17: Watch Your Step **(!!!)**
-    - [ ] MAP18: Spawned Fear **(!!!)**
-    - [ ] MAP19: The Spiral **(!!!)**
-    - [ ] MAP20: Breakdown **(!!!)**
-    - [ ] MAP21: Pitfalls **(!!!)**
-    - [ ] MAP22: Burnt Offering **(!!!)**
-    - [ ] MAP23: Unholy Temple **(!!!)**
-    - [ ] MAP24: No Escape **(!!!)**
+    - [X] MAP14: Eye Of The Storm
+    - [X] MAP15: Dark Entries
+    - [X] MAP16: Blood Keep
+    - [X] MAP17: Watch Your Step
+    - [X] MAP18: Spawned Fear
+    - [X] MAP19: The Spiral
+    - [X] MAP20: Breakdown
+    - [X] MAP21: Pitfalls
+    - [X] MAP22: Burnt Offering
+    - [X] MAP23: Unholy Temple
+    - [X] MAP24: No Escape
     - [X] MAP25: Cat And Mouse
     - [X] MAP26: HardCore
     - [X] MAP27: Playground
-    - [ ] MAP28: The Absolution **(!!!)**
+    - [X] MAP28: The Absolution
     - [X] MAP29: Outpost Omega
     - [X] MAP30: The Lair
-    - [ ] MAP31: In The Void **(!!!, more screenshots needed)**
+    - [X] MAP31: In The Void
     - [X] MAP32: Hectic 
 
 - The Lost Levels
     - [X] MAP34: Plant Ops
-    - [ ] MAP35: Evil Sacrifice **(!!!)**
-    - [ ] MAP36: Cold Rounds **(!!!)**
-    - [ ] MAP37: Wretched Vats **(!!!)**
-    - [ ] MAP38: Thy Glory **(!!!)**
-    - [ ] MAP39: Final Judgement **(!!!)**
+    - [X] MAP35: Evil Sacrifice
+    - [X] MAP36: Cold Rounds
+    - [X] MAP37: Wretched Vats
+    - [X] MAP38: Thy Glory
+    - [X] MAP39: Final Judgement
     - [X] MAP40: Panic
 
 ### No Rest for the Living
@@ -269,7 +272,7 @@ The actual TODO list.
     - [ ] MAP06: Inferno of Blood **(!!!)**
     - [ ] MAP07: Baron's Banquet **(!!!)**
     - [X] MAP08: Tomb of Malevolence
-    - [ ] MAP09: March of the Demons
+    - [X] MAP09: March of the Demons **(thanks, Zeca70!)**
 
 ## Outdated Notes
 > ~~Certain Doom II maps didn't quite get the same screenshot love as others by Doom Wiki. Therefore, maps such as MAP27 and MAP30 of Doom II are begging for some screenshots.~~
