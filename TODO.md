@@ -1,5 +1,5 @@
 # TODO list for DoomMapGuesser
-> Sadly, the [DoomWiki](https://doomwiki.org) doesn't have screenshots for some maps, making it a bit tougher to me. Therefore, help is specially important for ~~Doom II: Master Levels~~, ~~Final Doom: TNT Evilution~~, **Final Doom: The Plutonia Experiment** and **No Rest for the Living** screenshots.
+> Sadly, the [DoomWiki](https://doomwiki.org) doesn't have screenshots for some maps, making it a bit tougher to me. Therefore, help is specially important for ~~Doom II: Master Levels~~, ~~Final Doom: TNT Evilution~~, **Final Doom: The Plutonia Experiment** and ~~**No Rest for the Living**~~ screenshots.
 
 > I really need screenshots, so you'll find **(!!!)** near the most needed ones.
 
@@ -37,15 +37,13 @@ Unless there's a good reason not to, screenshot submissions for those levels won
 - **Final Doom: TNT Evilution:** 100% done - 32/32 levels *(screenshot submission closed)*
 - **Final Doom: The Plutonia Experiment:** ~53% done - 17/32 levels
 - **Doom 64:** 100% done - 39/39 levels *(screenshot submission closed)*
-- **No Rest for The Living:** ~33% done - 3/9 levels
+- **No Rest for The Living:** ~33% done - 3/9 levels *(screenshot submission closed)*
 
 ## List
 The actual TODO list.
 
-*And yes, I know I have a lot to do... :|*
-
 ### Doom (1993)/The Ultimate Doom
-- Episode 1: Knee-Deep in the Dead **(thanks, Zeca70!)**
+- Episode 1: Knee-Deep in the Dead **(thanks, Zeca70 and the DoomWiki!)**
     - [X] E1M1: Hangar
     - [X] E1M2: Nuclear Plant
     - [X] E1M3: Toxin Refinery
@@ -56,7 +54,7 @@ The actual TODO list.
     - [X] E1M8: Phobos Anomaly
     - [X] E1M9: Military Base
 
-- Episode 2: Shores of Hell **(thanks, Zeca70!)**
+- Episode 2: Shores of Hell **(thanks, Zeca70 and the DoomWiki!)**
     - [X] E2M1: Deimos Anomaly
     - [X] E2M2: Containment Area
     - [X] E2M3: Refinery
@@ -78,7 +76,7 @@ The actual TODO list.
     - [X] E3M8: Dis
     - [X] E3M9: Warrens
 
-- Episode 4: Thy Flesh Consumed **(thanks, Zeca70!)**
+- Episode 4: Thy Flesh Consumed **(thanks, Zeca70 and the DoomWiki!)**
     - [X] E4M1: Hell Beneath
     - [X] E4M2: Perfect Hatred
     - [X] E4M3: Sever the Wicked
@@ -137,13 +135,13 @@ The actual TODO list.
     - [X] MAP09: Subspace
     - [X] MAP10: Subterra
     - [X] MAP11: Trapped on Titan
-    - [X] MAP12: Virgil's Lead **(thanks, Zeca70!)**
-    - [X] MAP13: Minos' Judgement **(thanks, Zeca70!)**
+    - [X] MAP12: Virgil's Lead **(thanks, Zeca70 and the DoomWiki!)**
+    - [X] MAP13: Minos' Judgement **(thanks, Zeca70 and the DoomWiki!)**
     - [X] MAP14: Bloodsea Keep
     - [X] MAP15: Mephisto's Maosoleum
-    - [X] MAP16: Nessus **(thanks, Zeca70!)**
+    - [X] MAP16: Nessus **(thanks, Zeca70 and the DoomWiki!)**
     - [X] MAP17: Geryon
-    - [X] MAP18: Vesperas **(thanks, Zeca70!)**
+    - [X] MAP18: Vesperas **(thanks, Zeca70 and the DoomWiki!)**
     - [X] MAP19: Black Tower
     - [X] MAP20: The Express Elevator to Hell
     - [X] MAP21: Bad Dream
@@ -265,14 +263,14 @@ The actual TODO list.
 ### No Rest for the Living
 - N/A
     - [X] MAP01: The Earth Base
-    - [ ] MAP02: The Pain Labs **(!!!)**
-    - [ ] MAP03: Canyon of the Dead **(!!!)**
-    - [ ] MAP04: Hell Mountain **(!!!)**
-    - [ ] MAP05: Vivisection **(!!!)**
-    - [ ] MAP06: Inferno of Blood **(!!!)**
-    - [ ] MAP07: Baron's Banquet **(!!!)**
+    - [ ] MAP02: The Pain Labs **(I have screenshots)**
+    - [ ] MAP03: Canyon of the Dead **(I have screenshots)**
+    - [ ] MAP04: Hell Mountain **(I have screenshots)**
+    - [ ] MAP05: Vivisection **(I have screenshots)**
+    - [ ] MAP06: Inferno of Blood **(I have screenshots)**
+    - [ ] MAP07: Baron's Banquet **(I have screenshots)**
     - [X] MAP08: Tomb of Malevolence
-    - [X] MAP09: March of the Demons **(thanks, Zeca70!)**
+    - [X] MAP09: March of the Demons **(thanks, Zeca70 and the DoomWiki!)**
 
 ## Outdated Notes
 > ~~Certain Doom II maps didn't quite get the same screenshot love as others by Doom Wiki. Therefore, maps such as MAP27 and MAP30 of Doom II are begging for some screenshots.~~
