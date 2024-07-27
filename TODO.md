@@ -1,15 +1,13 @@
 # TODO list for DoomMapGuesser
-> Sadly, the [DoomWiki](https://doomwiki.org) doesn't have screenshots for some maps, making it a bit tougher to me. Therefore, help is specially important for ~~Doom II: Master Levels~~, ~~Final Doom: TNT Evilution~~, **Final Doom: The Plutonia Experiment** and ~~**No Rest for the Living**~~ screenshots.
+> Sadly, the [DoomWiki](https://doomwiki.org) doesn't have screenshots for some maps, making it a bit tougher to me. Therefore, help is specially important for **Final Doom: The Plutonia Experiment** screenshots.
 
-> I really need screenshots, so you'll find **(!!!)** near the most needed ones.
+> I really need screenshots, so you'll find **(!!!)** near the most needed ones. **(SCROLL DOWN TO PLUTONIA)**
 
-> 5 WADs/games have been fully screenshotted (TNT, The Ultimate Doom, Doom II, Doom 64, The Master Levels for Doom 2)!!!
+> **6 WADs/games have been fully screenshotted (TNT, The Ultimate Doom, Doom II, Doom 64, The Master Levels for Doom 2, No Rest for The Living)!!!**
 
-If anyone wants to help me out filling these gaps, your help would be appreciated.
+**Thank you, everyone! ONLY PLUTONIA MISSING NOW!!**
 
-**Thank you, everyone!**
-
-**Help via:** [Discord](https://discord.com/invite/HZnBRYTqvC) or GitHub's Issue/PR feature
+**Help via:** [Discord](https://discord.com/invite/HZnBRYTqvC), GitHub's Issue/PR feature or Discord DM: `mf366`
 
 **Screenshots shared either via Discord or this repository's Issues MUST be high quality, UNMODDED, ULTRA-VIOLENCE and TAGGED.** (see below)
 
@@ -27,7 +25,7 @@ No more screenshots are needed for the levels marked with a tick or "I have scre
 Unless there's a good reason not to, screenshot submissions for those levels won't be accepted. 
 
 ## Progress Summary
-- **TOTAL PROGRESS:** ~89% done - 180/201 levels (21 levels to go - **less than 30 levels to screenshot, nice!**)
+- **TOTAL PROGRESS:** ~92% done - 186/201 levels (15 levels to go - **ONLY PLUTONIA MISSING NOW LESGOOOO!!!!**)
 
 ---
 
@@ -37,7 +35,7 @@ Unless there's a good reason not to, screenshot submissions for those levels won
 - **Final Doom: TNT Evilution:** 100% done - 32/32 levels *(screenshot submission closed)*
 - **Final Doom: The Plutonia Experiment:** ~53% done - 17/32 levels
 - **Doom 64:** 100% done - 39/39 levels *(screenshot submission closed)*
-- **No Rest for The Living:** ~33% done - 3/9 levels *(screenshot submission closed)*
+- **No Rest for The Living:** 100% done - 9/9 levels *(screenshot submission closed)*
 
 ## List
 The actual TODO list.
@@ -263,12 +261,12 @@ The actual TODO list.
 ### No Rest for the Living
 - N/A
     - [X] MAP01: The Earth Base
-    - [ ] MAP02: The Pain Labs **(I have screenshots)**
-    - [ ] MAP03: Canyon of the Dead **(I have screenshots)**
-    - [ ] MAP04: Hell Mountain **(I have screenshots)**
-    - [ ] MAP05: Vivisection **(I have screenshots)**
-    - [ ] MAP06: Inferno of Blood **(I have screenshots)**
-    - [ ] MAP07: Baron's Banquet **(I have screenshots)**
+    - [X] MAP02: The Pain Labs
+    - [X] MAP03: Canyon of the Dead
+    - [X] MAP04: Hell Mountain
+    - [X] MAP05: Vivisection
+    - [X] MAP06: Inferno of Blood
+    - [X] MAP07: Baron's Banquet
     - [X] MAP08: Tomb of Malevolence
     - [X] MAP09: March of the Demons **(thanks, Zeca70 and the DoomWiki!)**
 
