@@ -3,8 +3,14 @@
 
 The GeoGuesser of DOOM. Guess the game/WAD, episode, map and number of secrets.
 
-[![Latest Version](https://img.shields.io/github/v/tag/MF366-Coding/DoomMapGuesser?color=%23000184)](https://github.com/MF366-Coding/DoomMapGuesser/releases/latest)
+[![Latest Version](https://img.shields.io/github/v/tag/MF366-Coding/DoomMapGuesser?color=blue)](https://github.com/MF366-Coding/DoomMapGuesser/releases/latest)
 [![License](https://img.shields.io/github/license/MF366-Coding/DoomMapGuesser)](https://raw.githubusercontent.com/MF366-Coding/DommMapGuesser/main/LICENSE)
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/MF366-Coding/DoomMapGuesser/total?color=yellow)
+![GitHub top language](https://img.shields.io/github/languages/top/MF366-Coding/DoomMapGuesser)
+![GitHub contributors](https://img.shields.io/github/contributors/MF366-Coding/DoomMapGuesser?color=orange)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/MF366-Coding/DoomMapGuesser?style=flat&color=green)
+![GitHub Repo stars](https://img.shields.io/github/stars/MF366-Coding/DoomMapGuesser?color=red)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/MF366-Coding/DoomMapGuesser?style=flat&color=purple) 
 
 ## Find this project on
 * [**itch.io**](https://mf366.itch.io/doommapguesser)
