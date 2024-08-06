@@ -25,7 +25,7 @@ No more screenshots are needed for the levels marked with a tick or "I have scre
 Unless there's a good reason not to, screenshot submissions for those levels won't be accepted. 
 
 ## Progress Summary
-- **TOTAL PROGRESS:** ~92% done - 186/201 levels (15 levels to go - **ONLY PLUTONIA MISSING NOW LESGOOOO!!!!**)
+- **TOTAL PROGRESS:** ~95% done - 191/201 levels (10 levels to go - **Getting really close!!!**)
 
 ---
 
@@ -33,7 +33,7 @@ Unless there's a good reason not to, screenshot submissions for those levels won
 - **Doom II:** 100% done - 32/32 levels *(screenshot submission closed)*
 - **Master Levels for Doom II:** 100% done - 21/21 levels *(screenshot submission closed)*
 - **Final Doom: TNT Evilution:** 100% done - 32/32 levels *(screenshot submission closed)*
-- **Final Doom: The Plutonia Experiment:** ~53% done - 17/32 levels
+- **Final Doom: The Plutonia Experiment:** ~68% done - 22/32 levels
 - **Doom 64:** 100% done - 39/39 levels *(screenshot submission closed)*
 - **No Rest for The Living:** 100% done - 9/9 levels *(screenshot submission closed)*
 
@@ -195,11 +195,11 @@ The actual TODO list.
     - [X] MAP12: Speed
     - [X] MAP13: The Crypt
     - [X] MAP14: Genesis
-    - [ ] MAP15: The Twilight **(!!!)**
-    - [ ] MAP16: The Omen **(!!!)**
-    - [ ] MAP17: Compound **(!!!)**
-    - [ ] MAP18: Neurosphere **(!!!)**
-    - [ ] MAP19: NME **(!!!)**
+    - [X] MAP15: The Twilight
+    - [X] MAP16: The Omen
+    - [X] MAP17: Compound
+    - [X] MAP18: Neurosphere
+    - [X] MAP19: NME
     - [ ] MAP20: The Death Domain **(!!!)**
     - [ ] MAP21: Slayer **(!!!)**
     - [ ] MAP22: Impossible Mission **(!!!)**
