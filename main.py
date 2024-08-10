@@ -7,7 +7,6 @@ import sys
 import simple_webbrowser
 from PIL import ImageTk, Image
 from core import level_db, scrapper
-import sv_ttk
 import math
 import io
 import requests
@@ -45,6 +44,7 @@ CONFIG_PATH: str = os.path.join(os.path.dirname(__file__), ".config")
 LOGO_PATH: str = os.path.join(os.path.dirname(__file__), "assets", "full_logo.png")
 ICON_PATH: str = os.path.join(os.path.dirname(__file__), "assets", "full_logo.ico")
 FONT_PATH: str = os.path.join(os.path.dirname(__file__), 'assets', 'font.ttf')
+THEME_PATH: str = os.path.join(os.path.dirname(__file__), 'assets', 'azure.tcl')
 
 GAME_PH = 'Doom (1993) / The Ultimate Doom'
 EPISODE_PH = 'E1: Knee-Deep in the Dead'
@@ -70,7 +70,9 @@ if sys.platform == 'win32': # [i] again, custom font only on Windows
     font_regular = tkextrafont.Font(file=FONT_PATH, family=cache[10], size=int(cache[11]))
     font_huge = tkextrafont.Font(family=cache[10], size=int(cache[12]))
     
-sv_ttk.set_theme(cache[2], root)
+# [!?] https://github.com/rdbende/Azure-ttk-theme (Azure theme)
+root.tk.call("source", THEME_PATH)
+root.tk.call("set_theme", "dark")
 style = ttk.Style(root)
 
 f1 = ttk.Frame(root)
