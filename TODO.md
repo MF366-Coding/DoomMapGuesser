@@ -9,7 +9,7 @@
 
 **Help via:** [Discord](https://discord.com/invite/HZnBRYTqvC), GitHub's Issue/PR feature or Discord DM: `mf366`
 
-**Screenshots shared either via Discord or this repository's Issues MUST be high quality, UNMODDED, ULTRA-VIOLENCE and TAGGED.** (see below)
+**Screenshots shared either via Discord or this repository's Issues MUST be high quality, UNMODDED, ULTRA-VIOLENCE and TAGGED. However, if you prefer, you can take screenshots with monsters disabled.** (see below)
 
 ## How to tag a screenshot?
 What I mean by tagging is just saying, when sharing the screenshot:
@@ -200,12 +200,12 @@ The actual TODO list.
     - [X] MAP17: Compound
     - [X] MAP18: Neurosphere
     - [X] MAP19: NME
-    - [ ] MAP20: The Death Domain **(!!!)**
-    - [ ] MAP21: Slayer **(!!!)**
-    - [ ] MAP22: Impossible Mission **(!!!)**
-    - [ ] MAP23: Tombstone **(!!!)**
-    - [ ] MAP24: The Final Frontier **(!!!)**
-    - [ ] MAP25: The Temple of Darkness **(!!!)**
+    - [ ] MAP20: The Death Domain **(I have screenshots)**
+    - [ ] MAP21: Slayer **(I have screenshots)**
+    - [ ] MAP22: Impossible Mission **(I have screenshots)**
+    - [ ] MAP23: Tombstone **(I have screenshos)**
+    - [ ] MAP24: The Final Frontier **(I have screenshots)**
+    - [ ] MAP25: The Temple of Darkness **(I have screenshots)**
     - [ ] MAP26: Bunker **(!!!)**
     - [ ] MAP27: Anti-Christ **(!!!)**
     - [ ] MAP28: The Sewers **(!!!)**
