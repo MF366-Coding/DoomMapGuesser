@@ -6,9 +6,11 @@
 version: 2
 updates:
   - package-ecosystem: "pip" # See documentation for possible values
-    directory: "/" # Location of package manifests
+    directory: "/.github/" # Location of package manifests
     schedule:
       interval: "daily"
+      time: "10:00"
+      timezone: "Europe/Lisbon"
     reviewers:
       - "MF366-Coding"
     assignees:
