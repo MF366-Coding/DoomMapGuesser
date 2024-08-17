@@ -1,5 +1,0 @@
-Install...
-
-requirements.txt for any OS (OS Independent)
-
-requirements-win32.txt for Windows only
