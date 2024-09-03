@@ -18,7 +18,7 @@ The GeoGuesser of DOOM. Guess the game/WAD, episode, map and number of secrets.
 * [**DoomWorld**](https://www.doomworld.com/forum/topic/146388-doommapguesser-the-geoguesser-of-doom/?tab=comments#comment-2821321)
 * and of course, in here, where you can download it!
 
-## [Contributions are appreciated - we're (not) close to a full release!](https://github.com/MF366-Coding/DoomMapGuesser/blob/main/TODO.md)
+### [Contributions are appreciated!](https://github.com/MF366-Coding/DoomMapGuesser/blob/main/TODO.md)
 
 # Short Information
 Since DoomMapGuesser collects the database from online, when a new screenshot is added to the database, you won't need to update the program. How cool is that?
