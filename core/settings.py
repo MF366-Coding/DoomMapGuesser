@@ -10,7 +10,7 @@ UNRETRIEVABLE = None
 
 
 class SettingsObject:
-    def __init__(self, given_path: str, *_, initial_settings: dict[str, int | bool | str | list[str]] | None, **kw) -> None:
+    def __init__(self, given_path: str, *_, initial_settings: dict[str, int | bool | str | list[str]] | None = None, **kw) -> None:
         """
         # SettingsObject
 
