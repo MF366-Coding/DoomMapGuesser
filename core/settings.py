@@ -37,7 +37,26 @@ class SettingsObject:
         with open(self._PATH, 'r', encoding='utf-8') as f:
             self._SETTINGS = json.load(f)
 
+    def save_settings(self, **kw) -> None:
+        """
+        ## save_settings
+        Automatically save the settings using the default inner settings of the class.
+
+        :param indent: how many spaces as indentation *(int, defaults to 4)*
+        """
+        
+        with open(self._PATH, 'w', encoding='utf-8') as f:
+            json.dump(self._SETTINGS, f, indent=kw.get("indent", 4))
+            
     def dump_settings(self, obj: dict, **kw) -> None:
+        """
+        ## dump_settings
+        Save settings using an outside object.
+
+        :param obj: settings to save
+        :param indent: how many spaces as indentation *(int, defaults to 4)*
+        """
+        
         if 'overwrite' in kw:
             obj = kw['overwrite']
         
