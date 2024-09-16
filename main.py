@@ -101,7 +101,7 @@ del play_img
 play_tk = ImageTk.PhotoImage(resized_play_img)
 
 play_butt = ttk.Button(sidebar, image=play_tk, width=50, command=lambda:
-    mb.showinfo(message='fuck you'))
+    mb.showerror('n/i', "not implemented"))
 
 play_butt.pack()
 
