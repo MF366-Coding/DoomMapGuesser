@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter.font import Font
 from tkinter import ttk
 import darkdetect
 import pywinstyles
@@ -6,7 +7,7 @@ import random
 import os
 import sys
 import simple_webbrowser
-from tkinter import messagebox as mb
+from tkinter import messagebox as mb # XXX: REMOVE THIS AFTERWARDS
 from PIL import ImageTk, Image
 from core import level_db, scrapper
 from core.settings import SettingsObject
@@ -15,9 +16,7 @@ import math
 import io
 import requests
 import json
-import importlib
-from argparse import ArgumentParser
-from tkinter.font import Font
+
 
 ONLINE = 'online'
 
@@ -29,7 +28,6 @@ ASSETS_PATH = os.path.join(os.path.dirname(__file__), 'assets')
 ICONS_PATH = os.path.join(ASSETS_PATH, 'icons')
 LOGO_PATH: str = os.path.join(ASSETS_PATH, "full_logo.png")
 MAIN_ICON_PATH: str = os.path.join(ASSETS_PATH, "full_logo.ico")
-FONT_PATH: str = os.path.join(ASSETS_PATH, 'font.ttf')
 THEME_PATH: str = os.path.join(ASSETS_PATH, 'sv.tcl')
 
 settings = SettingsObject(CONFIG_PATH)
@@ -90,6 +88,31 @@ main_frame = ttk.Frame(root, width=820)
 
 database_bar = ttk.Frame(main_frame, height=80)
 game_frame = ttk.Frame(main_frame)
+
+HEADING1 = Font(root, family="SUSE ExtraBold", size=30)
+HEADING2 = Font(root, family="SUSE Bold", size=22)
+HEADING3 = Font(root, family='SUSE Semibold', size=17)
+SUBTITLE = Font(root, family='SUSE Regular', size=12)
+REGULAR_TEXT = Font(root, family='SUSE Regular', size=14)
+LIGHT_TEXT = Font(root, family='SUSE Light', size=14)
+BOLD_TEXT = Font(root, family='SUSE Medium', size=14)
+GAME_TEXT = Font(root, family="Eternal UI", size=14)
+GAME_BOLD = Font(root, family='Eternal UI', size=14, weight='bold')
+
+PLAY_ITEMS = ttk.Frame(game_frame)
+
+
+def setup_play_screen():
+    PLAY_ITEMS.heading = ttk.Label(PLAY_ITEMS, text='Play', font=HEADING1)
+    PLAY_ITEMS.f1 = ttk.Frame(PLAY_ITEMS)
+    
+    if settings.use_width_as_height:
+        PLAY_ITEMS.f1.configure(height=settings.image_width)
+        
+    else:
+        PLAY_ITEMS.f1.configure(width=settings.image_width)
+    
+    PLAY_ITEMS.img_widget = ttk.Label() # TODO
 
 
 # [*] Sidebar Buttons
