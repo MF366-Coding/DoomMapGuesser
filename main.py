@@ -111,8 +111,13 @@ def setup_play_screen():
         
     else:
         PLAY_ITEMS.f1.configure(width=settings.image_width)
-    
-    PLAY_ITEMS.img_widget = ttk.Label() # TODO
+        
+    PLAY_ITEMS.cur_img = ImageTk.PhotoImage(
+        Image.open(os.path.join(ASSETS_PATH, 'error', 'image_none_yet.png')).resize(
+            size=(500, 281.25), resample=Image.Resampling.LANCZOS
+        )
+    )
+    PLAY_ITEMS.img_widget = ttk.Button(PLAY_ITEMS.f1, image=PLAY_ITEMS.cur_img)
 
 
 # [*] Sidebar Buttons
