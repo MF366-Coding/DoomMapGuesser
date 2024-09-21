@@ -33,6 +33,26 @@ THEME_PATH: str = os.path.join(ASSETS_PATH, 'sv.tcl')
 settings = SettingsObject(CONFIG_PATH)
 
 
+def nullish_operator(value, new_value):
+    """
+    # nullish_operator
+    **Recreation of the GameMaker Studio 2's nullish operator (??) and self nullish operator (=??).**
+    
+    Example usage:
+    ```
+    username = nullish_operator(data.username, "INVALID USERNAME")
+    ```
+    """
+    
+    if value is None:
+        return new_value
+    
+    return value
+
+
+nl = nullish_operator
+
+
 def autodetect_theme(configs: SettingsObject):    
     if configs.theme == 'auto':
         if sys.platform != 'win32':
@@ -73,6 +93,35 @@ def apply_theme_to_titlebar(window: tk.Tk, configs: SettingsObject):
     configs.save_settings()
 
 
+def resize_image(image: Image.Image, wanted_width: int, width_is_height: bool = False, aspect_ratio: str = "detect", resample: int = Image.Resampling.LANCZOS, **kw) -> Image.Image:
+    if width_is_height:
+        new_width = None
+        new_height = wanted_width
+        
+    else:
+        new_width = wanted_width
+        new_height = None
+    
+    match aspect_ratio:
+        case '1:1':
+            new_width = nl(new_width, wanted_width)
+            new_height = nl(new_height, wanted_width)
+        
+        case "16:9":
+            new_width = nl(new_width, int(new_height * (16 / 9)))
+            new_height = nl(new_height, int(new_width * (9 / 16)))
+            
+        case _:
+            original_width, original_height = image.size
+            
+            new_width = nl(new_width, int(new_height * (original_width / original_height)))
+            new_height = nl(new_height, int(new_width * (original_height / original_width)))
+
+
+    resized_logo = image.resize((new_width, new_height), resample, **kw)
+    return resized_logo
+
+
 root = tk.Tk()
 root.title(f'DoomMapGuesser by MF366 - {VERSION}')
 root.geometry('900x700')
@@ -105,28 +154,41 @@ PLAY_ITEMS = ttk.Frame(game_frame)
 def setup_play_screen():
     PLAY_ITEMS.heading = ttk.Label(PLAY_ITEMS, text='Play', font=HEADING1)
     PLAY_ITEMS.f1 = ttk.Frame(PLAY_ITEMS)
+    PLAY_ITEMS.f2 = ttk.Frame(PLAY_ITEMS)
     
     if settings.use_width_as_height:
-        PLAY_ITEMS.f1.configure(height=settings.image_width)
+        PLAY_ITEMS.f1.configure(height=settings.image_width + 20)
         
     else:
-        PLAY_ITEMS.f1.configure(width=settings.image_width)
+        PLAY_ITEMS.f1.configure(width=settings.image_width + 20)
         
     PLAY_ITEMS.cur_img = ImageTk.PhotoImage(
-        Image.open(os.path.join(ASSETS_PATH, 'error', 'image_none_yet.png')).resize(
-            size=(500, 281.25), resample=Image.Resampling.LANCZOS
+        resize_image(
+            Image.open(os.path.join(ASSETS_PATH, 'error', 'image_none_yet.png')),
+            settings.image_width,
+            settings.use_width_as_height,
+            settings.image_ratio
         )
     )
-    PLAY_ITEMS.img_widget = ttk.Button(PLAY_ITEMS.f1, image=PLAY_ITEMS.cur_img)
+    
+    PLAY_ITEMS.img_widget = ttk.Button(PLAY_ITEMS.f1, image=PLAY_ITEMS.cur_img, command=lambda:
+        mb.showerror('TODO', 'not done yet')) # TODO
+    
+    PLAY_ITEMS.generation_butt = ttk.Button(PLAY_ITEMS.f2, text="Generate", command=lambda:
+        mb.showerror('TODO', 'not done yet')) # TODO
+    
+    PLAY_ITEMS.guessing_butt = ttk.Button(PLAY_ITEMS.f2, text='Guess', command=lambda:
+        mb.showerror('TODO', 'not done yet')) # TODO
 
 
 # [*] Sidebar Buttons
-play_img = Image.open(os.path.join(ICONS_PATH, settings.theme, 'play.png'))
-resized_play_img = play_img.resize((50, 50), Image.Resampling.LANCZOS)
+play_img = resize_image(
+    Image.open(os.path.join(ICONS_PATH, settings.theme, 'play.png')),
+    50,
+    aspect_ratio='1:1'
+)
 
-del play_img
-
-play_tk = ImageTk.PhotoImage(resized_play_img)
+play_tk = ImageTk.PhotoImage(play_img)
 
 play_butt = ttk.Button(sidebar, image=play_tk, width=50, command=lambda:
     mb.showerror('n/i', "not implemented"))
