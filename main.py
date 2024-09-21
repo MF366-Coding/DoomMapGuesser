@@ -44,6 +44,10 @@ def nullish_operator(value, new_value):
     ```
     """
     
+    # [<] boy, do I love when I have to create functions for basic shit that should already have been made
+    # [<] achstually, mf366, you literally contributed to Norb's NCapybaraLib by adding this exact feature
+    # [<] achstually, shut yo ass up
+    
     if value is None:
         return new_value
     
@@ -155,6 +159,12 @@ def setup_play_screen():
     PLAY_ITEMS.heading = ttk.Label(PLAY_ITEMS, text='Play', font=HEADING1)
     PLAY_ITEMS.f1 = ttk.Frame(PLAY_ITEMS)
     PLAY_ITEMS.f2 = ttk.Frame(PLAY_ITEMS)
+    PLAY_ITEMS.f3 = ttk.Frame(PLAY_ITEMS)
+    PLAY_ITEMS.f4 = ttk.Frame(PLAY_ITEMS)
+    PLAY_ITEMS.f5 = ttk.Frame(PLAY_ITEMS.f4)
+    PLAY_ITEMS.f6 = ttk.Frame(PLAY_ITEMS.f4)
+    PLAY_ITEMS.f7 = ttk.Frame(PLAY_ITEMS.f4)
+    PLAY_ITEMS.f8 = ttk.Frame(PLAY_ITEMS.f4)
     
     if settings.use_width_as_height:
         PLAY_ITEMS.f1.configure(height=settings.image_width + 20)
@@ -179,6 +189,8 @@ def setup_play_screen():
     
     PLAY_ITEMS.guessing_butt = ttk.Button(PLAY_ITEMS.f2, text='Guess', command=lambda:
         mb.showerror('TODO', 'not done yet')) # TODO
+    
+    # TODO: after this it's just the game, episode, map and thingies
 
 
 # [*] Sidebar Buttons
