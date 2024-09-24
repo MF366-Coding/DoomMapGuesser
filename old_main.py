@@ -29,7 +29,7 @@ parser = ArgumentParser("DoomMapGuesser", description="The GeoGuesser of Doom.")
 
 def check_for_updates():
     global LATEST
-    
+
     if LATEST is None:
         try:
             response = requests.get('https://api.github.com/repos/MF366-Coding/DoomMapGuesser/releases/latest', timeout=1)
@@ -38,7 +38,7 @@ def check_for_updates():
 
         except requests.RequestException:
             LATEST = 'Unknown'
-            
+
     print(LATEST)
 
 
@@ -73,7 +73,7 @@ font_regular = Font(family=cache[10], size=int(cache[11]), weight='normal')
 if sys.platform == 'win32': # [i] again, custom font only on Windows
     font_regular = tkextrafont.Font(file=FONT_PATH, family=cache[10], size=int(cache[11]))
     font_huge = tkextrafont.Font(family=cache[10], size=int(cache[12]))
-    
+
 # [!?] https://github.com/rdbende/Sun-Valley-ttk-theme (Sun Valley theme)
 root.tk.call("source", os.path.join(THEME_PATH))
 style = ttk.Style(root)
@@ -117,23 +117,23 @@ def show_size_warning(root_win: tk.Tk | tk.Toplevel = root):
     dialog = tk.Toplevel(root_win)
     dialog.title('DoomMapGuesser - Warning')
     dialog.resizable(False, False)
-    
+
     dialog.focus_set()
-    
+
     title = ttk.Label(dialog, text='!!! WARNING !!!', foreground='red', font=font_huge)
     description = ttk.Label(dialog, text="It seems like there's a .github folder in DoomMapGuesser's directory. Unless you'd like to contribute to the project using GitHub, I'd recommend deleting that folder as it takes up a lot of space. If you want to keep this directory but would like to disable this warning, change the last config entry to 1.", wraplength=400, justify='center', font=font_regular)
 
     title.pack()
     description.pack()
-    
+
 
 def show_correct_guesses(correct_guesses: int, root_win: tk.Tk | tk.Toplevel = root):
     dialog = tk.Toplevel(root_win)
     dialog.title('DoomMapGuesser - Correct Guesses')
     dialog.resizable(False, False)
-    
+
     dialog.focus_set()
-    
+
     colors = [
         'red',
         'yellow',
@@ -141,10 +141,10 @@ def show_correct_guesses(correct_guesses: int, root_win: tk.Tk | tk.Toplevel = r
         'green',
         'blue'
     ]
-    
+
     guesses_label = ttk.Label(dialog, text=' - Correct Guesses - ')
     result_label = ttk.Label(dialog, text=f"{correct_guesses} / 4", foreground=colors[correct_guesses], font=font_huge)
-    
+
     guesses_label.pack()
     result_label.pack()
 
@@ -160,7 +160,7 @@ def get_width_height_of_image(image: bytes, ratio: tuple[int, int] = (16, 9)):
     # round to nearest integer
     height = round(height)
     width = round(width)
-    
+
     return width, height
 
 
@@ -169,97 +169,97 @@ def choose_game_window(origin: ttk.Button, master: tk.Tk | tk.Toplevel = root):
         try:
             index = game_listbox.curselection()[0]
             selected_text = game_listbox.get(index)
-            
+
             cur_selections[0] = selected_text
             cur_selections[1] = list(database[cur_selections[0]].keys())[0]
             cur_selections[2] = list(database[cur_selections[0]][cur_selections[1]].keys())[0]
-            
+
             origin.configure(text=selected_text)
-            
+
             game_choice_win.destroy()
-            
+
         except (tk.TclError, IndexError) as exc:
             mb.showerror("Doom Map Guesser - Error #1", f"You must select a game/WAD before hitting 'Comfirm'.\n{exc}")
-           
+
     game_choice_win = tk.Toplevel(master)
     game_choice_win.focus_set()
     game_choice_win.geometry(f'{int(cache[3])}x{int(cache[4])}')
     game_choice_win.resizable(False, False)
     game_choice_win.title("Choose the correct game/WAD")
-    
+
     if sys.platform == 'win32':
         game_choice_win.iconbitmap(ICON_PATH)
-    
+
     game_listbox = tk.Listbox(game_choice_win, listvariable=game_var, bg='dark blue', fg='yellow', selectmode=tk.SINGLE, width=int(cache[5]), height=int(cache[6]), font=font_regular)
     accept_butt = ttk.Button(game_choice_win, text='Confirm', command=_save_changes)
-        
+
     game_listbox.pack()
     accept_butt.pack(pady=5)
 
 
 def choose_episode_window(origin: ttk.Button, master: tk.Tk | tk.Toplevel = root):
     episode_var.set(list(database[cur_selections[0]].keys()))
-    
+
     def _save_changes():
         try:
             index = episode_listbox.curselection()[0]
             selected_text = episode_listbox.get(index)
-            
+
             cur_selections[1] = selected_text
             cur_selections[2] = list(database[cur_selections[0]][cur_selections[1]].keys())[0]
-            
+
             origin.configure(text=selected_text)
-            
+
             episode_choice_win.destroy()
-            
+
         except tk.TclError as exc:
             mb.showerror("Doom Map Guesser - Error #1", f"You must select a game/WAD before hitting 'Comfirm'.\n{exc}")
-           
+
     episode_choice_win = tk.Toplevel(master)
     episode_choice_win.focus_set()
     episode_choice_win.geometry(f'{int(cache[3])}x{int(cache[4])}')
     episode_choice_win.resizable(False, False)
     episode_choice_win.title(f"Choose the correct episode for {cur_selections[0]}")
-    
+
     if sys.platform == 'win32':
         episode_choice_win.iconbitmap(ICON_PATH)
-    
+
     episode_listbox = tk.Listbox(episode_choice_win, listvariable=episode_var, bg='dark blue', fg='yellow', selectmode=tk.SINGLE, width=int(cache[5]), height=int(cache[6]), font=font_regular)
     accept_butt = ttk.Button(episode_choice_win, text='Confirm', command=_save_changes)
-        
+
     episode_listbox.pack()
     accept_butt.pack(pady=5)
-    
+
 
 def choose_map_window(origin: ttk.Button, master: tk.Tk | tk.Toplevel = root):
     maps_var.set(list(database[cur_selections[0]][cur_selections[1]].keys()))
-    
+
     def _save_changes():
         try:
             index = maps_listbox.curselection()[0]
             selected_text = maps_listbox.get(index)
-            
+
             cur_selections[2] = selected_text
-            
+
             origin.configure(text=selected_text)
-            
+
             map_choice_win.destroy()
-            
+
         except tk.TclError as exc:
             mb.showerror("Doom Map Guesser - Error #1", f"You must select a game/WAD before hitting 'Comfirm'.\n{exc}")
-           
+
     map_choice_win = tk.Toplevel(master)
     map_choice_win.focus_set()
     map_choice_win.geometry(f'{int(cache[3])}x{int(cache[4])}')
     map_choice_win.resizable(False, False)
     map_choice_win.title(f"Choose the correct map for {cur_selections[1]}")
-    
+
     if sys.platform == 'win32':
         map_choice_win.iconbitmap(ICON_PATH)
-    
+
     maps_listbox = tk.Listbox(map_choice_win, listvariable=maps_var, bg='dark blue', fg='yellow', selectmode=tk.SINGLE, width=int(cache[5]), height=int(cache[6]), font=font_regular)
     accept_butt = ttk.Button(map_choice_win, text='Confirm', command=_save_changes)
-        
+
     maps_listbox.pack()
     accept_butt.pack(pady=5)
 
@@ -290,60 +290,60 @@ def pick_new_map(game: str, episode: str) -> tuple[str, int, int]:
 def pick_new_screenshot(map_id: int, current_screenshot_link: str, attempts: int = 10) -> str | bool:
     new_screenshot = current_screenshot_link
     map_id = str(map_id)
-    
+
     for _ in range(attempts):
         if map_id not in screenshot_database.keys():
             return False # [i] no screenshots for given map
-        
+
         if screenshot_database[map_id] == []:
             return False
-        
+
         new_screenshot: str = random.choice(screenshot_database[map_id])
-        
+
         if new_screenshot == current_screenshot_link:
             continue # [i] same screenshot, so let's move on
-        
+
         return new_screenshot # [i] the screenshot exists and is new
-    
+
     return False # [i] limit of attempts was reached
 
 
 def display_intro(master: tk.Tk | tk.Toplevel = root):
     check_for_updates()
-    
+
     intro_win = tk.Toplevel(master)
     intro_win.focus_set()
     intro_win.resizable(False, False)
     intro_win.title(f"Meet Doom Map Guesser ({VERSION})")
-    
+
     if sys.platform == 'win32':
         intro_win.iconbitmap(ICON_PATH)
-    
+
     logo = Image.open(LOGO_PATH)
-    
+
     # [*] Resizing
     new_width = int(cache[8])
     original_width, original_height = logo.size
     aspect_ratio = original_height / original_width
     new_height = int(new_width * aspect_ratio)  # [i] Calculate the height based on the original aspect ratio
     resized_logo = logo.resize((new_width, new_height), Image.LANCZOS)
-    
+
     intro_win.tk_logo = ImageTk.PhotoImage(resized_logo)
     logo_label = ttk.Label(intro_win, image=intro_win.tk_logo)
-    
+
     about_1 = ttk.Label(intro_win, text=f"Doom Map Guesser {VERSION} is the GeoGuesser of the DOOM series.")
     about_2 = ttk.Label(intro_win, text="Enjoy this little game made by MF366! :D")
     about_3 = ttk.Label(intro_win, text="Small note about what is considered a secret:")
     about_4 = ttk.Label(intro_win, text="The number of secrets are the number of sectors with Effect 9, whether they're acessible or not.")
     about_5 = ttk.Label(intro_win, text="DoomMapGuesser is up-to-date!" if LATEST == VERSION else "Your DoomMapGuesser is either outdated or there is no release data available.", foreground="green" if LATEST == VERSION else 'red')
-    
+
     butt_github = ttk.Button(intro_win, text='GitHub', command=lambda:
         simple_webbrowser.website("https://github.com/MF366-Coding/DoomMapGuesser"))
     butt_discord = ttk.Button(intro_win, text='Discord Server', command=lambda:
         simple_webbrowser.website("https://discord.gg/HZnBRYTqvC"))
     butt_buy_coffee = ttk.Button(intro_win, text="Donate <3", command=lambda:
         simple_webbrowser.website("https://buymeacoffee.com/mf366/"))
-        
+
     logo_label.pack(pady=2)
     about_1.pack(pady=2)
     about_2.pack(pady=2)
@@ -357,37 +357,37 @@ def display_intro(master: tk.Tk | tk.Toplevel = root):
 
 def display_screenshot(screenshot_link: str):
     # [!] I am assuming all screenshots are 16:9 which is NOT true
-    
+
     # /-/ print(screenshot_link) oops forgot to comment this ma bad
-    
+
     image_data = scrapper.scrape_byte_contents(screenshot_link)
     image_data_io = io.BytesIO(image_data)
-    
+
     img = Image.open(image_data_io, "r")
-    
+
     # [*] Resizing
     new_width = int(cache[9])
     original_width, original_height = img.size
     aspect_ratio = original_height / original_width
     new_height = int(new_width * aspect_ratio)  # [i] Calculate the height based on the original aspect ratio
     img_resized = img.resize((new_width, new_height), Image.LANCZOS)
-    
+
     f3.tk_img = ImageTk.PhotoImage(img_resized)
     img_label.configure(text='', image=f3.tk_img)
 
 
-def change_secret_amount_by_1(positive: bool):       
+def change_secret_amount_by_1(positive: bool):
     if positive:
         a = 1
-        
+
     else:
         a = -1
-    
-    num = number_of_secrets_var.get().split(' ')[0]        
+
+    num = number_of_secrets_var.get().split(' ')[0]
     number_of_secrets_var.set(f"{int(num) + a} Secrets")
 
 
-def reset_secret_amount():          
+def reset_secret_amount():
     number_of_secrets_var.set("0 Secrets")
 
 
@@ -401,58 +401,58 @@ secrets_reset_butt = ttk.Button(f4, text='Reset secrets', command=reset_secret_a
 
 def generate_new_game(attempts: int = 10):
     global cur_screenshot, cur_selections, cur_settings
-    
+
     game = pick_new_game_wad()
     episode = pick_new_episode(game)
     map_details = pick_new_map(game, episode)
-    
+
     map_name = map_details[0]
     map_id = map_details[1]
     number_of_secrets = map_details[2]
-    
+
     cur_screenshot = False
-    
+
     for _ in range(attempts):
         if cur_screenshot is not False:
             break
-        
+
         cur_screenshot = pick_new_screenshot(map_id, cur_screenshot, attempts)
-    
+
     if cur_screenshot is False:
         mb.showerror('DoomMapGuesser - Error #3', f"Couldn't load a screenshot in {attempts * 2} attempts.")
         return
-        
+
     cur_settings = [game, episode, map_name, number_of_secrets]
     cur_selections = [GAME_PH, EPISODE_PH, MAP_PH, SECRETS_PH]
     number_of_secrets_var.set('0 Secrets')
-    
+
     choose_game_butt.configure(text=cur_selections[0])
     choose_episode_butt.configure(text=cur_selections[1])
     choose_map_butt.configure(text=cur_selections[2])
 
     # /-/ print(cur_screenshot)
-    
+
     max_points_var.set(max_points_var.get() + 4)
-    
+
     display_screenshot(cur_screenshot)
-    
+
 
 def guess_screenshot(attempts: int = 10):
     correct_guesses = 0
-    
+
     num = number_of_secrets_var.get().split(' ')[0]
     cur_selections[3] = int(num)
-    
+
     if cur_selections[3] < 0 or cur_selections[3] > 1000:
         mb.showerror('DoomMapGuesser - Error #2', "The number of secrets cannot be lower than 0 or greater than 1000.")
         return
-    
+
     for index, setting in enumerate(cur_settings, 0):
         if cur_selections[index] == setting:
             correct_guesses += 1
-    
+
     show_correct_guesses(correct_guesses)
-    
+
     points_var.set(points_var.get() + correct_guesses)
     generate_new_game(attempts)
 

@@ -5,3 +5,6 @@ command.txt
 compile
 release
 old_main.py
+.vscode
+.config
+old_main.py
