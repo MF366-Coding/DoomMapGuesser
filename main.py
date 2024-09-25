@@ -9,7 +9,7 @@ import sys
 import simple_webbrowser
 from tkinter import messagebox as mb # XXX: REMOVE THIS AFTERWARDS
 from PIL import ImageTk, Image
-from core import level_db, scrapper
+from core import level_db, scrapper, utils
 from core.settings import SettingsObject
 from core.database_handler import LOCAL, get_database
 import math
@@ -33,28 +33,7 @@ THEME_PATH: str = os.path.join(ASSETS_PATH, 'sv.tcl')
 settings = SettingsObject(CONFIG_PATH)
 
 
-def nullish_operator(value, new_value):
-    """
-    # nullish_operator
-    **Recreation of the GameMaker Studio 2's nullish operator (??) and self nullish operator (=??).**
-    
-    Example usage:
-    ```
-    username = nullish_operator(data.username, "INVALID USERNAME")
-    ```
-    """
-    
-    # [<] boy, do I love when I have to create functions for basic shit that should already have been made
-    # [<] achstually, mf366, you literally contributed to Norb's NCapybaraLib by adding this exact feature
-    # [<] achstually, shut yo ass up
-    
-    if value is None:
-        return new_value
-    
-    return value
-
-
-nl = nullish_operator
+nl = utils.nullish_operator
 
 
 def autodetect_theme(configs: SettingsObject):    

@@ -6,7 +6,8 @@
     "imageWidth": 500,
     "widthIsHeight": false,
     "checkUpdates": true,
-    "intro": false,
     "skipDatabaseWarning": false,
-    "autoUpdateLevel": 0
+    "autoUpdateLevel": 0,
+    "excludeRule": null,
+    "seasonalEasterEggs": 1
 }

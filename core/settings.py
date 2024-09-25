@@ -6,7 +6,7 @@
 
 import json
 
-UNRETRIEVABLE = None
+UNRETRIEVABLE = MISSING = NULL = None # [<] random variables cuz why not??
 
 
 class SettingsObject:
@@ -27,7 +27,7 @@ class SettingsObject:
         """
         
         self._PATH = kw.get('overwrite', given_path)
-        self._SETTINGS: dict[str, int | bool | str | list[str]] = initial_settings
+        self._SETTINGS: dict[str, int | bool | str | list[str] | None] = initial_settings
         self._BE_STRICT = kw.get('strict', True)
         
         if initial_settings is None:
@@ -149,14 +149,6 @@ class SettingsObject:
         self._SETTINGS['checkUpdates'] = value
         
     @property
-    def display_app_intro(self) -> bool:
-        return self._SETTINGS['intro']
-    
-    @display_app_intro.setter
-    def display_app_intro(self, value: bool):
-        self._SETTINGS['intro'] = value
-        
-    @property
     def skip_downloaded_db_warning(self) -> bool:
         return self._SETTINGS['skipDatabaseWarning']
     
@@ -190,18 +182,69 @@ class SettingsObject:
         
         self._SETTINGS['autoUpdateLevel'] = value
         
+    @property
+    def seasonal_easter_eggs(self) -> int:
+        return self._SETTINGS['seasonalEasterEggs']
+    
+    @seasonal_easter_eggs.setter
+    def seasonal_easter_eggs(self, value: int):
+        """
+        # seasonal_easter_eggs
+        
+        **Key name:** `seasonalEasterEggs`
+
+        0. **Disabled**
+        1. **Enabled** (Default)
+        2. **Only the ones that do not interfere with gameplay**
+        """
+        
+        self._SETTINGS['seasonalEasterEgg'] = value
+        
+    @property
+    def exclude_rule_for_e3m1_e3m9(self, **kw) -> str | None:
+        """
+        # exclude_rule_for_e3m1_e3m9
+        
+        Whether to use **Hell Keep** or **Warrens** or both, even!
+        
+        :param obj: the object to save - if not specified, will save itself
+        :param object: same as above but this one does not take priority
+        """
+        
+        __obj = kw.get('obj', None)
+        
+        if __obj is None:
+            __obj = kw.get('object', None)
+        
+        a: str | None = self._SETTINGS['excludeRule']
+        
+        if a in (None, 'null', 0, 'empty'):
+            self._SETTINGS['excludeRule'] = 'none'
+            
+        if __obj is None:
+            self.save_settings()
+            
+        else:
+            self.dump_settings(__obj)
+
+        return self._SETTINGS['excludeRule']
+
+    @exclude_rule_for_e3m1_e3m9.setter
+    def exclude_rule_for_e3m1_e3m9(self, value: str | None):
+        self._SETTINGS['excludeRule'] = value
+        
     def __getitem__(self, key: str) -> int | bool | str | list[str] | None:        
         if self._BE_STRICT:
-            return self._SETTINGS[key]
+            return self._SETTINGS[key] # [i] if there is error, there is error. this is how strict mode behaves.
         
-        return self._SETTINGS.get(key, UNRETRIEVABLE)
+        return self._SETTINGS.get(key, UNRETRIEVABLE) # [i] no error!! (strict off)
     
     def __setitem__(self, key: str, value: int | bool | str | list[str]):
         if self._BE_STRICT:
             if not isinstance(value, (int, str, list, bool)):
                 raise ValueError('can only assign int, str, list[str] or boolean using SettingsObject.__setitem__')
             
-            if key not in ("theme", "offlineMode", "databases", "imageRatio", "imageWidth", "widthIsHeight", "checkUpdates", "intro", "skipDatabaseWarning", "autoUpdateLevel"):
+            if key not in ("theme", "offlineMode", "databases", "imageRatio", "imageWidth", "widthIsHeight", "checkUpdates", "seasonalEasterEggs", "excludeRule", "skipDatabaseWarning", "autoUpdateLevel"):
                 raise KeyError('strict mode in SettingsObject does not allow for assigning new keys')
             
         self._SETTINGS[key] = value
