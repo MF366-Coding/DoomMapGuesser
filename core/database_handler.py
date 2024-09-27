@@ -20,6 +20,12 @@ def __get_local_database(path: str) -> dict | int:
     
     except json.JSONDecodeError:
         return 3
+    
+    except Exception as e:
+        return (9, e)
+    
+    else:
+        return 0
 
 
 def __get_online_database(url: str) -> dict | int:
@@ -44,6 +50,9 @@ def __get_online_database(url: str) -> dict | int:
     
     except (requests.exceptions.InvalidURL, requests.exceptions.InvalidSchema, requests.exceptions.MissingSchema):
         return 7
+    
+    except Exception as e:
+        return (10, e)
 
 
 def get_database(source: str, mode: str = 'online') -> dict | int:
