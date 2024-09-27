@@ -10,7 +10,7 @@ UNRETRIEVABLE = MISSING = NULL = None # [<] random variables cuz why not??
 
 
 class SettingsObject:
-    def __init__(self, given_path: str, *_, initial_settings: dict[str, int | bool | str | list[str]] | None = None, **kw) -> None:
+    def __init__(self, given_path: str, *_, initial_settings: dict[str, int | bool | str | list[list[str, str, str]]] | None = None, **kw) -> None:
         """
         # SettingsObject
 
@@ -27,7 +27,7 @@ class SettingsObject:
         """
         
         self._PATH = kw.get('overwrite', given_path)
-        self._SETTINGS: dict[str, int | bool | str | list[str] | None] = initial_settings
+        self._SETTINGS: dict[str, int | bool | str | list[list[str, str, str]] | None] = initial_settings
         self._BE_STRICT = kw.get('strict', True)
         
         if initial_settings is None:
@@ -64,8 +64,13 @@ class SettingsObject:
             json.dump(obj, f, indent=kw.get("indent", 4))
             
     @property
-    def databases(self) -> list[str]:
+    def databases(self) -> list[list[str, str, str]]:
         return self._SETTINGS['databases']
+    
+    @databases.setter
+    def databases(self, value: list[list[str, str, str]]):
+        value.pop(0)
+        self._SETTINGS['databases'] = value
     
     @databases.deleter
     def databases(self):

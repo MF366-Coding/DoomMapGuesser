@@ -7,7 +7,6 @@ import random
 import os
 import sys
 import simple_webbrowser
-from tkinter import messagebox as mb # XXX: REMOVE THIS AFTERWARDS
 from PIL import ImageTk, Image
 from core import level_db, scrapper, utils
 from core.settings import SettingsObject
@@ -91,15 +90,20 @@ def resize_image(image: Image.Image, wanted_width: int, width_is_height: bool = 
             new_height = nl(new_height, wanted_width)
         
         case "16:9":
-            new_width = nl(new_width, int(new_height * (16 / 9)))
-            new_height = nl(new_height, int(new_width * (9 / 16)))
+            if new_width is None:
+                new_width = int(new_height * (16 / 9))
+                
+            else:
+                new_height = int(new_width * (9 / 16))
             
         case _:
             original_width, original_height = image.size
             
-            new_width = nl(new_width, int(new_height * (original_width / original_height)))
-            new_height = nl(new_height, int(new_width * (original_height / original_width)))
-
+            if new_width is None:
+                new_width = int(new_height * (original_width / original_height))
+                
+            else:
+                new_height = int(new_width * (original_height / original_width))
 
     resized_logo = image.resize((new_width, new_height), resample, **kw)
     return resized_logo
@@ -121,6 +125,10 @@ main_frame = ttk.Frame(root, width=820)
 database_bar = ttk.Frame(main_frame, height=80)
 game_frame = ttk.Frame(main_frame)
 
+DATABASES = settings.databases.copy()
+DATABASES.insert(0, ["Default Database", "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/ss_db.json", "NONE"])
+CUR_DB = 0
+
 HEADING1 = Font(root, family="SUSE ExtraBold", size=30)
 HEADING2 = Font(root, family="SUSE Bold", size=22)
 HEADING3 = Font(root, family='SUSE Semibold', size=17)
@@ -132,6 +140,65 @@ GAME_TEXT = Font(root, family="Eternal UI", size=14)
 GAME_BOLD = Font(root, family='Eternal UI', size=14, weight='bold')
 
 PLAY_ITEMS = ttk.Frame(game_frame)
+
+
+class __DialogErrorHappenedGeneralHidden(Exception): ...
+
+
+def __SendDialogHiddenResponsive(*args):
+    def __StopResponsiveAndHideMessage(*_):
+        root.focus_force()
+        
+        try:
+            __window.destroy()
+            
+        except __DialogErrorHappenedGeneralHidden:
+            print(f'__StopResponsiveAndHideMessage failed to eliminate the message with id {id(__window)}')
+
+    __window = tk.Toplevel(root)
+    __window.focus_force()
+    
+    apply_theme_to_titlebar(__window, settings)
+    
+    __old_icon = Image.open(os.path.join(ICONS_PATH, "universal", f"{args[0].lower()}.png"))
+    
+    __icon_img = resize_image(
+        image=__old_icon,
+        wanted_width=100,
+    )
+    
+    __window.__icon = ImageTk.PhotoImage(image=__icon_img)
+    
+    __window.title(args[1])
+    __icon_widget = ttk.Label(__window, image=__window.__icon)
+    __label = ttk.Label(__window, text=args[2], wraplength=args[3], font=args[4])
+    
+    __icon_widget.grid(column=0, row=0, padx=5, pady=5, ipadx=5, ipady=5)
+    __label.grid(column=1, row=0, padx=5, pady=5, ipadx=5, ipady=5)
+    
+    __window.bind('<Button-1>', __StopResponsiveAndHideMessage)
+    __window.bind('<Button-3>', __StopResponsiveAndHideMessage)
+
+
+def send_dialog(dtype: str, title: str, message: str, wraplenght: int = 400, **kw):
+    if dtype not in ('error', 'clock', 'warning', 'sucess', 'info'):
+        return 
+    
+    __SendDialogHiddenResponsive(dtype, title, message, wraplenght, kw.get('overwrite_font', SUBTITLE))
+
+
+def change_to_database(index: int):
+    global CUR_DB
+    
+    CUR_DB = index
+    
+    if settings.offline_mode:
+        if not DATABASES[index][2].startswith(('http://', 'https://', 'www.')):
+            send_dialog('error', 'Invalid URL', "...") # TODO       
+
+
+def generate_new_screenshot():
+    raise NotImplementedError('TODO')
 
 
 def setup_play_screen():
@@ -161,13 +228,13 @@ def setup_play_screen():
     )
     
     PLAY_ITEMS.img_widget = ttk.Button(PLAY_ITEMS.f1, image=PLAY_ITEMS.cur_img, command=lambda:
-        mb.showerror('TODO', 'not done yet')) # TODO
+        send_dialog('warning', 'TODO', 'Sadly, not done yet.')) # TODO
     
     PLAY_ITEMS.generation_butt = ttk.Button(PLAY_ITEMS.f2, text="Generate", command=lambda:
-        mb.showerror('TODO', 'not done yet')) # TODO
+        send_dialog('warning', 'TODO', 'Sadly, not done yet.')) # TODO
     
     PLAY_ITEMS.guessing_butt = ttk.Button(PLAY_ITEMS.f2, text='Guess', command=lambda:
-        mb.showerror('TODO', 'not done yet')) # TODO
+        send_dialog('warning', 'TODO', 'Sadly, not done yet.')) # TODO
     
     # TODO: after this it's just the game, episode, map and thingies
 
@@ -182,7 +249,7 @@ play_img = resize_image(
 play_tk = ImageTk.PhotoImage(play_img)
 
 play_butt = ttk.Button(sidebar, image=play_tk, width=50, command=lambda:
-    mb.showerror('n/i', "not implemented"))
+    send_dialog('clock', 'Not Implemented Yet', str(random.choices(("Don't worry, we'll have DoomMapGuesser before GTA 6 xD", "Don't worry, DoomMapGuesser v2.0 is coming soon"), weights=(20, 80), k=1)[0])))
 
 play_butt.pack()
 
