@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter.font import Font
 from tkinter import ttk
+from typing import Any
 import darkdetect
 import pywinstyles
 import random
@@ -127,7 +128,8 @@ game_frame = ttk.Frame(main_frame)
 
 DATABASES = settings.databases.copy()
 DATABASES.insert(0, ["Default Database", "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/ss_db.json", "NONE"])
-CUR_DB = 0
+CUR_DB_INDEX = 0
+CUR_DB_DICT = {}
 
 HEADING1 = Font(root, family="SUSE ExtraBold", size=30)
 HEADING2 = Font(root, family="SUSE Bold", size=22)
@@ -179,12 +181,87 @@ def __SendDialogHiddenResponsive(*args):
     __window.bind('<Button-1>', __StopResponsiveAndHideMessage)
     __window.bind('<Button-3>', __StopResponsiveAndHideMessage)
 
+def __SendDialogHiddenResponsiveButtons(button_args: list[dict[str, Any]], *args):
+    def __StopResponsiveAndHideMessageButtons(*_):
+        root.focus_force()
+        
+        try:
+            __window.destroy()
+            
+        except __DialogErrorHappenedGeneralHidden:
+            print(f'__StopResponsiveAndHideMessageButtons failed to eliminate the message with id {id(__window)}')
+
+    __window = tk.Toplevel(root)
+    __window.focus_force()
+    
+    apply_theme_to_titlebar(__window, settings)
+    
+    __old_icon = Image.open(os.path.join(ICONS_PATH, "universal", f"{args[0].lower()}.png"))
+    
+    __icon_img = resize_image(
+        image=__old_icon,
+        wanted_width=100,
+    )
+    
+    __window.__icon = ImageTk.PhotoImage(image=__icon_img)
+    
+    __window.title(args[1])
+    
+    __frame = ttk.Frame(__window)
+    __icon_widget = ttk.Label(__frame, image=__window.__icon)
+    __label = ttk.Label(__frame, text=args[2], wraplength=args[3], font=args[4])
+    
+    __icon_widget.grid(column=0, row=0, padx=5, pady=5, ipadx=5, ipady=5)
+    __label.grid(column=1, row=0, padx=5, pady=5, ipadx=5, ipady=5)
+    
+    __frame.pack(padx=5, pady=5, ipadx=5, ipady=5)
+    
+    __BUTTONS = []
+    
+    for __buttargs in button_args:
+        __com = __buttargs.get('command', None)
+        
+        if __com is not None:        
+            match __com:
+                case 'TYPE_DUPLICATE':
+                    __com = lambda: __SendDialogHiddenResponsiveButtons(button_args, *args)
+                    # [!] IMPORTANT THING
+                    # [i] Keep in mind that duplicating dialog a will create dialog b
+                    # [i] but dialog b won't respond to special actions
+                    # [i] which kinda makes it useless... lol
+                    # [<] yea, imma remove this
+                    
+                case 'TYPE_CLOSE':
+                    __com = __StopResponsiveAndHideMessageButtons
+
+                case _:
+                    print('Special Command Received Well')
+                    
+            __buttargs.pop('command')
+                
+            __BUTTONS.append(ttk.Button(__window, command=__com, **__buttargs))
+            continue
+
+        __BUTTONS.append(ttk.Button(__window, **__buttargs))
+        
+    for __butt in __BUTTONS:
+        __butt.pack(side='right', padx=5, pady=5, ipadx=5, ipady=5)
+
 
 def send_dialog(dtype: str, title: str, message: str, wraplenght: int = 400, **kw):
-    if dtype not in ('error', 'clock', 'warning', 'sucess', 'info'):
-        return 
-    
-    __SendDialogHiddenResponsive(dtype, title, message, wraplenght, kw.get('overwrite_font', SUBTITLE))
+    try:
+        __SendDialogHiddenResponsive(dtype, title, message, wraplenght, kw.get('overwrite_font', SUBTITLE))
+        
+    except FileNotFoundError:
+        return 10
+
+
+def send_dialog_with_buttons(dtype: str, title: str, message: str, button_args: list[dict[str, Any]], wraplenght: int = 400, **kw):
+    try:
+        __SendDialogHiddenResponsiveButtons(button_args, dtype, title, message, wraplenght, kw.get('overwrite_font', SUBTITLE))
+        
+    except FileNotFoundError:
+        return 9
 
 
 def change_to_database(index: int):
@@ -249,7 +326,20 @@ play_img = resize_image(
 play_tk = ImageTk.PhotoImage(play_img)
 
 play_butt = ttk.Button(sidebar, image=play_tk, width=50, command=lambda:
-    send_dialog('clock', 'Not Implemented Yet', str(random.choices(("Don't worry, we'll have DoomMapGuesser before GTA 6 xD", "Don't worry, DoomMapGuesser v2.0 is coming soon"), weights=(20, 80), k=1)[0])))
+    send_dialog_with_buttons('yellow-light', 'Not Implemented Yet', str(random.choices(("Don't worry, we'll have DoomMapGuesser before GTA 6 xD", "Don't worry, DoomMapGuesser v2.0 is coming soon"), weights=(20, 80), k=1)[0]), [
+        {
+            "text": "Shut Up!",
+            "command": "TYPE_DUPLICATE"            
+        },
+        {
+            "text": "I SAID SHUT UP!",
+            "command": "TYPE_CLOSE"
+        },
+        {
+            "text": "Gen",
+            "command": generate_new_screenshot
+        }
+    ]))
 
 play_butt.pack()
 
