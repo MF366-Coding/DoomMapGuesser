@@ -27,7 +27,6 @@ CONFIG_PATH: str = os.path.join(os.path.dirname(__file__), "settings.json")
 ASSETS_PATH = os.path.join(os.path.dirname(__file__), 'assets')
 ICONS_PATH = os.path.join(ASSETS_PATH, 'icons')
 LOGO_PATH: str = os.path.join(ASSETS_PATH, "full_logo.png")
-MAIN_ICON_PATH: str = os.path.join(ASSETS_PATH, "full_logo.ico")
 THEME_PATH: str = os.path.join(ASSETS_PATH, 'sv.tcl')
 
 settings = SettingsObject(CONFIG_PATH)
@@ -109,15 +108,16 @@ def resize_image(image: Image.Image, wanted_width: int, width_is_height: bool = 
     resized_logo = image.resize((new_width, new_height), resample, **kw)
     return resized_logo
 
+autodetect_theme(settings)
+MAIN_ICON_PATH: str = os.path.join(ASSETS_PATH, f"full_icon_{settings.theme}.ico")
 
 root = tk.Tk()
 root.title(f'DoomMapGuesser by MF366 - {VERSION}')
 root.geometry('900x700')
 
 if sys.platform == 'win32':
-    root.iconbitmap(MAIN_ICON_PATH)
+    root.iconbitmap(default=MAIN_ICON_PATH)
 
-autodetect_theme(settings)
 apply_theme_to_titlebar(root, settings)
 
 sidebar = ttk.Frame(root, width=80)
@@ -137,28 +137,41 @@ HEADING3 = Font(root, family='SUSE Semibold', size=17)
 SUBTITLE = Font(root, family='SUSE Regular', size=12)
 REGULAR_TEXT = Font(root, family='SUSE Regular', size=14)
 LIGHT_TEXT = Font(root, family='SUSE Light', size=14)
+XLIGHT_TEXT = Font(root, family='SUSE ExtraLight', size=14)
+THIN_TEXT = Font(root, family='SUSE Thin', size=14)
 BOLD_TEXT = Font(root, family='SUSE Medium', size=14)
+PRIMARY_BUTTON = Font(root, family='SUSE Semibold', size=12, underline=False)
+SECONDARY_BUTTON = Font(root, family='SUSE Light', size=12)
 GAME_TEXT = Font(root, family="Eternal UI", size=14)
 GAME_BOLD = Font(root, family='Eternal UI', size=14, weight='bold')
 
 PLAY_ITEMS = ttk.Frame(game_frame)
 
 
+class PrimaryButton(ttk.Button):
+    def __init__(self, master=None, **kwargs):
+        _ = kwargs.pop('type', None)
+        del _
+        super().__init__(master, style='Primary.TButton', **kwargs)
+
+
 class __DialogErrorHappenedGeneralHidden(Exception): ...
+class __InvalidButtonAction(Exception): ...
 
 
 def __SendDialogHiddenResponsive(*args):
     def __StopResponsiveAndHideMessage(*_):
-        root.focus_force()
+        args[5].focus_force()
         
         try:
             __window.destroy()
             
-        except __DialogErrorHappenedGeneralHidden:
-            print(f'__StopResponsiveAndHideMessage failed to eliminate the message with id {id(__window)}')
+        except Exception as e:
+            raise __DialogErrorHappenedGeneralHidden(f'__StopResponsiveAndHideMessage failed to eliminate the message with id {id(__window)}') from e
 
-    __window = tk.Toplevel(root)
+    __window = tk.Toplevel(args[5])
     __window.focus_force()
+    __window.resizable(False, False)
     
     apply_theme_to_titlebar(__window, settings)
     
@@ -183,16 +196,17 @@ def __SendDialogHiddenResponsive(*args):
 
 def __SendDialogHiddenResponsiveButtons(button_args: list[dict[str, Any]], *args):
     def __StopResponsiveAndHideMessageButtons(*_):
-        root.focus_force()
+        args[5].focus_force()
         
         try:
             __window.destroy()
             
-        except __DialogErrorHappenedGeneralHidden:
-            print(f'__StopResponsiveAndHideMessageButtons failed to eliminate the message with id {id(__window)}')
+        except Exception as e:
+            raise __DialogErrorHappenedGeneralHidden(f'__StopResponsiveAndHideMessageButtons failed to eliminate the message with id {id(__window)}') from e
 
-    __window = tk.Toplevel(root)
+    __window = tk.Toplevel(args[5])
     __window.focus_force()
+    __window.resizable(False, False)
     
     apply_theme_to_titlebar(__window, settings)
     
@@ -218,18 +232,13 @@ def __SendDialogHiddenResponsiveButtons(button_args: list[dict[str, Any]], *args
     
     __BUTTONS = []
     
-    for __buttargs in button_args:
+    for __buttargs in button_args:        
         __com = __buttargs.get('command', None)
         
         if __com is not None:        
             match __com:
                 case 'TYPE_DUPLICATE':
-                    __com = lambda: __SendDialogHiddenResponsiveButtons(button_args, *args)
-                    # [!] IMPORTANT THING
-                    # [i] Keep in mind that duplicating dialog a will create dialog b
-                    # [i] but dialog b won't respond to special actions
-                    # [i] which kinda makes it useless... lol
-                    # [<] yea, imma remove this
+                    raise __InvalidButtonAction('action TYPE_DUPLICATE was removed for being useless')
                     
                 case 'TYPE_CLOSE':
                     __com = __StopResponsiveAndHideMessageButtons
@@ -238,30 +247,56 @@ def __SendDialogHiddenResponsiveButtons(button_args: list[dict[str, Any]], *args
                     print('Special Command Received Well')
                     
             __buttargs.pop('command')
-                
-            __BUTTONS.append(ttk.Button(__window, command=__com, **__buttargs))
-            continue
+            
+            if __buttargs['type'] == 'PRIMARY':            
+                __BUTTONS.append(PrimaryButton(__window, command=__com, **__buttargs))
 
-        __BUTTONS.append(ttk.Button(__window, **__buttargs))
+            else:
+                __buttargs.pop('type')      
+                __BUTTONS.append(ttk.Button(__window, command=__com, **__buttargs))
+            
+            continue
+        
+        if __buttargs['type'] == 'PRIMARY':            
+            __BUTTONS.append(PrimaryButton(__window, **__buttargs))
+
+        else:
+            __buttargs.pop('type')
+            __BUTTONS.append(ttk.Button(__window, **__buttargs))
         
     for __butt in __BUTTONS:
         __butt.pack(side='right', padx=5, pady=5, ipadx=5, ipady=5)
 
 
-def send_dialog(dtype: str, title: str, message: str, wraplenght: int = 400, **kw):
+def send_dialog(dtype: str, title: str, message: str, wraplenght: int = 400, root_of: tk.Tk | tk.Toplevel = root, **kw):
     try:
-        __SendDialogHiddenResponsive(dtype, title, message, wraplenght, kw.get('overwrite_font', SUBTITLE))
+        __SendDialogHiddenResponsive(dtype, title, message, wraplenght, kw.get('overwrite_font', SUBTITLE), root_of)
         
     except FileNotFoundError:
         return 10
+    
+    except __DialogErrorHappenedGeneralHidden:
+        return 12
+    
+    except KeyError:
+        return 15
 
 
-def send_dialog_with_buttons(dtype: str, title: str, message: str, button_args: list[dict[str, Any]], wraplenght: int = 400, **kw):
+def send_dialog_with_buttons(dtype: str, title: str, message: str, button_args: list[dict[str, Any]], wraplenght: int = 400, root_of: tk.Tk | tk.Toplevel = root, **kw):
     try:
-        __SendDialogHiddenResponsiveButtons(button_args, dtype, title, message, wraplenght, kw.get('overwrite_font', SUBTITLE))
+        __SendDialogHiddenResponsiveButtons(button_args, dtype, title, message, wraplenght, kw.get('overwrite_font', SUBTITLE), root_of)
         
     except FileNotFoundError:
         return 9
+    
+    except __DialogErrorHappenedGeneralHidden:
+        return 13
+    
+    except __InvalidButtonAction:
+        return 14
+    
+    except KeyError:
+        return 16
 
 
 def change_to_database(index: int):
@@ -326,18 +361,16 @@ play_img = resize_image(
 play_tk = ImageTk.PhotoImage(play_img)
 
 play_butt = ttk.Button(sidebar, image=play_tk, width=50, command=lambda:
-    send_dialog_with_buttons('yellow-light', 'Not Implemented Yet', str(random.choices(("Don't worry, we'll have DoomMapGuesser before GTA 6 xD", "Don't worry, DoomMapGuesser v2.0 is coming soon"), weights=(20, 80), k=1)[0]), [
+    send_dialog_with_buttons('upload', 'Not Implemented Yet', "Don't worry, DoomMapGuesser v2.0 is coming soon.\nThis dialog serves only to showcase the new Dialog with Buttons, as well as DoomMapGuesser's icon library (which are... ahem... icons stolen from Windows...).\nMost of these icons won't be used in the final version and expect some of them to get removed along the way.", [
         {
-            "text": "Shut Up!",
-            "command": "TYPE_DUPLICATE"            
+            "text": "Close Dialog Box",
+            "command": "TYPE_CLOSE",
+            "type": "PRIMARY"
         },
         {
-            "text": "I SAID SHUT UP!",
-            "command": "TYPE_CLOSE"
-        },
-        {
-            "text": "Gen",
-            "command": generate_new_screenshot
+            "text": "Learn More",
+            "command": lambda: send_dialog('clock', "What is there to learn more?", "We'll have DoomMapGuesser v2.0.0 before GTA VI lol"),
+            "type": "DEFAULT"
         }
     ]))
 
@@ -355,5 +388,7 @@ main_frame.grid(column=1, row=0)
 root.tk.call("source", os.path.join(THEME_PATH))
 style = ttk.Style(root)
 style.theme_use(f"sun-valley-{settings.theme}")
+style.configure('TButton', font=SECONDARY_BUTTON)
+style.configure('Primary.TButton', font=PRIMARY_BUTTON, foreground='cyan' if settings.theme == 'dark' else 'blue')
 
 root.mainloop()
