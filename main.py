@@ -63,6 +63,8 @@ def __SendDialogHiddenResponsive(*args):
     
     __window.bind('<Button-1>', __StopResponsiveAndHideMessage)
     __window.bind('<Button-3>', __StopResponsiveAndHideMessage)
+    
+    __window.wait_window()
 
 
 def __SendDialogHiddenResponsiveButtons(button_args: list[dict[str, Any]], *args):
@@ -137,6 +139,8 @@ def __SendDialogHiddenResponsiveButtons(button_args: list[dict[str, Any]], *args
         
     for __butt in __BUTTONS:
         __butt.pack(side='right', padx=5, pady=5, ipadx=5, ipady=5)
+        
+    __window.wait_window()
 
 
 root = tk.Tk()
@@ -320,19 +324,75 @@ class __DialogErrorHappenedGeneralHidden(Exception): ...
 class __InvalidButtonAction(Exception): ...
 
 
-
-def change_to_database(index: int):
-    global CUR_DB
+class Database:
+    # TODO: databases!!!!!!
+    def __init__(self, source: str):
+        self._SOURCE = source
+        self._DB = {}
+        self._INDEX = None
     
-    CUR_DB = index
+    def search(self):
+        for index, db in enumerate(DATABASES, 0):
+            if db[1] == self._SOURCE:
+                self._INDEX = index
+                break
     
-    if settings.offline_mode:
-        if not DATABASES[index][2].startswith(('http://', 'https://', 'www.')):
-            send_dialog('error', 'Invalid URL', "...") # TODO       
+    def get(self) -> None | int:
+        db = get_database(self._SOURCE, __ErrorHandler)
 
+        if isinstance(db, int):
+            return db
+        
+        self._DB = db
+        
+    def verify(self):
+        # [!?] Rule 1: if WARRENS is defined, HELL_KEEP must also be
+        w = self._DB.get('WARRENS', None)
+        hk = self._DB.get('HELL_KEEP', None)
+        
+        if [w, hk].count(None) == 1:
+            return __ErrorHandler(19, "The database structure is not correct. WARRENS and HELL_KEEP require each other, so the user might leave both undefined or define both, but cannot define only one of them.")
+            
+        # [!?] Rule 2: overall structure should be correct
+        if self._DB.get('struct', None) is None:
+            return __ErrorHandler(20, "Missing the whole main component in the database. The key matching the main component is 'struct'.")
+        
+        if not isinstance(self._DB['struct'], dict):
+            return __ErrorHandler(20, "The main component of the database must be a dictionary (or object, using JSOn terms).")
+        
+        for k1, v1 in self._DB['struct'].items(): # [i] going thru the games
+            if not isinstance(k1, str) or not isinstance(v1, dict):
+                return __ErrorHandler(20, "Games should be strings and should match a dictionary (episodes).")
+            
+            for k2, v2 in v1.items(): # [i] going thru the episodes
+                if not isinstance(k2, str) or not isinstance(v2, dict):
+                    return __ErrorHandler(20, "Episodes should be strings and should match a dictionary (maps).")
+                
+                for k3, v3 in v2.items(): # [i] going thru the maps
+                    if not isinstance(k3, str) or not isinstance(v3, dict):
+                        return __ErrorHandler(20, "In the databases, DOOM maps should be strings and should match a dictionary (individual map info).")
+                
+                    if not isinstance(v3.get('screenshots'), list) or not all(isinstance(item, str) for item in v3['screenshots']):
+                        return __ErrorHandler(22, "A list of URLs pointing to screenshots must be the match for the key 'screenshots'.")
+                    
+                    if len(v3['screenshots']) < 1:
+                        return __ErrorHandler(23, "A list of URLs pointing to screenshots must be the match for the key 'screenshots'.\nIn this case, it is empty, which is not allowed.")
+                    
+                    secrets = v3.get('secrets'), int
+                    
+                    if not isinstance(secrets, int):
+                        return __ErrorHandler(22, "An integer between 0 and 99, both ends included, must be the match for the key 'secrets'.")
+
+                    if -1 < secrets < 100:
+                        print('good range')
+                        
+                    else:
+                        return __ErrorHandler(25, "An integer between 0 and 99, both ends included, must be the match for the key 'secrets'.")
+
+        return 0 # [i] it cool
 
 def generate_new_screenshot():
-    raise NotImplementedError('TODO')
+    return __ErrorHandler(11, "Not Implemented.")
 
 
 def setup_play_screen():
@@ -383,17 +443,16 @@ play_img = resize_image(
 play_tk = ImageTk.PhotoImage(play_img)
 
 play_butt = ttk.Button(sidebar, image=play_tk, width=50, command=lambda:
-    send_dialog_with_buttons('cmd', 'Not Implemented Yet', "Don't worry, DoomMapGuesser v2.0 is coming soon.\nThis dialog serves only to showcase the new Dialog with Buttons, as well as DoomMapGuesser's icon library (which are... ahem... icons stolen from Windows...).\nMost of these icons won't be used in the final version and expect some of them to get removed along the way.", [
+    send_dialog_with_buttons('users', 'Not Implemented Yet', "Don't worry, DoomMapGuesser v2.0 is coming soon.\nThis dialog serves only to showcase the new Dialog with Buttons, as well as DoomMapGuesser's icon library (which are... ahem... icons stolen from Windows...).\nMost of these icons won't be used in the final version and expect some of them to get removed along the way.", [
         {
-            "text": "Close Dialog Box",
+            "text": "Got it!",
             "command": "TYPE_CLOSE",
             "type": "PRIMARY",
         },
         {
             "text": "Learn More",
-            "command": lambda: send_dialog('calculator', "What is there to learn more?", "We'll have DoomMapGuesser v2.0.0 before GTA VI lol"),
-            "type": "DEFAULT",
-            "js": True
+            "command": lambda: send_dialog('cttune', "What is there to learn more?", "We'll have DoomMapGuesser v2.0.0 before GTA VI lol"),
+            "type": "DEFAULT"
         }
     ]))
 

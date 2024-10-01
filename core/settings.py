@@ -5,9 +5,15 @@
 """
 
 import json
+import sys
 from typing import Any
 
 UNRETRIEVABLE = MISSING = NULL = None # [<] random variables cuz why not??
+
+# pylint: disable=W0718
+
+
+class StrictModeError(Exception): ... # [<] teachers be like :|
 
 
 class SettingsObject:
@@ -36,9 +42,44 @@ class SettingsObject:
             self.load()
         
     def load(self) -> None:
-        with open(self._PATH, 'r', encoding='utf-8') as f:
-            self._SETTINGS = json.load(f)
-
+        try:
+            with open(self._PATH, 'r', encoding='utf-8') as f:
+                self._SETTINGS = json.load(f)
+                
+        except FileNotFoundError as e:
+            self._HANDLER(44, f"FATAL ERROR:\nSettings file could not be found!\n{e}")
+            sys.exit()
+            
+        except PermissionError as e:
+            self._HANDLER(43, f"FATAL ERROR:\nMissing permissions to read the settings file\n{e}")
+            sys.exit()
+            
+        except UnicodeError as e:
+            self._HANDLER(42, f"FATAL ERROR:\nSystem failed to translate the Unicode characters in the settings file\n{e}")
+            sys.exit()
+            
+        except json.JSONDecodeError as e:
+            self._HANDLER(1, f"FATAL ERROR:\nJSON file could not be parsed correctly.\n{e}")    
+            sys.exit()
+            
+        except Exception as e:
+            self._HANDLER(3, f"FATAL ERROR:\nUnknown error when attempting to parse the settings.\n{e}")
+            sys.exit()
+        
+        it_happened = False # [i] variable that indicates whether an expected key is... gone... (this sounds stupid)
+        
+        for ek in ("theme", "databases", "imageRatio", "imageWidth", "widthIsHeight", "checkUpdates", "autoUpdateLevel", "excludeRule", "seasonalEasterEggs"):
+            if ek not in self._SETTINGS:
+                it_happened = True
+                self._HANDLER(2, f"FATAL ERROR:\nMissing a key in the settings file.\nMissing key:\n'{ek}'")
+                continue
+            
+            continue
+        
+        if it_happened:
+            print('Program cannot handle missing key. Please review settings file.')
+            sys.exit()   
+        
     def save_settings(self, **kw) -> None:
         """
         ## save_settings
@@ -47,8 +88,7 @@ class SettingsObject:
         :param indent: how many spaces as indentation *(int, defaults to 4)*
         """
         
-        with open(self._PATH, 'w', encoding='utf-8') as f:
-            json.dump(self._SETTINGS, f, indent=kw.get("indent", 4))
+        self.dump_settings(self._SETTINGS, indent=kw.get('indent', 4))
             
     def dump_settings(self, obj: dict, **kw) -> None:
         """
@@ -59,12 +99,32 @@ class SettingsObject:
         :param indent: how many spaces as indentation *(int, defaults to 4)*
         """
         
-        if 'overwrite' in kw:
-            obj = kw['overwrite']
+        obj = kw.get(kw['overwrite'], obj)
         
-        with open(self._PATH, 'w', encoding='utf-8') as f:
-            json.dump(obj, f, indent=kw.get("indent", 4))
+        try:
+            with open(self._PATH, 'w', encoding='utf-8') as f:
+                json.dump(obj, f, indent=kw.get("indent", 4))
+        
+        except FileNotFoundError as e:
+            self._HANDLER(44, f"FATAL ERROR:\nSettings file could not be found!\n{e}")
+            sys.exit()
             
+        except PermissionError as e:
+            self._HANDLER(43, f"FATAL ERROR:\nMissing permissions to write to the settings file\n{e}")
+            sys.exit()
+            
+        except UnicodeError as e:
+            self._HANDLER(42, f"FATAL ERROR:\nSystem failed to translate the Unicode characters\n{e}")
+            sys.exit()
+            
+        except json.JSONDecodeError as e:
+            self._HANDLER(1, f"FATAL ERROR:\nJSON file could not be parsed correctly\n{e}")    
+            sys.exit()
+            
+        except Exception as e:
+            self._HANDLER(3, f"FATAL ERROR:\nUnknown error when attempting to write to the settings\n{e}")
+            sys.exit()
+
     @property
     def databases(self) -> list[list[str, str, str]]:
         return self._SETTINGS['databases']
