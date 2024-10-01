@@ -5,12 +5,13 @@
 """
 
 import json
+from typing import Any
 
 UNRETRIEVABLE = MISSING = NULL = None # [<] random variables cuz why not??
 
 
 class SettingsObject:
-    def __init__(self, given_path: str, *_, initial_settings: dict[str, int | bool | str | list[list[str, str, str]]] | None = None, **kw) -> None:
+    def __init__(self, given_path: str, *_, handler: Any, initial_settings: dict[str, int | bool | str | list[list[str, str, str]]] | None = None, **kw) -> None:
         """
         # SettingsObject
 
@@ -27,6 +28,7 @@ class SettingsObject:
         """
         
         self._PATH = kw.get('overwrite', given_path)
+        self._HANDLER = handler
         self._SETTINGS: dict[str, int | bool | str | list[list[str, str, str]] | None] = initial_settings
         self._BE_STRICT = kw.get('strict', True)
         
@@ -107,14 +109,6 @@ class SettingsObject:
         self._SETTINGS['theme'] = value
     
     @property
-    def offline_mode(self) -> bool:
-        return self._SETTINGS['offlineMode']
-    
-    @offline_mode.setter
-    def offline_mode(self, value: bool):
-        self._SETTINGS['offlineMode'] = value
-    
-    @property
     def image_ratio(self) -> bool:
         return self._SETTINGS['imageRatio']
     
@@ -152,14 +146,6 @@ class SettingsObject:
     @check_for_updates_on_startup.setter
     def check_for_updates_on_startup(self, value: bool):
         self._SETTINGS['checkUpdates'] = value
-        
-    @property
-    def skip_downloaded_db_warning(self) -> bool:
-        return self._SETTINGS['skipDatabaseWarning']
-    
-    @skip_downloaded_db_warning.setter
-    def skip_downloaded_db_warning(self, value: bool):
-        self._SETTINGS['skipDatabaseWarning'] = value
 
     @property
     def autoupdate(self) -> bool:
@@ -249,7 +235,7 @@ class SettingsObject:
             if not isinstance(value, (int, str, list, bool)):
                 raise ValueError('can only assign int, str, list[str] or boolean using SettingsObject.__setitem__')
             
-            if key not in ("theme", "offlineMode", "databases", "imageRatio", "imageWidth", "widthIsHeight", "checkUpdates", "seasonalEasterEggs", "excludeRule", "skipDatabaseWarning", "autoUpdateLevel"):
+            if key not in ("theme", "databases", "imageRatio", "imageWidth", "widthIsHeight", "checkUpdates", "seasonalEasterEggs", "excludeRule", "autoUpdateLevel"):
                 raise KeyError('strict mode in SettingsObject does not allow for assigning new keys')
             
         self._SETTINGS[key] = value

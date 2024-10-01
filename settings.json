@@ -1,12 +1,10 @@
 {
     "theme": 0,
-    "offlineMode": false,
     "databases": [],
     "imageRatio": "detect",
     "imageWidth": 500,
     "widthIsHeight": false,
     "checkUpdates": true,
-    "skipDatabaseWarning": false,
     "autoUpdateLevel": 0,
     "excludeRule": null,
     "seasonalEasterEggs": 1
