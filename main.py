@@ -9,9 +9,9 @@ import os
 import sys
 import simple_webbrowser
 from PIL import ImageTk, Image
-from core import level_db, scrapper, utils
+from core import level_db, utils
+from core.database_handler import get_database
 from core.settings import SettingsObject
-from core.database_handler import LOCAL, get_database
 import math
 import io
 import requests
@@ -29,7 +29,172 @@ ICONS_PATH = os.path.join(ASSETS_PATH, 'icons')
 LOGO_PATH: str = os.path.join(ASSETS_PATH, "full_logo.png")
 THEME_PATH: str = os.path.join(ASSETS_PATH, 'sv.tcl')
 
-settings = SettingsObject(CONFIG_PATH)
+def __SendDialogHiddenResponsive(*args):
+    def __StopResponsiveAndHideMessage(*_):
+        args[5].focus_force()
+        
+        try:
+            __window.destroy()
+            
+        except Exception as e:
+            raise __DialogErrorHappenedGeneralHidden(f'__StopResponsiveAndHideMessage failed to eliminate the message with id {id(__window)}') from e
+
+    __window = tk.Toplevel(args[5])
+    __window.focus_force()
+    __window.resizable(False, False)
+    
+    apply_theme_to_titlebar(__window, settings)
+    
+    __old_icon = Image.open(os.path.join(ICONS_PATH, "universal", f"{args[0].lower()}.png"))
+    
+    __icon_img = resize_image(
+        image=__old_icon,
+        wanted_width=100,
+    )
+    
+    __window.__icon = ImageTk.PhotoImage(image=__icon_img)
+    
+    __window.title(args[1])
+    __icon_widget = ttk.Label(__window, image=__window.__icon)
+    __label = ttk.Label(__window, text=args[2], wraplength=args[3], font=args[4])
+    
+    __icon_widget.grid(column=0, row=0, padx=5, pady=5, ipadx=5, ipady=5)
+    __label.grid(column=1, row=0, padx=5, pady=5, ipadx=5, ipady=5)
+    
+    __window.bind('<Button-1>', __StopResponsiveAndHideMessage)
+    __window.bind('<Button-3>', __StopResponsiveAndHideMessage)
+
+
+def __SendDialogHiddenResponsiveButtons(button_args: list[dict[str, Any]], *args):
+    def __StopResponsiveAndHideMessageButtons(*_):
+        args[5].focus_force()
+        
+        try:
+            __window.destroy()
+            
+        except Exception as e:
+            raise __DialogErrorHappenedGeneralHidden(f'__StopResponsiveAndHideMessageButtons failed to eliminate the message with id {id(__window)}') from e
+
+    __window = tk.Toplevel(args[5])
+    __window.focus_force()
+    __window.resizable(False, False)
+    
+    apply_theme_to_titlebar(__window, settings)
+    
+    __old_icon = Image.open(os.path.join(ICONS_PATH, "universal", f"{args[0].lower()}.png"))
+    
+    __icon_img = resize_image(
+        image=__old_icon,
+        wanted_width=100,
+    )
+    
+    __window.__icon = ImageTk.PhotoImage(image=__icon_img)
+    
+    __window.title(args[1])
+    
+    __frame = ttk.Frame(__window)
+    __icon_widget = ttk.Label(__frame, image=__window.__icon)
+    __label = ttk.Label(__frame, text=args[2], wraplength=args[3], font=args[4])
+    
+    __icon_widget.grid(column=0, row=0, padx=5, pady=5, ipadx=5, ipady=5)
+    __label.grid(column=1, row=0, padx=5, pady=5, ipadx=5, ipady=5)
+    
+    __frame.pack(padx=5, pady=5, ipadx=5, ipady=5)
+    
+    __BUTTONS = []
+    
+    for __buttargs in button_args:        
+        __com = __buttargs.get('command', None)
+        
+        if __com is not None:        
+            match __com:
+                case 'TYPE_DUPLICATE':
+                    raise __InvalidButtonAction('action TYPE_DUPLICATE was removed for being useless')
+                    
+                case 'TYPE_CLOSE':
+                    __com = __StopResponsiveAndHideMessageButtons
+
+                case _:
+                    print('Special Command Received Well')
+                    
+            __buttargs.pop('command')
+            
+            if __buttargs['type'] == 'PRIMARY':            
+                __BUTTONS.append(PrimaryButton(__window, command=__com, **__buttargs))
+
+            else:
+                __buttargs.pop('type')      
+                __BUTTONS.append(ttk.Button(__window, command=__com, **__buttargs))
+            
+            continue
+        
+        if __buttargs['type'] == 'PRIMARY':            
+            __BUTTONS.append(PrimaryButton(__window, **__buttargs))
+
+        else:
+            __buttargs.pop('type')
+            __BUTTONS.append(ttk.Button(__window, **__buttargs))
+        
+    for __butt in __BUTTONS:
+        __butt.pack(side='right', padx=5, pady=5, ipadx=5, ipady=5)
+
+
+root = tk.Tk()
+root.title(f'DoomMapGuesser by MF366 - {VERSION}')
+root.geometry('900x700')
+
+
+def __ErrorHandler(code: int, message: str, **kw):
+    try:
+        __SendDialogHiddenResponsive(kw.get('icon', 'error'), f"DoomMapGuesser - Error #{code}", f"=== Error #{code} ===\n{message}", kw.get('wraplenght', 400), kw.get('overwrite_font', SUBTITLE), kw.get('root_of', root))
+
+    except FileNotFoundError as e:
+        return __ErrorHandler(10, f"Invalid icon. A valid icon bust be the name of an image - without extension - that is inside:\nassets/icons/universal\n\n{e}")
+    
+    except __DialogErrorHappenedGeneralHidden as e:
+        return __ErrorHandler(12, f"Failed to close dialog by left/right clicking.\n{e}")
+    
+    except KeyError as e:
+        return __ErrorHandler(15, f"An invalid key was parsed.\n{e}")
+    
+    return code
+    
+
+def send_dialog(dtype: str, title: str, message: str, wraplenght: int = 400, root_of: tk.Tk | tk.Toplevel = root, **kw):
+    try:
+        __SendDialogHiddenResponsive(dtype, title, message, wraplenght, kw.get('overwrite_font', SUBTITLE), root_of)
+        
+    except FileNotFoundError as e:
+        return __ErrorHandler(10, f"Invalid icon. A valid icon bust be the name of an image - without extension - that is inside:\nassets/icons/universal\n\n{e}")
+    
+    except __DialogErrorHappenedGeneralHidden as e:
+        return __ErrorHandler(12, f"Failed to close dialog by left/right clicking.\n{e}")
+    
+    except KeyError as e:
+        return __ErrorHandler(15, f"An invalid key was parsed.\n{e}")
+
+
+def send_dialog_with_buttons(dtype: str, title: str, message: str, button_args: list[dict[str, Any]], wraplenght: int = 400, root_of: tk.Tk | tk.Toplevel = root, **kw):
+    try:
+        __SendDialogHiddenResponsiveButtons(button_args, dtype, title, message, wraplenght, kw.get('overwrite_font', SUBTITLE), root_of)
+        
+    except FileNotFoundError as e:
+        return __ErrorHandler(9, f"Invalid icon. A valid icon bust be the name of an image - without extension - that is inside:\nassets/icons/universal\n\n{e}")
+    
+    except __DialogErrorHappenedGeneralHidden as e:
+        return __ErrorHandler(13, f"Failed to close dialog.\n{e}")
+    
+    except __InvalidButtonAction:
+        return __ErrorHandler(14, "Action 'TYPE_DUPLICATE' is no longer allowed when constructing a Button for a button dialog.")
+    
+    except KeyError as e:
+        return __ErrorHandler(16, f"An invalid key was parsed.\nIt's very likely this was raised by a badly constructed Button.\n{e}")
+    
+    except tk.TclError as e:
+        return __ErrorHandler(46, f"An invalid argument was parsed by tkinter.\nIt's very likely this was raised by a badly constructed Button.\n{e}")
+
+
+settings = SettingsObject(CONFIG_PATH, handler=__ErrorHandler)
 
 
 nl = utils.nullish_operator
@@ -111,10 +276,6 @@ def resize_image(image: Image.Image, wanted_width: int, width_is_height: bool = 
 autodetect_theme(settings)
 MAIN_ICON_PATH: str = os.path.join(ASSETS_PATH, f"full_icon_{settings.theme}.ico")
 
-root = tk.Tk()
-root.title(f'DoomMapGuesser by MF366 - {VERSION}')
-root.geometry('900x700')
-
 if sys.platform == 'win32':
     root.iconbitmap(default=MAIN_ICON_PATH)
 
@@ -158,145 +319,6 @@ class PrimaryButton(ttk.Button):
 class __DialogErrorHappenedGeneralHidden(Exception): ...
 class __InvalidButtonAction(Exception): ...
 
-
-def __SendDialogHiddenResponsive(*args):
-    def __StopResponsiveAndHideMessage(*_):
-        args[5].focus_force()
-        
-        try:
-            __window.destroy()
-            
-        except Exception as e:
-            raise __DialogErrorHappenedGeneralHidden(f'__StopResponsiveAndHideMessage failed to eliminate the message with id {id(__window)}') from e
-
-    __window = tk.Toplevel(args[5])
-    __window.focus_force()
-    __window.resizable(False, False)
-    
-    apply_theme_to_titlebar(__window, settings)
-    
-    __old_icon = Image.open(os.path.join(ICONS_PATH, "universal", f"{args[0].lower()}.png"))
-    
-    __icon_img = resize_image(
-        image=__old_icon,
-        wanted_width=100,
-    )
-    
-    __window.__icon = ImageTk.PhotoImage(image=__icon_img)
-    
-    __window.title(args[1])
-    __icon_widget = ttk.Label(__window, image=__window.__icon)
-    __label = ttk.Label(__window, text=args[2], wraplength=args[3], font=args[4])
-    
-    __icon_widget.grid(column=0, row=0, padx=5, pady=5, ipadx=5, ipady=5)
-    __label.grid(column=1, row=0, padx=5, pady=5, ipadx=5, ipady=5)
-    
-    __window.bind('<Button-1>', __StopResponsiveAndHideMessage)
-    __window.bind('<Button-3>', __StopResponsiveAndHideMessage)
-
-def __SendDialogHiddenResponsiveButtons(button_args: list[dict[str, Any]], *args):
-    def __StopResponsiveAndHideMessageButtons(*_):
-        args[5].focus_force()
-        
-        try:
-            __window.destroy()
-            
-        except Exception as e:
-            raise __DialogErrorHappenedGeneralHidden(f'__StopResponsiveAndHideMessageButtons failed to eliminate the message with id {id(__window)}') from e
-
-    __window = tk.Toplevel(args[5])
-    __window.focus_force()
-    __window.resizable(False, False)
-    
-    apply_theme_to_titlebar(__window, settings)
-    
-    __old_icon = Image.open(os.path.join(ICONS_PATH, "universal", f"{args[0].lower()}.png"))
-    
-    __icon_img = resize_image(
-        image=__old_icon,
-        wanted_width=100,
-    )
-    
-    __window.__icon = ImageTk.PhotoImage(image=__icon_img)
-    
-    __window.title(args[1])
-    
-    __frame = ttk.Frame(__window)
-    __icon_widget = ttk.Label(__frame, image=__window.__icon)
-    __label = ttk.Label(__frame, text=args[2], wraplength=args[3], font=args[4])
-    
-    __icon_widget.grid(column=0, row=0, padx=5, pady=5, ipadx=5, ipady=5)
-    __label.grid(column=1, row=0, padx=5, pady=5, ipadx=5, ipady=5)
-    
-    __frame.pack(padx=5, pady=5, ipadx=5, ipady=5)
-    
-    __BUTTONS = []
-    
-    for __buttargs in button_args:        
-        __com = __buttargs.get('command', None)
-        
-        if __com is not None:        
-            match __com:
-                case 'TYPE_DUPLICATE':
-                    raise __InvalidButtonAction('action TYPE_DUPLICATE was removed for being useless')
-                    
-                case 'TYPE_CLOSE':
-                    __com = __StopResponsiveAndHideMessageButtons
-
-                case _:
-                    print('Special Command Received Well')
-                    
-            __buttargs.pop('command')
-            
-            if __buttargs['type'] == 'PRIMARY':            
-                __BUTTONS.append(PrimaryButton(__window, command=__com, **__buttargs))
-
-            else:
-                __buttargs.pop('type')      
-                __BUTTONS.append(ttk.Button(__window, command=__com, **__buttargs))
-            
-            continue
-        
-        if __buttargs['type'] == 'PRIMARY':            
-            __BUTTONS.append(PrimaryButton(__window, **__buttargs))
-
-        else:
-            __buttargs.pop('type')
-            __BUTTONS.append(ttk.Button(__window, **__buttargs))
-        
-    for __butt in __BUTTONS:
-        __butt.pack(side='right', padx=5, pady=5, ipadx=5, ipady=5)
-
-
-def send_dialog(dtype: str, title: str, message: str, wraplenght: int = 400, root_of: tk.Tk | tk.Toplevel = root, **kw):
-    try:
-        __SendDialogHiddenResponsive(dtype, title, message, wraplenght, kw.get('overwrite_font', SUBTITLE), root_of)
-        
-    except FileNotFoundError:
-        return 10
-    
-    except __DialogErrorHappenedGeneralHidden:
-        return 12
-    
-    except KeyError:
-        return 15
-
-
-def send_dialog_with_buttons(dtype: str, title: str, message: str, button_args: list[dict[str, Any]], wraplenght: int = 400, root_of: tk.Tk | tk.Toplevel = root, **kw):
-    try:
-        __SendDialogHiddenResponsiveButtons(button_args, dtype, title, message, wraplenght, kw.get('overwrite_font', SUBTITLE), root_of)
-        
-    except FileNotFoundError:
-        return 9
-    
-    except __DialogErrorHappenedGeneralHidden:
-        return 13
-    
-    except __InvalidButtonAction:
-        return 14
-    
-    except KeyError:
-        return 16
 
 
 def change_to_database(index: int):
@@ -361,16 +383,17 @@ play_img = resize_image(
 play_tk = ImageTk.PhotoImage(play_img)
 
 play_butt = ttk.Button(sidebar, image=play_tk, width=50, command=lambda:
-    send_dialog_with_buttons('upload', 'Not Implemented Yet', "Don't worry, DoomMapGuesser v2.0 is coming soon.\nThis dialog serves only to showcase the new Dialog with Buttons, as well as DoomMapGuesser's icon library (which are... ahem... icons stolen from Windows...).\nMost of these icons won't be used in the final version and expect some of them to get removed along the way.", [
+    send_dialog_with_buttons('cmd', 'Not Implemented Yet', "Don't worry, DoomMapGuesser v2.0 is coming soon.\nThis dialog serves only to showcase the new Dialog with Buttons, as well as DoomMapGuesser's icon library (which are... ahem... icons stolen from Windows...).\nMost of these icons won't be used in the final version and expect some of them to get removed along the way.", [
         {
             "text": "Close Dialog Box",
             "command": "TYPE_CLOSE",
-            "type": "PRIMARY"
+            "type": "PRIMARY",
         },
         {
             "text": "Learn More",
-            "command": lambda: send_dialog('clock', "What is there to learn more?", "We'll have DoomMapGuesser v2.0.0 before GTA VI lol"),
-            "type": "DEFAULT"
+            "command": lambda: send_dialog('calculator', "What is there to learn more?", "We'll have DoomMapGuesser v2.0.0 before GTA VI lol"),
+            "type": "DEFAULT",
+            "js": True
         }
     ]))
 

@@ -1,28 +1,12 @@
 import json
+from typing import Any
 import requests
-
-LOCAL = OFFLINE = 'local'
 
 
 class StatusCodeNot200(Exception): ...
 
 
-def __get_local_database(path: str) -> dict | int:
-    try:
-        with open(file=path, mode='r', encoding='utf-8') as f:
-            return json.load(f)
-        
-    except UnicodeError:
-        return 1
-    
-    except FileNotFoundError:
-        return 2
-    
-    except json.JSONDecodeError:
-        return 3
-
-
-def __get_online_database(url: str) -> dict | int:
+def __get_online_database(url: str, handler: Any) -> dict | int:
     try:
         response = requests.get(url=url, allow_redirects=False, timeout=1)
         
@@ -34,25 +18,25 @@ def __get_online_database(url: str) -> dict | int:
         return database
         
     except StatusCodeNot200:
-        return 4
+        return handler(4, f"The Status Code of URL...\n\n{url}\n\n...is not 200, meaning DoomMapGuesser is unable to collect the database.")
     
     except (requests.exceptions.ConnectionError, requests.exceptions.HTTPError):
-        return 5
+        return handler(5, "Unable to connect via HTTP. This might be caused by a bad Internet connection.")
     
     except (TimeoutError, requests.exceptions.Timeout):
-        return 6
+        return handler(6, f"The databases's URL...\n\n({url})\n\n...took too long to respond to the GET request.")
     
     except (requests.exceptions.InvalidURL, requests.exceptions.InvalidSchema, requests.exceptions.MissingSchema):
-        return 7
+        return handler(7, f"The URL...\n\n({url})\n\n...is invalid.")
 
 
-def get_database(source: str, mode: str = 'online') -> dict | int:
+def get_database(source: str, error_handler: Any, mode: str = 'online') -> dict | int:
     match mode:
         case 'local' | 'offline':
-            return __get_local_database(source)
+            return error_handler(45, "Local databases are not allowed anymore.")
         
         case _:
-            return __get_online_database(source)
+            return __get_online_database(source, error_handler)
     
-    return 8 # [!] Unknown error
+    return error_handler(8, f"An unknown error happened when trying to access database located at:\n\n{source}\n\nMake sure the URL is correct.") # [!] Unknown error
 
