@@ -9,7 +9,7 @@ import os
 import sys
 import simple_webbrowser
 from PIL import ImageTk, Image
-from core import level_db, utils
+from core import level_db, utils_constants
 from core.database_handler import get_database
 from core.settings import SettingsObject
 import math
@@ -17,10 +17,9 @@ import io
 import requests
 import json
 
+# pylint: disable=W0212
+# pylint: disable=W0603
 
-ONLINE = 'online'
-
-VERSION = 'v2.0.0'
 LATEST = None
 
 CONFIG_PATH: str = os.path.join(os.path.dirname(__file__), "settings.json")
@@ -29,15 +28,16 @@ ICONS_PATH = os.path.join(ASSETS_PATH, 'icons')
 LOGO_PATH: str = os.path.join(ASSETS_PATH, "full_logo.png")
 THEME_PATH: str = os.path.join(ASSETS_PATH, 'sv.tcl')
 
-def __SendDialogHiddenResponsive(*args):
-    def __StopResponsiveAndHideMessage(*_):
+
+def __send_responsive_dialog(*args):
+    def __stop_dialog(*_):
         args[5].focus_force()
         
         try:
             __window.destroy()
             
         except Exception as e:
-            raise __DialogErrorHappenedGeneralHidden(f'__StopResponsiveAndHideMessage failed to eliminate the message with id {id(__window)}') from e
+            raise __CloseDialogError(f'__stop_dialog failed to eliminate the message with id {id(__window)}') from e
 
     __window = tk.Toplevel(args[5])
     __window.focus_force()
@@ -61,21 +61,21 @@ def __SendDialogHiddenResponsive(*args):
     __icon_widget.grid(column=0, row=0, padx=5, pady=5, ipadx=5, ipady=5)
     __label.grid(column=1, row=0, padx=5, pady=5, ipadx=5, ipady=5)
     
-    __window.bind('<Button-1>', __StopResponsiveAndHideMessage)
-    __window.bind('<Button-3>', __StopResponsiveAndHideMessage)
+    __window.bind('<Button-1>', __stop_dialog)
+    __window.bind('<Button-3>', __stop_dialog)
     
     __window.wait_window()
 
 
-def __SendDialogHiddenResponsiveButtons(button_args: list[dict[str, Any]], *args):
-    def __StopResponsiveAndHideMessageButtons(*_):
+def __send_responsive_dialog_with_buttons(button_args: list[dict[str, Any]], *args):
+    def __stop_dialog_hide_buttons(*_):
         args[5].focus_force()
         
         try:
             __window.destroy()
             
         except Exception as e:
-            raise __DialogErrorHappenedGeneralHidden(f'__StopResponsiveAndHideMessageButtons failed to eliminate the message with id {id(__window)}') from e
+            raise __CloseDialogError(f'__stop_dialog_hide_buttons failed to eliminate the message with id {id(__window)}') from e
 
     __window = tk.Toplevel(args[5])
     __window.focus_force()
@@ -114,7 +114,7 @@ def __SendDialogHiddenResponsiveButtons(button_args: list[dict[str, Any]], *args
                     raise __InvalidButtonAction('action TYPE_DUPLICATE was removed for being useless')
                     
                 case 'TYPE_CLOSE':
-                    __com = __StopResponsiveAndHideMessageButtons
+                    __com = __stop_dialog_hide_buttons
 
                 case _:
                     print('Special Command Received Well')
@@ -144,67 +144,67 @@ def __SendDialogHiddenResponsiveButtons(button_args: list[dict[str, Any]], *args
 
 
 root = tk.Tk()
-root.title(f'DoomMapGuesser by MF366 - {VERSION}')
+root.title(f'DoomMapGuesser by MF366 - {utils_constants.VERSION}')
 root.geometry('900x700')
 
 
-def __ErrorHandler(code: int, message: str, **kw):
+def handle_error(code: int, message: str, **kw) -> int:
     try:
-        __SendDialogHiddenResponsive(kw.get('icon', 'error'), f"DoomMapGuesser - Error #{code}", f"=== Error #{code} ===\n{message}", kw.get('wraplenght', 400), kw.get('overwrite_font', SUBTITLE), kw.get('root_of', root))
+        __send_responsive_dialog(kw.get('icon', 'error'), f"DoomMapGuesser - Error #{code}", f"=== Error #{code} ===\n{message}", kw.get('wraplenght', 400), kw.get('overwrite_font', SUBTITLE), kw.get('root_of', root))
 
     except FileNotFoundError as e:
-        return __ErrorHandler(10, f"Invalid icon. A valid icon bust be the name of an image - without extension - that is inside:\nassets/icons/universal\n\n{e}")
+        return handle_error(10, f"Invalid icon. A valid icon bust be the name of an image - without extension - that is inside:\nassets/icons/universal\n\n{e}")
     
-    except __DialogErrorHappenedGeneralHidden as e:
-        return __ErrorHandler(12, f"Failed to close dialog by left/right clicking.\n{e}")
+    except __CloseDialogError as e:
+        return handle_error(12, f"Failed to close dialog by left/right clicking.\n{e}")
     
     except KeyError as e:
-        return __ErrorHandler(15, f"An invalid key was parsed.\n{e}")
+        return handle_error(15, f"An invalid key was parsed.\n{e}")
     
     return code
     
 
-def send_dialog(dtype: str, title: str, message: str, wraplenght: int = 400, root_of: tk.Tk | tk.Toplevel = root, **kw):
+def send_dialog(dtype: str, title: str, message: str, wraplenght: int = 400, root_of: tk.Tk | tk.Toplevel = root, **kw) -> int | None:
     try:
-        __SendDialogHiddenResponsive(dtype, title, message, wraplenght, kw.get('overwrite_font', SUBTITLE), root_of)
+        __send_responsive_dialog(dtype, title, message, wraplenght, kw.get('overwrite_font', SUBTITLE), root_of)
         
     except FileNotFoundError as e:
-        return __ErrorHandler(10, f"Invalid icon. A valid icon bust be the name of an image - without extension - that is inside:\nassets/icons/universal\n\n{e}")
+        return handle_error(10, f"Invalid icon. A valid icon bust be the name of an image - without extension - that is inside:\nassets/icons/universal\n\n{e}")
     
-    except __DialogErrorHappenedGeneralHidden as e:
-        return __ErrorHandler(12, f"Failed to close dialog by left/right clicking.\n{e}")
+    except __CloseDialogError as e:
+        return handle_error(12, f"Failed to close dialog by left/right clicking.\n{e}")
     
     except KeyError as e:
-        return __ErrorHandler(15, f"An invalid key was parsed.\n{e}")
+        return handle_error(15, f"An invalid key was parsed.\n{e}")
 
 
-def send_dialog_with_buttons(dtype: str, title: str, message: str, button_args: list[dict[str, Any]], wraplenght: int = 400, root_of: tk.Tk | tk.Toplevel = root, **kw):
+def send_dialog_with_buttons(dtype: str, title: str, message: str, button_args: list[dict[str, Any]], wraplenght: int = 400, root_of: tk.Tk | tk.Toplevel = root, **kw) -> int | None:
     try:
-        __SendDialogHiddenResponsiveButtons(button_args, dtype, title, message, wraplenght, kw.get('overwrite_font', SUBTITLE), root_of)
+        __send_responsive_dialog_with_buttons(button_args, dtype, title, message, wraplenght, kw.get('overwrite_font', SUBTITLE), root_of)
         
     except FileNotFoundError as e:
-        return __ErrorHandler(9, f"Invalid icon. A valid icon bust be the name of an image - without extension - that is inside:\nassets/icons/universal\n\n{e}")
+        return handle_error(9, f"Invalid icon. A valid icon bust be the name of an image - without extension - that is inside:\nassets/icons/universal\n\n{e}")
     
-    except __DialogErrorHappenedGeneralHidden as e:
-        return __ErrorHandler(13, f"Failed to close dialog.\n{e}")
+    except __CloseDialogError as e:
+        return handle_error(13, f"Failed to close dialog.\n{e}")
     
     except __InvalidButtonAction:
-        return __ErrorHandler(14, "Action 'TYPE_DUPLICATE' is no longer allowed when constructing a Button for a button dialog.")
+        return handle_error(14, "Action 'TYPE_DUPLICATE' is no longer allowed when constructing a Button for a button dialog.")
     
     except KeyError as e:
-        return __ErrorHandler(16, f"An invalid key was parsed.\nIt's very likely this was raised by a badly constructed Button.\n{e}")
+        return handle_error(16, f"An invalid key was parsed.\nIt's very likely this was raised by a badly constructed Button.\n{e}")
     
     except tk.TclError as e:
-        return __ErrorHandler(46, f"An invalid argument was parsed by tkinter.\nIt's very likely this was raised by a badly constructed Button.\n{e}")
+        return handle_error(46, f"An invalid argument was parsed by tkinter.\nIt's very likely this was raised by a badly constructed Button.\n{e}")
 
 
-settings = SettingsObject(CONFIG_PATH, handler=__ErrorHandler)
+settings = SettingsObject(CONFIG_PATH, handler=handle_error)
 
 
-nl = utils.nullish_operator
+nl = utils_constants.nullish_operator
 
 
-def autodetect_theme(configs: SettingsObject):    
+def autodetect_theme(configs: SettingsObject) -> None:    
     if configs.theme == 'auto':
         if sys.platform != 'win32':
             configs.theme = 2 # [i] default to dark if not available
@@ -222,7 +222,7 @@ def autodetect_theme(configs: SettingsObject):
     configs.save_settings()
 
 
-def apply_theme_to_titlebar(window: tk.Tk, configs: SettingsObject):
+def apply_theme_to_titlebar(window: tk.Tk, configs: SettingsObject) -> None:
     if sys.platform != 'win32':
         return # [i] completely ignore this
     
@@ -291,11 +291,6 @@ main_frame = ttk.Frame(root, width=820)
 database_bar = ttk.Frame(main_frame, height=80)
 game_frame = ttk.Frame(main_frame)
 
-DATABASES = settings.databases.copy()
-DATABASES.insert(0, ["Default Database", "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/ss_db.json", "NONE"])
-CUR_DB_INDEX = 0
-CUR_DB_DICT = {}
-
 HEADING1 = Font(root, family="SUSE ExtraBold", size=30)
 HEADING2 = Font(root, family="SUSE Bold", size=22)
 HEADING3 = Font(root, family='SUSE Semibold', size=17)
@@ -320,79 +315,266 @@ class PrimaryButton(ttk.Button):
         super().__init__(master, style='Primary.TButton', **kwargs)
 
 
-class __DialogErrorHappenedGeneralHidden(Exception): ...
+class __CloseDialogError(Exception): ...
 class __InvalidButtonAction(Exception): ...
 
 
+CUR_DB = None
+
+
 class Database:
-    # TODO: databases!!!!!!
     def __init__(self, source: str):
+        """
+        # Database
+        
+        :param source: the URL from where the database should be aquired *(str)*
+        """
+        
         self._SOURCE = source
         self._DB = {}
         self._INDEX = None
     
-    def search(self):
+    def search(self) -> bool:
+        """
+        # Database.search
+
+        Search for the stored database in the list of databases.
+
+        Returns:
+            bool: the database was found
+        """
+        
         for index, db in enumerate(DATABASES, 0):
-            if db[1] == self._SOURCE:
+            if db == self:
                 self._INDEX = index
-                break
+                return True # [i] it's in
+        
+        return False # [i] it's NOT in
     
     def get(self) -> None | int:
-        db = get_database(self._SOURCE, __ErrorHandler)
+        """
+        # Database.get
+
+        Returns:
+            int: the error code *(None if the database was correctly obtained)*
+        """
+        
+        db = get_database(self._SOURCE, handle_error)
 
         if isinstance(db, int):
             return db
         
-        self._DB = db
+        self._DB = db 
+    
+    def use(self) -> None:
+        """
+        # Database.use
         
-    def verify(self):
-        # [!?] Rule 1: if WARRENS is defined, HELL_KEEP must also be
+        Use this database as the one to generate screenshots from.
+        """
+        
+        global CUR_DB
+        
+        self.add()
+        self.search()
+        
+        CUR_DB = self._DB.copy()
+    
+    def add(self, **kw) -> None:
+        """
+        # Database.add
+
+        Add or update the database information in the used DBs.
+        
+        :param index: the index to insert in
+        """
+        
+        if self.search():
+            DATABASES[self._INDEX] = [self._DB.get('TITLE', self._SOURCE), self._SOURCE]
+        
+        else:
+            if kw.get('index', None) is None:
+                DATABASES.append([
+                    self._DB.get('TITLE', self._SOURCE),
+                    self._SOURCE
+                ])
+                
+            else:
+                DATABASES.insert(kw.get('index'), [
+                    self._DB.get('TITLE', self._SOURCE),
+                    self._SOURCE
+                ])
+        
+    def verify(self) -> int:
+        """
+        # Database.verify
+
+        Use 3 different rulesets to verify whether this database is usable or not.
+        
+        Returns 0 if it is.
+        
+        It is possible the database has badly placed screenshots but these are indentified during the game. They are not removed and neither is the database.
+
+        Returns:
+            int: error code associated with what makes this DB invalid *(integer 0 means the DB is valid)*
+        """
+        
+        # [!?] Rule 1: if WARRENS is defined, HELL_KEEP must also be defined
         w = self._DB.get('WARRENS', None)
         hk = self._DB.get('HELL_KEEP', None)
         
         if [w, hk].count(None) == 1:
-            return __ErrorHandler(19, "The database structure is not correct. WARRENS and HELL_KEEP require each other, so the user might leave both undefined or define both, but cannot define only one of them.")
+            self._DB = {}
+            return handle_error(19, "The database structure is not correct. WARRENS and HELL_KEEP require each other, so the user might leave both undefined or define both, but cannot define only one of them.")
             
         # [!?] Rule 2: overall structure should be correct
         if self._DB.get('struct', None) is None:
-            return __ErrorHandler(20, "Missing the whole main component in the database. The key matching the main component is 'struct'.")
+            self._DB = {}
+            return handle_error(20, "Missing the whole main component in the database. The key matching the main component is 'struct'.")
         
         if not isinstance(self._DB['struct'], dict):
-            return __ErrorHandler(20, "The main component of the database must be a dictionary (or object, using JSOn terms).")
+            self._DB = {}
+            return handle_error(20, "The main component of the database must be a dictionary (or object, using JSOn terms).")
         
         for k1, v1 in self._DB['struct'].items(): # [i] going thru the games
             if not isinstance(k1, str) or not isinstance(v1, dict):
-                return __ErrorHandler(20, "Games should be strings and should match a dictionary (episodes).")
+                self._DB = {}
+                return handle_error(20, "Games should be strings and should match a dictionary (episodes).")
             
             for k2, v2 in v1.items(): # [i] going thru the episodes
                 if not isinstance(k2, str) or not isinstance(v2, dict):
-                    return __ErrorHandler(20, "Episodes should be strings and should match a dictionary (maps).")
+                    self._DB = {}
+                    return handle_error(20, "Episodes should be strings and should match a dictionary (maps).")
                 
                 for k3, v3 in v2.items(): # [i] going thru the maps
                     if not isinstance(k3, str) or not isinstance(v3, dict):
-                        return __ErrorHandler(20, "In the databases, DOOM maps should be strings and should match a dictionary (individual map info).")
+                        self._DB = {}
+                        return handle_error(20, "In the databases, DOOM maps should be strings and should match a dictionary (individual map info).")
                 
                     if not isinstance(v3.get('screenshots'), list) or not all(isinstance(item, str) for item in v3['screenshots']):
-                        return __ErrorHandler(22, "A list of URLs pointing to screenshots must be the match for the key 'screenshots'.")
+                        self._DB = {}
+                        return handle_error(22, "A list of URLs pointing to screenshots must be the match for the key 'screenshots'.")
                     
                     if len(v3['screenshots']) < 1:
-                        return __ErrorHandler(23, "A list of URLs pointing to screenshots must be the match for the key 'screenshots'.\nIn this case, it is empty, which is not allowed.")
+                        self._DB = {}
+                        return handle_error(23, "A list of URLs pointing to screenshots must be the match for the key 'screenshots'.\nIn this case, it is empty, which is not allowed.")
                     
                     secrets = v3.get('secrets'), int
                     
                     if not isinstance(secrets, int):
-                        return __ErrorHandler(22, "An integer between 0 and 99, both ends included, must be the match for the key 'secrets'.")
+                        self._DB = {}
+                        return handle_error(22, "An integer between 0 and 99, both ends included, must be the match for the key 'secrets'.")
 
                     if -1 < secrets < 100:
                         print('good range')
                         
                     else:
-                        return __ErrorHandler(25, "An integer between 0 and 99, both ends included, must be the match for the key 'secrets'.")
+                        self._DB = {}
+                        return handle_error(25, "An integer between 0 and 99, both ends included, must be the match for the key 'secrets'.")
+
+        # [!?] Rule 3: WARRENS and HELL_KEEP are pointing to valid maps
+        if w is None or hk is None:
+            w_list = w.split('///')
+            hk_list = hk.split('///')
+            
+            # [!?] Rule 3.1: Lenght is 3 - game, episode, map
+            if len(w_list) != 3:
+                self._DB = {}
+                return handle_error(19, "WARRENS should be a string in format:\nGAME///EPISODE///MAP")
+            
+            if len(hk_list) != 3:
+                self._DB = {}
+                return handle_error(19, "HELL_KEEP should be a string in format:\nGAME///EPISODE///MAP")
+            
+            # [!?] Rule 3.2: Game, episode and map are valid
+            if self._DB.get(w_list[0], None) is None:
+                self._DB = {}
+                return handle_error(19, "WARRENS is pointing to an invalid game.")
+            
+            if self._DB[w_list[0]].get(w_list[1], None) is None:
+                self._DB = {}
+                return handle_error(19, f"WARRENS is poiting to an invalid episode inside of game {w_list[0]}")
+            
+            if self._DB[w_list[0]][w_list[1]].get(w_list[2], None) is None:
+                self._DB = {}
+                return handle_error(19, f"WARRENS is poiting to an invalid map inside of game {w_list[0]}, episode {w_list[1]}")
+            
+            # --
+            
+            if self._DB.get(w_list[0], None) is None:
+                self._DB = {}
+                return handle_error(19, "HELL_KEEP is pointing to an invalid game.")
+            
+            if self._DB[w_list[0]].get(w_list[1], None) is None:
+                self._DB = {}
+                return handle_error(19, f"HELL_KEEP is poiting to an invalid episode inside of game {w_list[0]}")
+            
+            if self._DB[w_list[0]][w_list[1]].get(w_list[2], None) is None:
+                self._DB = {}
+                return handle_error(19, f"HELL_KEEP is poiting to an invalid map inside of game {w_list[0]}, episode {w_list[1]}")
 
         return 0 # [i] it cool
+        # [!] NOTE: it's possible a database has wrong images - however, images are tested at the time they are generated
+
+    @property
+    def database(self) -> dict | None:
+        """
+        # Database.database
+
+        Returns:
+            dict: the database a dict *(None means the database hasn't been obtained or is invalid)*
+        """
+        
+        if not self._DB:
+            return None
+        
+        return self._DB
+    
+    @property
+    def index(self) -> int | None:
+        """
+        # Database.index
+
+        Returns:
+            int: the index that matches the database in DATABASES *(None if not in DATABASES)*
+        """
+        
+        if not self.search():
+            return None
+        
+        return self._INDEX
+    
+
+def add_database(source: str, *_, index: int | None = None):
+    new_database = Database(source)
+    new_database.get()
+    
+    if new_database.database is None:
+        return False
+    
+    if new_database.verify() != 0:
+        return False
+    
+    new_database.search() # [i] this can be omited as .add() already does a search
+    new_database.add(index=index)
+    
+    return Database
+
+
+DATABASES: list[Database] = []
+
+for i in settings.databases:
+    add_database(i)
+
+if not add_database(utils_constants.DEFAULT_DB_URL, index=0):
+    handle_error(47, "CRITICAL ERROR!!!\nUnable to obtain/verify the default database.")
+    sys.exit()
+
+DATABASES[0].use()
+
 
 def generate_new_screenshot():
-    return __ErrorHandler(11, "Not Implemented.")
+    return handle_error(11, "Not Implemented.")
 
 
 def setup_play_screen():
@@ -471,6 +653,7 @@ root.tk.call("source", os.path.join(THEME_PATH))
 style = ttk.Style(root)
 style.theme_use(f"sun-valley-{settings.theme}")
 style.configure('TButton', font=SECONDARY_BUTTON)
-style.configure('Primary.TButton', font=PRIMARY_BUTTON, foreground='cyan' if settings.theme == 'dark' else 'blue')
+style.configure('Primary.TButton', font=PRIMARY_BUTTON, foreground='#5bcff1' if settings.theme == 'dark' else '#040929')
+style.configure('TEntry', font=SUBTITLE, background="#0e0e0e" if settings.theme == 'light' else '#9c9c9c', foreground='black' if settings.theme == 'dark' else 'white')
 
 root.mainloop()

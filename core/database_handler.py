@@ -30,7 +30,7 @@ def __get_online_database(url: str, handler: Any) -> dict | int:
         return handler(7, f"The URL...\n\n({url})\n\n...is invalid.")
     
     except UnicodeError as e:
-            return handler(17, f"Failed to translate the website's data to valid Unicode.\n{e}")
+        return handler(17, f"Failed to translate the website's data to valid Unicode.\n{e}")
         
     except json.JSONDecodeError as e:
         return handler(18, f"Failed to decode JSON data from database stored at:\n\n{url}\n\nAre you sure this URL points to a JSON/raw JSON object?\n{e}")

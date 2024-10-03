@@ -1,6 +1,9 @@
 from typing import Any
 
 
+DEFAULT_DB_URL = "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/ss_db.json"
+VERSION = 'v2.0.0'
+
 def nullish_operator(value: Any, new_value: Any) -> Any:
     """
     # nullish_operator
