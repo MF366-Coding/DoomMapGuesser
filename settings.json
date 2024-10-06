@@ -6,6 +6,6 @@
     "widthIsHeight": false,
     "checkUpdates": true,
     "autoUpdateLevel": 0,
-    "excludeRule": null,
+    "excludeRule": "both",
     "seasonalEasterEggs": 1
 }
