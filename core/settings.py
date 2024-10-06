@@ -47,23 +47,23 @@ class SettingsObject:
                 self._SETTINGS = json.load(f)
                 
         except FileNotFoundError as e:
-            self._HANDLER(44, f"FATAL ERROR:\nSettings file could not be found!\n{e}")
+            self._HANDLER(44, f"FATAL ERROR\nSettings file could not be found!\n{e}")
             sys.exit()
             
         except PermissionError as e:
-            self._HANDLER(43, f"FATAL ERROR:\nMissing permissions to read the settings file\n{e}")
+            self._HANDLER(43, f"FATAL ERROR\nMissing permissions to read the settings file\n{e}")
             sys.exit()
             
         except UnicodeError as e:
-            self._HANDLER(42, f"FATAL ERROR:\nSystem failed to translate the Unicode characters in the settings file\n{e}")
+            self._HANDLER(42, f"FATAL ERROR\nSystem failed to translate the Unicode characters in the settings file\n{e}")
             sys.exit()
             
         except json.JSONDecodeError as e:
-            self._HANDLER(1, f"FATAL ERROR:\nJSON file could not be parsed correctly.\n{e}")    
+            self._HANDLER(1, f"FATAL ERROR\nJSON file could not be parsed correctly.\n{e}")    
             sys.exit()
             
         except Exception as e:
-            self._HANDLER(3, f"FATAL ERROR:\nUnknown error when attempting to parse the settings.\n{e}")
+            self._HANDLER(3, f"FATAL ERROR\nUnknown error when attempting to parse the settings.\n{e}")
             sys.exit()
         
         it_happened = False # [i] variable that indicates whether an expected key is... gone... (this sounds stupid)
@@ -71,7 +71,7 @@ class SettingsObject:
         for ek in ("theme", "databases", "imageRatio", "imageWidth", "widthIsHeight", "checkUpdates", "autoUpdateLevel", "excludeRule", "seasonalEasterEggs"):
             if ek not in self._SETTINGS:
                 it_happened = True
-                self._HANDLER(2, f"FATAL ERROR:\nMissing a key in the settings file.\nMissing key:\n'{ek}'")
+                self._HANDLER(2, f"FATAL ERROR\nMissing a key in the settings file.\nMissing key:\n'{ek}'")
                 continue
             
             continue
@@ -106,23 +106,23 @@ class SettingsObject:
                 json.dump(obj, f, indent=kw.get("indent", 4))
         
         except FileNotFoundError as e:
-            self._HANDLER(44, f"FATAL ERROR:\nSettings file could not be found!\n{e}")
+            self._HANDLER(44, f"FATAL ERROR\nSettings file could not be found!\n{e}")
             sys.exit()
             
         except PermissionError as e:
-            self._HANDLER(43, f"FATAL ERROR:\nMissing permissions to write to the settings file\n{e}")
+            self._HANDLER(43, f"FATAL ERROR\nMissing permissions to write to the settings file\n{e}")
             sys.exit()
             
         except UnicodeError as e:
-            self._HANDLER(42, f"FATAL ERROR:\nSystem failed to translate the Unicode characters\n{e}")
+            self._HANDLER(42, f"FATAL ERROR\nSystem failed to translate the Unicode characters\n{e}")
             sys.exit()
             
         except json.JSONDecodeError as e:
-            self._HANDLER(1, f"FATAL ERROR:\nJSON file could not be parsed correctly\n{e}")    
+            self._HANDLER(1, f"FATAL ERROR\nJSON file could not be parsed correctly\n{e}")    
             sys.exit()
             
         except Exception as e:
-            self._HANDLER(3, f"FATAL ERROR:\nUnknown error when attempting to write to the settings\n{e}")
+            self._HANDLER(3, f"FATAL ERROR\nUnknown error when attempting to write to the settings\n{e}")
             sys.exit()
 
     @property
@@ -260,6 +260,9 @@ class SettingsObject:
         
         :param obj: the object to save - if not specified, will save itself
         :param object: same as above but this one does not take priority
+        
+        Returns:
+            str: either 'warrens', 'hellkeep' or 'both' depending on what the user chose *(None if set to show none)*
         """
         
         __obj = kw.get('obj', None)
@@ -269,8 +272,8 @@ class SettingsObject:
         
         a: str | None = self._SETTINGS['excludeRule']
         
-        if a in (None, 'null', 0, 'empty'):
-            self._SETTINGS['excludeRule'] = 'none'
+        if a not in ('warrens', 'hell_keep', 'both'):
+            self._SETTINGS['excludeRule'] = None
             
         if __obj is None:
             self.save_settings()
@@ -282,6 +285,9 @@ class SettingsObject:
 
     @exclude_rule_for_e3m1_e3m9.setter
     def exclude_rule_for_e3m1_e3m9(self, value: str | None):
+        if value not in ('warrens', 'hell_keep', 'both'):
+            value = None
+
         self._SETTINGS['excludeRule'] = value
         
     def __getitem__(self, key: str) -> int | bool | str | list[str] | None:        
