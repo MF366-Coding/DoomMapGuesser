@@ -417,6 +417,8 @@ class Database:
         Returns:
             int: error code *(number 0 if everything went right)*
         """
+        
+        global CUR_DB
             
         if not self.search():
             return handle_error(49, "This database is not being used by DoomMapGuesser in any way.")
@@ -518,35 +520,58 @@ class Database:
                 return handle_error(19, "HELL_KEEP should be a string in format:\nGAME///EPISODE///MAP")
             
             # [!?] Rule 3.2: Game, episode and map are valid
-            if self._DB.get(w_list[0], None) is None:
+            if self._DB['struct'].get(w_list[0], None) is None:
                 self._DB = {}
                 return handle_error(19, "WARRENS is pointing to an invalid game.")
             
-            if self._DB[w_list[0]].get(w_list[1], None) is None:
+            if self._DB['struct'][w_list[0]].get(w_list[1], None) is None:
                 self._DB = {}
                 return handle_error(19, f"WARRENS is poiting to an invalid episode inside of game {w_list[0]}")
             
-            if self._DB[w_list[0]][w_list[1]].get(w_list[2], None) is None:
+            if self._DB['struct'][w_list[0]][w_list[1]].get(w_list[2], None) is None:
                 self._DB = {}
                 return handle_error(19, f"WARRENS is poiting to an invalid map inside of game {w_list[0]}, episode {w_list[1]}")
             
             # --
             
-            if self._DB.get(w_list[0], None) is None:
+            if self._DB['struct'].get(w_list[0], None) is None:
                 self._DB = {}
                 return handle_error(19, "HELL_KEEP is pointing to an invalid game.")
             
-            if self._DB[w_list[0]].get(w_list[1], None) is None:
+            if self._DB['struct'][w_list[0]].get(w_list[1], None) is None:
                 self._DB = {}
                 return handle_error(19, f"HELL_KEEP is poiting to an invalid episode inside of game {w_list[0]}")
             
-            if self._DB[w_list[0]][w_list[1]].get(w_list[2], None) is None:
+            if self._DB['struct'][w_list[0]][w_list[1]].get(w_list[2], None) is None:
                 self._DB = {}
                 return handle_error(19, f"HELL_KEEP is poiting to an invalid map inside of game {w_list[0]}, episode {w_list[1]}")
 
         return 0 # [i] it cool
         # [!] NOTE: it's possible a database has wrong images - however, images are tested at the time they are generated
 
+    def generate(self) -> list[str]:
+        """
+        # Database.generate
+        
+        ## Alias
+            - **Database.gen**
+
+        Returns:
+            list[str]: a list of 3 generated choices in order - Game, Episode, Map
+        """
+        
+        choices: list[str] = [
+            random.choice(self._DB['struct'])
+        ]
+        
+        choices.append(random.choice(self._DB['struct'][choices[0]]))
+        choices.append(random.choice(self._DB['struct'][choices[0]][choices[1]]))
+        # [<] no need to append the details, that can be done manually after
+        
+        return choices.copy()
+    
+    gen = generate
+    
     @property
     def database(self) -> dict | None:
         """
@@ -560,6 +585,26 @@ class Database:
             return None
         
         return self._DB
+    
+    @property
+    def structure(self) -> dict | None:
+        """
+        # Database.structure
+        
+        ## Alias
+            - **Database.struct**
+            - **Database.database['struct']**
+
+        Returns:
+            dict: the inner game/ep./map structure in the database *(None means the database hasn't been obtained or is invalid)*
+        """
+        
+        if not self._DB:
+            return None
+        
+        return self._DB['struct']
+    
+    struct: property = structure
     
     @property
     def index(self) -> int | None:
@@ -600,7 +645,7 @@ class Database:
         self._DB[item] = value
 
 
-def add_database(source: str, *_, index: int | None = None):
+def add_database(source: str, *_, index: int | None = None) -> Database | bool:
     new_database = Database(source)
     new_database.get()
     
@@ -629,7 +674,15 @@ DATABASES[0].use()
 
 
 def generate_new_screenshot() -> int:
+    TODO = '''
+    here are the plans:
+    - get the generated details
+    - handle them according to the exclusion rule
+    - save the details in a global variable, as well as their placeholders
+    - and then we got good stuff!!!
+    '''
     
+    del TODO
     
     return handle_error(11, "Not Implemented.")
 
