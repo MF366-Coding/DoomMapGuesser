@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter.font import Font
 from tkinter import ttk
-from typing import Any
+from typing import Any, Self
 import darkdetect
 import pywinstyles
 import random
@@ -378,7 +378,7 @@ class Database:
         self.add()
         self.search()
         
-        CUR_DB = self._DB.copy()
+        CUR_DB: Self = self
     
     def add(self, **kw) -> None:
         """
@@ -388,6 +388,9 @@ class Database:
         
         :param index: the index to insert in
         """
+        
+        if kw.get('index', 1) == 0:
+            return handle_error(50, "Cannot replace the Default Database in the list.", icon='warning')
         
         if self.search():
             DATABASES[self._INDEX] = [self._DB.get('TITLE', self._SOURCE), self._SOURCE]
@@ -404,6 +407,34 @@ class Database:
                     self._DB.get('TITLE', self._SOURCE),
                     self._SOURCE
                 ])
+
+    def remove(self) -> int:
+        """
+        # Database.remove
+
+        Remove the database information in the used DBs and set the used DB to the default if this one is being used.
+        
+        Returns:
+            int: error code *(number 0 if everything went right)*
+        """
+            
+        if not self.search():
+            return handle_error(49, "This database is not being used by DoomMapGuesser in any way.")
+        
+        if self._INDEX == 0:
+            return handle_error(48, "Unable to remove the Default Database.", icon='warning')
+        
+        if CUR_DB == self:
+            CUR_DB = DATABASES[0]
+            
+        try:
+            DATABASES.pop(self._INDEX)
+            
+        except IndexError as e:
+            return handle_error(51, f"Unable to remove the database from use.\n{e}")        
+        
+        else:
+            return 0
         
     def verify(self) -> int:
         """
@@ -543,7 +574,31 @@ class Database:
             return None
         
         return self._INDEX
+
+    def __eq__(self, value) -> bool:
+        if isinstance(value, dict):
+            return self._DB == value
+            
+        return self._DB == value.database
     
+    def __ne__(self, value) -> bool:
+        return not self.__eq__(value)
+    
+    def __str__(self) -> str:
+        return str(self._DB)
+    
+    def __len__(self) -> int:
+        return len(self._DB)
+    
+    def __iter__(self):
+        return self._DB.__iter__()
+    
+    def __getitem__(self, item) -> Any:
+        return self._DB[item]
+    
+    def __setitem__(self, item, value) -> None:
+        self._DB[item] = value
+
 
 def add_database(source: str, *_, index: int | None = None):
     new_database = Database(source)
@@ -567,13 +622,15 @@ for i in settings.databases:
     add_database(i)
 
 if not add_database(utils_constants.DEFAULT_DB_URL, index=0):
-    handle_error(47, "CRITICAL ERROR!!!\nUnable to obtain/verify the default database.")
+    handle_error(47, "CRITICAL ERROR\nUnable to obtain/verify the default database.")
     sys.exit()
 
 DATABASES[0].use()
 
 
-def generate_new_screenshot():
+def generate_new_screenshot() -> int:
+    
+    
     return handle_error(11, "Not Implemented.")
 
 
