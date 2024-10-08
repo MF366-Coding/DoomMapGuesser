@@ -324,6 +324,7 @@ CUR_DATA: list[str] | None = None
 PH_DATA: list[str] | None = None
 POINTS: int = 0
 GEN_SF: int = 0
+CUR_IMAGE = None
 
 
 class Database:
@@ -829,6 +830,29 @@ def generate_new_screenshot(**kw) -> None:
     GEN_SF += 4
     CUR_DATA = data
     return
+
+
+def generate_new_image(**kw) -> str:
+    """
+    # generate_new_image
+
+    Get an image from the selected data.
+    
+    :param database: overwrite for CUR_DB *(should be of type Database)*
+
+    Returns:
+        str: the link to the new image *(it also saves it as a global so it might not be necessary to get the returned value)*
+    """
+    
+    global CUR_IMAGE
+    
+    db: Database = kw.get('database', CUR_DB)
+
+    x = random.choice(db.structure[CUR_DATA[0]][CUR_DATA[1]][CUR_DATA[2]]['screenshots'].remove(CUR_IMAGE))
+    CUR_IMAGE = x
+    del x
+    
+    return CUR_IMAGE
 
 
 def setup_play_screen():
