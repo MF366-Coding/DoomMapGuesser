@@ -884,7 +884,7 @@ def generate_new_round(*_, first: dict[str, Any] = None, second: dict[str, Any] 
     PLAY_ITEMS.cur_img = resize_image(c, settings.image_width, settings.use_width_as_height, settings.image_ratio)
 
 
-def update_game_widgets():
+def update_game_widgets(_):
     return handle_error(11, "Not Implemented!")
 
 
