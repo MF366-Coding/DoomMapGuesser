@@ -10,10 +10,9 @@ import sys
 import simple_webbrowser
 from PIL import ImageTk, Image
 from core import level_db, utils_constants
-from core.database_handler import get_database
+from core.database_handler import get_database, get_image
 from core.settings import SettingsObject
 import math
-import io
 import requests
 import json
 
@@ -324,7 +323,7 @@ CUR_DATA: list[str] | None = None
 PH_DATA: list[str] | None = None
 POINTS: int = 0
 GEN_SF: int = 0
-CUR_IMAGE = None
+CUR_IMG_LINK = None
 
 
 class Database:
@@ -772,9 +771,7 @@ if not add_database(utils_constants.DEFAULT_DB_URL, index=0):
 DATABASES[0].use()
 
 
-def generate_new_screenshot(**kw) -> None:
-    global CUR_DATA, GEN_SF
-
+def generate_new_map_data(**kw) -> list[str] | int:
     db: Database = kw.get('database', CUR_DB)
 
     warrens: list[str] | None = db.warrens
@@ -783,18 +780,15 @@ def generate_new_screenshot(**kw) -> None:
     # [*] 1st Case: WARRENS and HELL_KEEP are undefined
     # [i] this code assumes Database.verify() has been ran
     if warrens is None and hell_keep is None:
-        GEN_SF += 4
-        CUR_DATA = db.generate()
-        return
+        return db.generate()
 
     # [*] 2nd Case: WARRENS and HELL_KEEP can be both shown - in this case, we don't need to do anything
     if settings.exclude_rule_for_e3m1_e3m9 == 'both':
-        GEN_SF += 4
-        CUR_DATA = db.generate()
-        return
+        return db.generate()
 
     is_warrens = False
     is_hk = False
+    data = None
 
     # [*] 3rd Case: we loop around 20 times, which should be enough to get rid of WARRENS and HELL_KEEP generated data
     # [i] ofc that if we get valid data before the last loop, we end it, duh?!
@@ -823,16 +817,21 @@ def generate_new_screenshot(**kw) -> None:
                 if is_warrens is False:
                     break
 
-            case _:
+            case None | 'null' | 'none':
                 if is_hk is False and is_warrens is False:
                     break
+                
+            case _:
+                data = None
+                continue
+            
+    if data is None:
+        return handle_error(52, "Failed to get an image that respects the chosen exclusion rule for HELL_KEEP and WARRENS.")
 
-    GEN_SF += 4
-    CUR_DATA = data
-    return
+    return data
 
 
-def generate_new_image(**kw) -> str:
+def generate_new_image(data: list[str], **kw) -> str:
     """
     # generate_new_image
 
@@ -841,21 +840,65 @@ def generate_new_image(**kw) -> str:
     :param database: overwrite for CUR_DB *(should be of type Database)*
 
     Returns:
-        str: the link to the new image *(it also saves it as a global so it might not be necessary to get the returned value)*
+        str: the link to the new image
     """
-    
-    global CUR_IMAGE
     
     db: Database = kw.get('database', CUR_DB)
 
-    x = random.choice(db.structure[CUR_DATA[0]][CUR_DATA[1]][CUR_DATA[2]]['screenshots'].remove(CUR_IMAGE))
-    CUR_IMAGE = x
-    del x
+    x = random.choice(db.structure[data[0]][data[1]][data[2]]['screenshots'].remove(CUR_IMG_LINK))
+    return x
+
+
+def get_selected_image(img_link: str, **kw) -> Image.Image | int:
+    return get_image(img_link, handle_error, **kw)
+
+
+def generate_new_round(*_, first: dict[str, Any] = None, second: dict[str, Any] = None, third: dict[str, Any] = None):
+    global CUR_DATA, GEN_SF, CUR_IMG_LINK
     
-    return CUR_IMAGE
+    # [<] ik one letter vars are not good but screw it
+    if first is None:
+        a = generate_new_map_data()
+        
+    else:   
+        a = generate_new_map_data(**first)
+    
+    if isinstance(a, int):
+        return # [!?] Cancel the operation, since an error happened
+    
+    if second is None:
+        b = generate_new_image(a)
+    
+    else:
+        b = generate_new_image(b, **second)    
+    
+    if third is None:
+        c = get_selected_image(b)
+    
+    else:
+        c = get_selected_image(b, **third)
+
+    GEN_SF += 4
+    CUR_DATA = a
+    CUR_IMG_LINK = b
+    PLAY_ITEMS.cur_img = resize_image(c, settings.image_width, settings.use_width_as_height, settings.image_ratio)
+
+
+def update_game_widgets():
+    return handle_error(11, "Not Implemented!")
 
 
 def setup_play_screen():
+    global CUR_DATA, POINTS, GEN_SF, CUR_IMG_LINK, PH_DATA
+    
+    PH_DATA = [random.randint(10, 99) for _ in range(3)]
+    CUR_DATA = PH_DATA.copy()
+    
+    PLAY_ITEMS.selected_game = tk.StringVar(root, list(CUR_DB.structure.keys())[0])
+    PLAY_ITEMS.selected_episode = tk.StringVar(root, list(CUR_DB.structure[PLAY_ITEMS.selected_game].keys())[0])
+    PLAY_ITEMS.selected_map = tk.StringVar(root, list(CUR_DB.structure[PLAY_ITEMS.selected_game][PLAY_ITEMS.selected_episode].keys())[0])
+    PLAY_ITEMS.selected_secrets = tk.IntVar(root, 0)
+
     PLAY_ITEMS.heading = ttk.Label(PLAY_ITEMS, text='Play', font=HEADING1)
     PLAY_ITEMS.f1 = ttk.Frame(PLAY_ITEMS)
     PLAY_ITEMS.f2 = ttk.Frame(PLAY_ITEMS)
@@ -884,13 +927,20 @@ def setup_play_screen():
     PLAY_ITEMS.img_widget = ttk.Button(PLAY_ITEMS.f1, image=PLAY_ITEMS.cur_img, command=lambda:
         send_dialog('warning', 'TODO', 'Sadly, not done yet.')) # TODO
 
-    PLAY_ITEMS.generation_butt = ttk.Button(PLAY_ITEMS.f2, text="Generate", command=lambda:
-        send_dialog('warning', 'TODO', 'Sadly, not done yet.')) # TODO
+    PLAY_ITEMS.generation_butt = ttk.Button(PLAY_ITEMS.f2, text="Generate", command=generate_new_round)
 
     PLAY_ITEMS.guessing_butt = ttk.Button(PLAY_ITEMS.f2, text='Guess', command=lambda:
         send_dialog('warning', 'TODO', 'Sadly, not done yet.')) # TODO
 
-    # TODO: after this it's just the game, episode, map and thingies
+    
+    PLAY_ITEMS.game_ch = ttk.OptionMenu(PLAY_ITEMS.f5, PLAY_ITEMS.selected_game, PLAY_ITEMS.selected_game.get(), *list(CUR_DB.structure.keys()), command=lambda:
+        update_game_widgets('game'))
+    PLAY_ITEMS.episode_ch = ttk.OptionMenu(PLAY_ITEMS.f6, PLAY_ITEMS.selected_episode, PLAY_ITEMS.selected_episode.get(), *list(CUR_DB.structure[PLAY_ITEMS.selected_game].keys()), command=lambda:
+        update_game_widgets('episode'))
+    PLAY_ITEMS.map_ch = ttk.OptionMenu(PLAY_ITEMS.f7, PLAY_ITEMS.selected_map, PLAY_ITEMS.selected_map.get(), *list(CUR_DB.structure[PLAY_ITEMS.selected_game][PLAY_ITEMS.selected_episode].keys()), command=lambda:
+        update_game_widgets('map'))
+    
+    PLAY_ITEMS.secrets_plus = None # TODO
 
 
 # [*] Sidebar Buttons
