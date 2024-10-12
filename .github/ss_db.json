@@ -1,64 +1,84 @@
 {
-    "0": [
-        "https://doomwiki.org/w/images/c/cf/E1M1_start.png",
-        "https://doomwiki.org/w/images/9/99/E1M1_armor.png",
-        "https://doomwiki.org/w/images/a/a4/E1M1_security_armor.png",
-        "https://doomwiki.org/w/images/0/03/E1M1_Security_Post.png",
-        "https://doomwiki.org/w/images/c/cc/E1M1_window.png",
-        "https://doomwiki.org/w/images/f/ff/E1M1_computer.png",
-        "https://doomwiki.org/w/images/5/5d/E1M1_behind_computer.png",
-        "https://doomwiki.org/w/images/e/ef/E1M1_zigzag.png",
-        "https://doomwiki.org/w/images/2/21/E1M1_imps.png",
-        "https://doomwiki.org/w/images/a/a4/E1M1_exit.png",
-        "https://doomwiki.org/w/images/7/7e/E1M1_exit_room.png",
-        "https://doomwiki.org/w/images/8/84/E1M1_tunnel.png",
-        "https://doomwiki.org/w/images/1/1d/E1M1_courtyard.png",
-        "https://doomwiki.org/w/images/1/1f/E1M1_shotgun.png",
-        "https://doomwiki.org/w/images/6/66/E1M1_zigzag_2.png"
-    ],
-    "1": [
-        "https://doomwiki.org/w/images/7/72/E1M2_start.png",
-        "https://doomwiki.org/w/images/6/63/E1M2_blue_stairs.png",
-        "https://doomwiki.org/w/images/7/7d/E1M2_key.png",
-        "https://doomwiki.org/w/images/6/6e/E1M2_slime_switch.png",
-        "https://doomwiki.org/w/images/d/d7/E1M2_maze_entrance.png",
-        "https://doomwiki.org/w/images/9/9c/E1M2_maze_1.png",
-        "https://doomwiki.org/w/images/e/e3/E1M2_maze_2.png",
-        "https://doomwiki.org/w/images/5/50/E1M2_slime_bridge.png",
-        "https://doomwiki.org/w/images/f/fd/E1M2_dark_lift_room.png",
-        "https://doomwiki.org/w/images/b/bd/E1M2_exit.png",
-        "https://doomwiki.org/w/images/2/27/E1M2_courtyard.png",
-        "https://doomwiki.org/w/images/9/9f/E1M2_chainsaw.png",
-        "https://doomwiki.org/w/images/1/1a/E1M2_blue_ledge.png"
-    ],
-    "2": [
-        "https://doomwiki.org/w/images/b/b8/E1M3_initial.png",
-        "https://doomwiki.org/w/images/6/61/E1M3_start.png",
-        "https://doomwiki.org/w/images/0/0f/E1M3_cellar_switch.png",
-        "https://doomwiki.org/w/images/e/e9/E1M3_slime_oval.png",
-        "https://doomwiki.org/w/images/5/59/E1M3_blue_key.png",
-        "https://doomwiki.org/w/images/6/68/E1M3_path_to_exit.png",
-        "https://doomwiki.org/w/images/d/d0/E1M3_exit_stairs.png",
-        "https://doomwiki.org/w/images/7/7e/E1M3_rocket_launcher.png",
-        "https://doomwiki.org/w/images/6/6d/E1M3_chaingun.png",
-        "https://doomwiki.org/w/images/b/b6/E1M3_start_bridge.png",
-        "https://doomwiki.org/w/images/1/10/E1M3_secret_exit_anteroom.png",
-        "https://doomwiki.org/w/images/6/69/E1M3_supercharge.png",
-        "https://doomwiki.org/w/images/3/37/E1M3_swag.png"
-    ],
-    "3": [
-        "https://doomwiki.org/w/images/f/fa/E1M4_first_room.png",
-        "https://doomwiki.org/w/images/d/d9/E1M4_second_room.png",
-        "https://doomwiki.org/w/images/2/2e/E1M4_round_room.png",
-        "https://doomwiki.org/w/images/a/a9/E1M4_maze_south.png",
-        "https://doomwiki.org/w/images/d/d8/E1M4_maze_north.png",
-        "https://doomwiki.org/w/images/d/da/E1M4_yellow_door.png",
-        "https://doomwiki.org/w/images/0/09/E1M4_exit.png",
-        "https://doomwiki.org/w/images/d/da/E1M4_wide_ledge.png",
-        "https://doomwiki.org/w/images/9/98/E1M4_not_a_swastika.png",
-        "https://doomwiki.org/w/images/d/d9/E1M4_yellow_key.png",
-        "https://doomwiki.org/w/images/6/69/E1M4_slime_river_secret.png"
-    ],
+    "HELL_KEEP": "Ultimate Doom///E3: Inferno///E3M1: Hell Keep",
+    "WARRENS": "Ultimate Doom///E3: Inferno///E3M9: Warrens",
+    "struct": {
+        "Ultimate Doom": {
+            "E1: Knee-Deep in the Dead": {
+                "E1M1: Hangar": {
+                    "screenshots": [
+                        "https://doomwiki.org/w/images/c/cf/E1M1_start.png",
+                        "https://doomwiki.org/w/images/9/99/E1M1_armor.png",
+                        "https://doomwiki.org/w/images/a/a4/E1M1_security_armor.png",
+                        "https://doomwiki.org/w/images/0/03/E1M1_Security_Post.png",
+                        "https://doomwiki.org/w/images/c/cc/E1M1_window.png",
+                        "https://doomwiki.org/w/images/f/ff/E1M1_computer.png",
+                        "https://doomwiki.org/w/images/5/5d/E1M1_behind_computer.png",
+                        "https://doomwiki.org/w/images/e/ef/E1M1_zigzag.png",
+                        "https://doomwiki.org/w/images/2/21/E1M1_imps.png",
+                        "https://doomwiki.org/w/images/a/a4/E1M1_exit.png",
+                        "https://doomwiki.org/w/images/7/7e/E1M1_exit_room.png",
+                        "https://doomwiki.org/w/images/8/84/E1M1_tunnel.png",
+                        "https://doomwiki.org/w/images/1/1d/E1M1_courtyard.png",
+                        "https://doomwiki.org/w/images/1/1f/E1M1_shotgun.png",
+                        "https://doomwiki.org/w/images/6/66/E1M1_zigzag_2.png"
+                    ],
+                    "secrets": 3
+                },
+                "E1M2: Nuclear Plant": {
+                    "screenshots": [
+                        "https://doomwiki.org/w/images/7/72/E1M2_start.png",
+                        "https://doomwiki.org/w/images/6/63/E1M2_blue_stairs.png",
+                        "https://doomwiki.org/w/images/7/7d/E1M2_key.png",
+                        "https://doomwiki.org/w/images/6/6e/E1M2_slime_switch.png",
+                        "https://doomwiki.org/w/images/d/d7/E1M2_maze_entrance.png",
+                        "https://doomwiki.org/w/images/9/9c/E1M2_maze_1.png",
+                        "https://doomwiki.org/w/images/e/e3/E1M2_maze_2.png",
+                        "https://doomwiki.org/w/images/5/50/E1M2_slime_bridge.png",
+                        "https://doomwiki.org/w/images/f/fd/E1M2_dark_lift_room.png",
+                        "https://doomwiki.org/w/images/b/bd/E1M2_exit.png",
+                        "https://doomwiki.org/w/images/2/27/E1M2_courtyard.png",
+                        "https://doomwiki.org/w/images/9/9f/E1M2_chainsaw.png",
+                        "https://doomwiki.org/w/images/1/1a/E1M2_blue_ledge.png"
+                    ],
+                    "secrets": 6
+                },
+                "E1M3: Toxin Refinery": {
+                    "screenshots": [
+                        "https://doomwiki.org/w/images/b/b8/E1M3_initial.png",
+                        "https://doomwiki.org/w/images/6/61/E1M3_start.png",
+                        "https://doomwiki.org/w/images/0/0f/E1M3_cellar_switch.png",
+                        "https://doomwiki.org/w/images/e/e9/E1M3_slime_oval.png",
+                        "https://doomwiki.org/w/images/5/59/E1M3_blue_key.png",
+                        "https://doomwiki.org/w/images/6/68/E1M3_path_to_exit.png",
+                        "https://doomwiki.org/w/images/d/d0/E1M3_exit_stairs.png",
+                        "https://doomwiki.org/w/images/7/7e/E1M3_rocket_launcher.png",
+                        "https://doomwiki.org/w/images/6/6d/E1M3_chaingun.png",
+                        "https://doomwiki.org/w/images/b/b6/E1M3_start_bridge.png",
+                        "https://doomwiki.org/w/images/1/10/E1M3_secret_exit_anteroom.png",
+                        "https://doomwiki.org/w/images/6/69/E1M3_supercharge.png",
+                        "https://doomwiki.org/w/images/3/37/E1M3_swag.png"
+                    ],
+                    "secrets": 7
+                },
+                "E1M4: Command Control": {
+                    "screenshots": [
+                        "https://doomwiki.org/w/images/f/fa/E1M4_first_room.png",
+                        "https://doomwiki.org/w/images/d/d9/E1M4_second_room.png",
+                        "https://doomwiki.org/w/images/2/2e/E1M4_round_room.png",
+                        "https://doomwiki.org/w/images/a/a9/E1M4_maze_south.png",
+                        "https://doomwiki.org/w/images/d/d8/E1M4_maze_north.png",
+                        "https://doomwiki.org/w/images/d/da/E1M4_yellow_door.png",
+                        "https://doomwiki.org/w/images/0/09/E1M4_exit.png",
+                        "https://doomwiki.org/w/images/d/da/E1M4_wide_ledge.png",
+                        "https://doomwiki.org/w/images/9/98/E1M4_not_a_swastika.png",
+                        "https://doomwiki.org/w/images/d/d9/E1M4_yellow_key.png",
+                        "https://doomwiki.org/w/images/6/69/E1M4_slime_river_secret.png"
+                    ],
+                    "secrets": 3
+                }
+            }
+        }
+    },
     "4": [
         "https://doomwiki.org/w/images/2/29/E1M5_start.png",
         "https://doomwiki.org/w/images/d/d3/E1M5_rising_walkway.png",
