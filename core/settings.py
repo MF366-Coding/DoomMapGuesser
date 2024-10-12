@@ -8,16 +8,14 @@ import json
 import sys
 from typing import Any
 
-UNRETRIEVABLE = MISSING = NULL = None # [<] random variables cuz why not??
-
 # pylint: disable=W0718
 
 
-class StrictModeError(Exception): ... # [<] teachers be like :|
+class StrictModeError(Exception): ... # [<] teachers be like :| (this was such a stupid comment, gawdamn)
 
 
 class SettingsObject:
-    def __init__(self, given_path: str, *_, handler: Any, initial_settings: dict[str, int | bool | str | list[list[str, str, str]]] | None = None, **kw) -> None:
+    def __init__(self, given_path: str, *_, handler: Any, initial_settings: dict[str, int | bool | str | float | list[list[str, str, str]]] | None = None, **kw) -> None:
         """
         # SettingsObject
 
@@ -35,7 +33,7 @@ class SettingsObject:
         
         self._PATH = kw.get('overwrite', given_path)
         self._HANDLER = handler
-        self._SETTINGS: dict[str, int | bool | str | list[list[str, str, str]] | None] = initial_settings
+        self._SETTINGS: dict[str, int | bool | str | float | list[list[str, str, str]] | None] = initial_settings
         self._BE_STRICT = kw.get('strict', True)
         
         if initial_settings is None:
@@ -68,7 +66,7 @@ class SettingsObject:
         
         it_happened = False # [i] variable that indicates whether an expected key is... gone... (this sounds stupid)
         
-        for ek in ("theme", "databases", "imageRatio", "imageWidth", "widthIsHeight", "checkUpdates", "autoUpdateLevel", "excludeRule", "seasonalEasterEggs"):
+        for ek in ("theme", "databases", "imageRatio", "imageWidth", "widthIsHeight", "checkUpdates", "autoUpdateLevel", "excludeRule", "zoomBoost", "seasonalEasterEggs"):
             if ek not in self._SETTINGS:
                 it_happened = True
                 self._HANDLER(2, f"FATAL ERROR\nMissing a key in the settings file.\nMissing key:\n'{ek}'")
@@ -200,6 +198,14 @@ class SettingsObject:
         self._SETTINGS['widthIsHeight'] = value
         
     @property
+    def zoom_boost(self) -> float:
+        return self._SETTINGS['zoomBoost']
+    
+    @zoom_boost.setter
+    def zoom_boost(self, value: float):
+        self._SETTINGS['zoomBoost'] = value
+        
+    @property
     def check_for_updates_on_startup(self) -> bool:
         return self._SETTINGS['checkUpdates']
     
@@ -290,18 +296,18 @@ class SettingsObject:
 
         self._SETTINGS['excludeRule'] = value
         
-    def __getitem__(self, key: str) -> int | bool | str | list[str] | None:        
+    def __getitem__(self, key: str) -> int | bool | str | float | list[str] | None:        
         if self._BE_STRICT:
             return self._SETTINGS[key] # [i] if there is error, there is error. this is how strict mode behaves.
         
-        return self._SETTINGS.get(key, UNRETRIEVABLE) # [i] no error!! (strict off)
+        return self._SETTINGS.get(key, None) # [i] no error!! (strict off)
     
-    def __setitem__(self, key: str, value: int | bool | str | list[str]):
+    def __setitem__(self, key: str, value: int | bool | float | str | list[str]):
         if self._BE_STRICT:
-            if not isinstance(value, (int, str, list, bool)):
+            if not isinstance(value, (int, str, float, list, bool)):
                 raise ValueError('can only assign int, str, list[str] or boolean using SettingsObject.__setitem__')
             
-            if key not in ("theme", "databases", "imageRatio", "imageWidth", "widthIsHeight", "checkUpdates", "seasonalEasterEggs", "excludeRule", "autoUpdateLevel"):
+            if key not in ("theme", "databases", "imageRatio", "imageWidth", "widthIsHeight", "checkUpdates", "seasonalEasterEggs", "excludeRule", "autoUpdateLevel", "zoomBoost"):
                 raise KeyError('strict mode in SettingsObject does not allow for assigning new keys')
             
         self._SETTINGS[key] = value

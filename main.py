@@ -16,8 +16,6 @@ import math
 import requests
 import json
 
-# pylint: disable=W0212
-# pylint: disable=W0603
 
 LATEST = None
 
@@ -301,17 +299,24 @@ THIN_TEXT = Font(root, family='SUSE Thin', size=14)
 BOLD_TEXT = Font(root, family='SUSE Medium', size=14)
 PRIMARY_BUTTON = Font(root, family='SUSE Semibold', size=12, underline=False)
 SECONDARY_BUTTON = Font(root, family='SUSE Light', size=12)
-GAME_TEXT = Font(root, family="Eternal UI", size=14)
-GAME_BOLD = Font(root, family='Eternal UI', size=14, weight='bold')
 
 PLAY_ITEMS = ttk.Frame(game_frame)
 
 
 class PrimaryButton(ttk.Button):
-    def __init__(self, master=None, **kwargs):
-        _ = kwargs.pop('type', None)
-        del _
-        super().__init__(master, style='Primary.TButton', **kwargs)
+    def __init__(self, master = None, *, class_ = "", command = "", compound = "", cursor = "", default = "normal", image = "", name = ..., padding=..., state = "normal", takefocus = ..., text = "", textvariable = ..., underline = -1, width = "", **kw):
+        kw.pop('type', None)
+        super().__init__(master, class_=class_, command=command, compound=compound, cursor=cursor, default=default, image=image, name=name, padding=padding, state=state, style='Primary.TButton', takefocus=takefocus, text=text, textvariable=textvariable, underline=underline, width=width)
+
+
+class ImportantFrame(ttk.Frame):
+    def __init__(self, master = None, *, border = ..., borderwidth = ..., class_ = "", cursor = "", height = 0, name = ..., padding = ..., relief = ..., takefocus = "", width = 0):
+        super().__init__(master, border=border, borderwidth=borderwidth, class_=class_, cursor=cursor, height=height, name=name, padding=padding, relief=relief, style='Important.TFrame', takefocus=takefocus, width=width)
+
+
+class ImportantLabel(ttk.Label):
+    def __init__(self, master = None, *, anchor = ..., background = "", border = ..., borderwidth = ..., class_ = "", compound = "", cursor = "", image = "", justify = ..., name = ..., padding = ..., relief = ..., state = "normal", takefocus = "", text = "", textvariable = ..., underline = -1, width = "", wraplength = ...):
+        super().__init__(master, anchor=anchor, background=background, border=border, borderwidth=borderwidth, class_=class_, compound=compound, cursor=cursor, image=image, justify=justify, name=name, padding=padding, relief=relief, state=state, style="Important.TLabel", takefocus=takefocus, text=text, textvariable=textvariable, underline=underline, width=width, wraplength=wraplength)
 
 
 class __CloseDialogError(Exception): ...
@@ -718,6 +723,23 @@ class Database:
 
         return self._INDEX
 
+    @property
+    def source(self) -> str:
+        """
+        # Database.source
+
+        ## Alias
+        - **Database.url**
+        - **Database.link**
+
+        Returns:
+            str: the URL where the database was downloaded from
+        """
+
+        return self._SOURCE
+
+    url = link = source # [<] "OMG, code so ugly. lil bro literally triple assigned ew." shut the frick up!
+
     def __eq__(self, value) -> bool:
         if isinstance(value, dict):
             return self._DB == value
@@ -820,11 +842,11 @@ def generate_new_map_data(**kw) -> list[str] | int:
             case None | 'null' | 'none':
                 if is_hk is False and is_warrens is False:
                     break
-                
+
             case _:
                 data = None
                 continue
-            
+
     if data is None:
         return handle_error(52, "Failed to get an image that respects the chosen exclusion rule for HELL_KEEP and WARRENS.")
 
@@ -836,13 +858,13 @@ def generate_new_image(data: list[str], **kw) -> str:
     # generate_new_image
 
     Get an image from the selected data.
-    
+
     :param database: overwrite for CUR_DB *(should be of type Database)*
 
     Returns:
         str: the link to the new image
     """
-    
+
     db: Database = kw.get('database', CUR_DB)
 
     x = random.choice(db.structure[data[0]][data[1]][data[2]]['screenshots'].remove(CUR_IMG_LINK))
@@ -855,26 +877,26 @@ def get_selected_image(img_link: str, **kw) -> Image.Image | int:
 
 def generate_new_round(*_, first: dict[str, Any] = None, second: dict[str, Any] = None, third: dict[str, Any] = None):
     global CUR_DATA, GEN_SF, CUR_IMG_LINK
-    
+
     # [<] ik one letter vars are not good but screw it
     if first is None:
         a = generate_new_map_data()
-        
-    else:   
+
+    else:
         a = generate_new_map_data(**first)
-    
+
     if isinstance(a, int):
         return # [!?] Cancel the operation, since an error happened
-    
+
     if second is None:
         b = generate_new_image(a)
-    
+
     else:
-        b = generate_new_image(b, **second)    
-    
+        b = generate_new_image(b, **second)
+
     if third is None:
         c = get_selected_image(b)
-    
+
     else:
         c = get_selected_image(b, **third)
 
@@ -884,22 +906,51 @@ def generate_new_round(*_, first: dict[str, Any] = None, second: dict[str, Any] 
     PLAY_ITEMS.cur_img = resize_image(c, settings.image_width, settings.use_width_as_height, settings.image_ratio)
 
 
-def update_game_widgets(_):
-    return handle_error(11, "Not Implemented!")
+def update_game_widgets(scope: str) -> int:
+    if scope == 'game':
+        PLAY_ITEMS.selected_episode.set(list(CUR_DB.structure[PLAY_ITEMS.selected_game].keys())[0])
+        PLAY_ITEMS.episode_ch.set_menu(PLAY_ITEMS.selected_episode.get(), *list(CUR_DB.structure[PLAY_ITEMS.selected_game].keys()))
+        scope = 'episode'
 
+    if scope == 'episode':
+        PLAY_ITEMS.selected_map.set(list(CUR_DB.structure[PLAY_ITEMS.selected_game][PLAY_ITEMS.selected_episode].keys())[0])
+        PLAY_ITEMS.map_ch.set_menu(PLAY_ITEMS.selected_map.get(), *list(CUR_DB.structure[PLAY_ITEMS.selected_game][PLAY_ITEMS.selected_episode].keys()))
+        
+    return 0
+
+
+def zoom_in_image():
+    img_display = tk.Toplevel(root)
+    img_display.geometry(f'{PLAY_ITEMS.cur_img.size[0] * settings.zoom_boost}x{PLAY_ITEMS.cur_img.size[1] * settings.zoom_boost}')
+    img_display.title('Zoom In on Generated Image')
+    img_display.resizable(False, False)
+    
+    img_display.image = resize_image(PLAY_ITEMS.cur_img, settings.image_width * settings.zoom_boost, settings.use_width_as_height, settings.image_ratio)
+    
+    img_display.image.pack()
+    
+    img_display.bind('<Button-1>', img_display.destroy)
+    img_display.bind('<Button-3>', img_display.destroy)
+    
+    img_display.wait_window()
+    
 
 def setup_play_screen():
     global CUR_DATA, POINTS, GEN_SF, CUR_IMG_LINK, PH_DATA
-    
+
     PH_DATA = [random.randint(10, 99) for _ in range(3)]
     CUR_DATA = PH_DATA.copy()
-    
-    PLAY_ITEMS.selected_game = tk.StringVar(root, list(CUR_DB.structure.keys())[0])
-    PLAY_ITEMS.selected_episode = tk.StringVar(root, list(CUR_DB.structure[PLAY_ITEMS.selected_game].keys())[0])
-    PLAY_ITEMS.selected_map = tk.StringVar(root, list(CUR_DB.structure[PLAY_ITEMS.selected_game][PLAY_ITEMS.selected_episode].keys())[0])
-    PLAY_ITEMS.selected_secrets = tk.IntVar(root, 0)
+    CUR_IMG_LINK = None
+    GEN_SF = 0
+    POINTS = 0
+
+    PLAY_ITEMS.selected_game = tk.StringVar(PLAY_ITEMS, list(CUR_DB.structure.keys())[0])
+    PLAY_ITEMS.selected_episode = tk.StringVar(PLAY_ITEMS, list(CUR_DB.structure[PLAY_ITEMS.selected_game].keys())[0])
+    PLAY_ITEMS.selected_map = tk.StringVar(PLAY_ITEMS, list(CUR_DB.structure[PLAY_ITEMS.selected_game][PLAY_ITEMS.selected_episode].keys())[0])
+    PLAY_ITEMS.selected_secrets = tk.IntVar(PLAY_ITEMS, 0)
 
     PLAY_ITEMS.heading = ttk.Label(PLAY_ITEMS, text='Play', font=HEADING1)
+    PLAY_ITEMS.f0 = ImportantFrame(PLAY_ITEMS)
     PLAY_ITEMS.f1 = ttk.Frame(PLAY_ITEMS)
     PLAY_ITEMS.f2 = ttk.Frame(PLAY_ITEMS)
     PLAY_ITEMS.f3 = ttk.Frame(PLAY_ITEMS)
@@ -908,39 +959,55 @@ def setup_play_screen():
     PLAY_ITEMS.f6 = ttk.Frame(PLAY_ITEMS.f4)
     PLAY_ITEMS.f7 = ttk.Frame(PLAY_ITEMS.f4)
     PLAY_ITEMS.f8 = ttk.Frame(PLAY_ITEMS.f4)
+    PLAY_ITEMS.f9 = ttk.Frame(PLAY_ITEMS.f8)
+
+    PLAY_ITEMS.database_label = ImportantLabel(PLAY_ITEMS.f0, text="Using the defualt database." if CUR_DB.source == utils_constants.DEFAULT_DB_URL else f'Using database with link <{CUR_DB.source}>!')
+    PLAY_ITEMS.points_label = ttk.Label(PLAY_ITEMS.f1, text=f'Points: {POINTS} / {GEN_SF}')
 
     if settings.use_width_as_height:
-        PLAY_ITEMS.f1.configure(height=settings.image_width + 20)
+        PLAY_ITEMS.f2.configure(height=settings.image_width + 20)
 
     else:
-        PLAY_ITEMS.f1.configure(width=settings.image_width + 20)
+        PLAY_ITEMS.f2.configure(width=settings.image_width + 20)
 
-    PLAY_ITEMS.cur_img = ImageTk.PhotoImage(
-        resize_image(
+    PLAY_ITEMS.cur_img = resize_image(
             Image.open(os.path.join(ASSETS_PATH, 'error', 'image_none_yet.png')),
             settings.image_width,
             settings.use_width_as_height,
             settings.image_ratio
         )
-    )
 
-    PLAY_ITEMS.img_widget = ttk.Button(PLAY_ITEMS.f1, image=PLAY_ITEMS.cur_img, command=lambda:
+    PLAY_ITEMS.cur_tk_img = ImageTk.PhotoImage(PLAY_ITEMS.cur_img)
+    
+
+    PLAY_ITEMS.img_widget = ttk.Button(PLAY_ITEMS.f2, image=PLAY_ITEMS.cur_tk_img, command=zoom_in_image)
+
+    PLAY_ITEMS.generation_butt = ttk.Button(PLAY_ITEMS.f3, text="Generate", command=generate_new_round)
+
+    PLAY_ITEMS.guessing_butt = ttk.Button(PLAY_ITEMS.f3, text='Guess', command=lambda:
         send_dialog('warning', 'TODO', 'Sadly, not done yet.')) # TODO
 
-    PLAY_ITEMS.generation_butt = ttk.Button(PLAY_ITEMS.f2, text="Generate", command=generate_new_round)
-
-    PLAY_ITEMS.guessing_butt = ttk.Button(PLAY_ITEMS.f2, text='Guess', command=lambda:
-        send_dialog('warning', 'TODO', 'Sadly, not done yet.')) # TODO
-
+    PLAY_ITEMS.game_label = ttk.Label(PLAY_ITEMS.f5, text='Game', font=BOLD_TEXT)
+    PLAY_ITEMS.episode_label = ttk.Label(PLAY_ITEMS.f6, text='Episode', font=BOLD_TEXT)
+    PLAY_ITEMS.map_label = ttk.Label(PLAY_ITEMS.f7, text='Map', font=BOLD_TEXT)
+    PLAY_ITEMS.secrets_label = ttk.Label(PLAY_ITEMS.f8, text='Secrets', font=BOLD_TEXT)
+    
     
     PLAY_ITEMS.game_ch = ttk.OptionMenu(PLAY_ITEMS.f5, PLAY_ITEMS.selected_game, PLAY_ITEMS.selected_game.get(), *list(CUR_DB.structure.keys()), command=lambda:
         update_game_widgets('game'))
     PLAY_ITEMS.episode_ch = ttk.OptionMenu(PLAY_ITEMS.f6, PLAY_ITEMS.selected_episode, PLAY_ITEMS.selected_episode.get(), *list(CUR_DB.structure[PLAY_ITEMS.selected_game].keys()), command=lambda:
         update_game_widgets('episode'))
-    PLAY_ITEMS.map_ch = ttk.OptionMenu(PLAY_ITEMS.f7, PLAY_ITEMS.selected_map, PLAY_ITEMS.selected_map.get(), *list(CUR_DB.structure[PLAY_ITEMS.selected_game][PLAY_ITEMS.selected_episode].keys()), command=lambda:
-        update_game_widgets('map'))
+    PLAY_ITEMS.map_ch = ttk.OptionMenu(PLAY_ITEMS.f7, PLAY_ITEMS.selected_map, PLAY_ITEMS.selected_map.get(), *list(CUR_DB.structure[PLAY_ITEMS.selected_game][PLAY_ITEMS.selected_episode].keys()))
     
-    PLAY_ITEMS.secrets_plus = None # TODO
+    PLAY_ITEMS.secrets_minus = ttk.Button(PLAY_ITEMS.f9, text='-', command=lambda:
+        PLAY_ITEMS.selected_secrets.set(PLAY_ITEMS.selected_secrets.get() + 1))
+    PLAY_ITEMS.secrets_reset = ttk.Button(PLAY_ITEMS.f9, textvariable=PLAY_ITEMS.selected_secrets, command=lambda:
+        PLAY_ITEMS.selected_secrets.set(0))
+    PLAY_ITEMS.secrets_plus = ttk.Button(PLAY_ITEMS.f9, text='+', command=lambda:
+        PLAY_ITEMS.selected_secrets.set(PLAY_ITEMS.selected_secrets.get() + 1))
+    
+    # TODO: packing/gridding is necessary
+    # TODO: fix database
 
 
 # [*] Sidebar Buttons
@@ -952,19 +1019,7 @@ play_img = resize_image(
 
 play_tk = ImageTk.PhotoImage(play_img)
 
-play_butt = ttk.Button(sidebar, image=play_tk, width=50, command=lambda:
-    send_dialog_with_buttons('users', 'Not Implemented Yet', "Don't worry, DoomMapGuesser v2.0 is coming soon.\nThis dialog serves only to showcase the new Dialog with Buttons, as well as DoomMapGuesser's icon library (which are... ahem... icons stolen from Windows...).\nMost of these icons won't be used in the final version and expect some of them to get removed along the way.", [
-        {
-            "text": "Got it!",
-            "command": "TYPE_CLOSE",
-            "type": "PRIMARY",
-        },
-        {
-            "text": "Learn More",
-            "command": lambda: send_dialog('cttune', "What is there to learn more?", "We'll have DoomMapGuesser v2.0.0 before GTA VI lol"),
-            "type": "DEFAULT"
-        }
-    ]))
+play_butt = ttk.Button(sidebar, image=play_tk, width=50, command=setup_play_screen)
 
 play_butt.pack()
 
@@ -974,14 +1029,16 @@ game_frame.pack()
 sidebar.grid(column=0, row=0)
 main_frame.grid(column=1, row=0)
 
-# TODO
-
 # [!?] https://github.com/rdbende/Sun-Valley-ttk-theme (Sun Valley theme)
+# [<] Credits to rdbende
 root.tk.call("source", os.path.join(THEME_PATH))
 style = ttk.Style(root)
 style.theme_use(f"sun-valley-{settings.theme}")
+style.configure('TLabel', font=REGULAR_TEXT)
 style.configure('TButton', font=SECONDARY_BUTTON)
 style.configure('Primary.TButton', font=PRIMARY_BUTTON, foreground='#5bcff1' if settings.theme == 'dark' else '#040929')
-style.configure('TEntry', font=SUBTITLE, background="#0e0e0e" if settings.theme == 'light' else '#9c9c9c', foreground='black' if settings.theme == 'dark' else 'white')
+style.configure('Important.TFrame', background='#f17b7b' if settings.theme == 'dark' else "#5a0606")
+style.configure('Important.TLabel', font=BOLD_TEXT, foreground='#000000' if settings.theme == 'dark' else "#ffffff")
+style.configure('TEntry', font=SUBTITLE, background='#9c9c9c' if settings.theme == 'dark' else "#0e0e0e", foreground='#000000' if settings.theme == 'dark' else '#ffffff')
 
 root.mainloop()

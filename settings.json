@@ -7,5 +7,6 @@
     "checkUpdates": true,
     "autoUpdateLevel": 0,
     "excludeRule": "both",
-    "seasonalEasterEggs": 1
+    "seasonalEasterEggs": 1,
+    "zoomBoost": 1.5
 }
