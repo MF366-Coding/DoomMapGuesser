@@ -300,6 +300,17 @@ SECONDARY_BUTTON = Font(root, family='SUSE Light', size=12)
 PLAY_ITEMS = ttk.Frame(game_frame)
 
 
+# TODO: needs testing
+def set_menu(option_menu: ttk.OptionMenu, var: tk.Variable, value: Any, *values):
+    menu = option_menu["menu"]
+    menu.delete(0, tk.END)
+
+    for val in values:
+        menu.add_command(label=str(val), command=lambda v=val: var.set(v))
+
+    var.set(value)
+
+
 class PrimaryButton(ttk.Button):
     def __init__(self, master = None, *, class_ = "", command = "", compound = "", cursor = "", default = "normal", image = "", name = ..., padding=..., state = "normal", takefocus = ..., text = "", textvariable = ..., underline = -1, width = "", **kw):
         kw.pop('type', None)
