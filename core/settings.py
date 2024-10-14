@@ -97,7 +97,7 @@ class SettingsObject:
         :param indent: how many spaces as indentation *(int, defaults to 4)*
         """
         
-        obj = kw.get(kw['overwrite'], obj)
+        obj = kw.get('overwrite', obj)
         
         try:
             with open(self._PATH, 'w', encoding='utf-8') as f:
