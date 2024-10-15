@@ -300,17 +300,6 @@ SECONDARY_BUTTON = Font(root, family='SUSE Light', size=12)
 PLAY_ITEMS = ttk.Frame(game_frame)
 
 
-# TODO: needs testing
-def set_menu(option_menu: ttk.OptionMenu, var: tk.Variable, value: Any, *values):
-    menu = option_menu["menu"]
-    menu.delete(0, tk.END)
-
-    for val in values:
-        menu.add_command(label=str(val), command=lambda v=val: var.set(v))
-
-    var.set(value)
-
-
 class PrimaryButton(ttk.Button):
     def __init__(self, master = None, *, class_ = "", command = "", compound = "", cursor = "", default = "normal", image = "", name = ..., padding=..., state = "normal", takefocus = ..., text = "", textvariable = ..., underline = -1, width = "", **kw):
         kw.pop('type', None)
@@ -452,17 +441,28 @@ def generate_new_round(*_, first: dict[str, Any] = None, second: dict[str, Any] 
     PLAY_ITEMS.cur_img = resize_image(c, settings.image_width, settings.use_width_as_height, settings.image_ratio)
 
 
-def update_game_widgets(scope: str) -> int:
-    if scope == 'game':
-        PLAY_ITEMS.selected_episode.set(list(CUR_DB.structure[PLAY_ITEMS.selected_game.get()].keys())[0])
-        PLAY_ITEMS.episode_ch.set_menu(PLAY_ITEMS.selected_episode.get(), *list(CUR_DB.structure[PLAY_ITEMS.selected_game.get()].keys()))
-        scope = 'episode'
-
-    if scope == 'episode':
-        PLAY_ITEMS.selected_map.set(list(CUR_DB.structure[PLAY_ITEMS.selected_game.get()][PLAY_ITEMS.selected_episode.get()].keys())[0])
-        PLAY_ITEMS.map_ch.set_menu(PLAY_ITEMS.selected_map.get(), *list(CUR_DB.structure[PLAY_ITEMS.selected_game.get()][PLAY_ITEMS.selected_episode.get()].keys()))
+def update_episode_widget(value: str) -> int:
+    print('2', value)
+    
+    PLAY_ITEMS.selected_episode.set(value)
+    PLAY_ITEMS.episode_ch.set_menu(PLAY_ITEMS.selected_episode.get(), *list(CUR_DB.structure[PLAY_ITEMS.selected_game.get()].keys()))
+    
+    PLAY_ITEMS.selected_map.set(list(CUR_DB.structure[PLAY_ITEMS.selected_game.get()][PLAY_ITEMS.selected_episode.get()].keys())[0])
+    PLAY_ITEMS.map_ch.set_menu(PLAY_ITEMS.selected_map.get(), *list(CUR_DB.structure[PLAY_ITEMS.selected_game.get()][PLAY_ITEMS.selected_episode.get()].keys()))
+    
+    print(PLAY_ITEMS.selected_episode.get(), PLAY_ITEMS.selected_map.get())
         
     return 0
+
+
+def update_game_widget(value: str) -> int:
+    print('1', value)
+    
+    PLAY_ITEMS.selected_game.set(value)
+    
+    print(PLAY_ITEMS.selected_game.get())
+    
+    return update_episode_widget(list(CUR_DB.structure[PLAY_ITEMS.selected_game.get()].keys())[0])
 
 
 def zoom_in_image():
@@ -543,10 +543,8 @@ def setup_play_screen():
     PLAY_ITEMS.map_label = ttk.Label(PLAY_ITEMS.f7, text='Map', font=BOLD_TEXT)
     PLAY_ITEMS.secrets_label = ttk.Label(PLAY_ITEMS.f8, text='Secrets', font=BOLD_TEXT)
     
-    PLAY_ITEMS.game_ch = ttk.OptionMenu(PLAY_ITEMS.f5, PLAY_ITEMS.selected_game, PLAY_ITEMS.selected_game.get(), *list(CUR_DB.structure.keys()), command=lambda:
-        update_game_widgets('game'))
-    PLAY_ITEMS.episode_ch = ttk.OptionMenu(PLAY_ITEMS.f6, PLAY_ITEMS.selected_episode, PLAY_ITEMS.selected_episode.get(), *list(CUR_DB.structure[PLAY_ITEMS.selected_game.get()].keys()), command=lambda:
-        update_game_widgets('episode'))
+    PLAY_ITEMS.game_ch = ttk.OptionMenu(PLAY_ITEMS.f5, PLAY_ITEMS.selected_game, PLAY_ITEMS.selected_game.get(), *list(CUR_DB.structure.keys()), command=update_game_widget)
+    PLAY_ITEMS.episode_ch = ttk.OptionMenu(PLAY_ITEMS.f6, PLAY_ITEMS.selected_episode, PLAY_ITEMS.selected_episode.get(), *list(CUR_DB.structure[PLAY_ITEMS.selected_game.get()].keys()), command=update_episode_widget)
     PLAY_ITEMS.map_ch = ttk.OptionMenu(PLAY_ITEMS.f7, PLAY_ITEMS.selected_map, PLAY_ITEMS.selected_map.get(), *list(CUR_DB.structure[PLAY_ITEMS.selected_game.get()][PLAY_ITEMS.selected_episode.get()].keys()))
     
     PLAY_ITEMS.secrets_minus = ttk.Button(PLAY_ITEMS.f9, text='-', command=lambda:
