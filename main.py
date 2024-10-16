@@ -297,23 +297,23 @@ BOLD_TEXT = Font(root, family='SUSE Medium', size=14)
 PRIMARY_BUTTON = Font(root, family='SUSE Semibold', size=12, underline=False)
 SECONDARY_BUTTON = Font(root, family='SUSE Light', size=12)
 
-PLAY_ITEMS = ttk.Frame(game_frame)
+PLAY_ITEMS = ttk.Frame(main_frame)
 
 
 class PrimaryButton(ttk.Button):
-    def __init__(self, master = None, *, class_ = "", command = "", compound = "", cursor = "", default = "normal", image = "", name = ..., padding=..., state = "normal", takefocus = ..., text = "", textvariable = ..., underline = -1, width = "", **kw):
+    def __init__(self, master = None, *, class_ = "", command = "", compound = "", cursor = "", default = "normal", image = "", state = "normal", text = "", underline = -1, width = "", **kw):
         kw.pop('type', None)
-        super().__init__(master, class_=class_, command=command, compound=compound, cursor=cursor, default=default, image=image, name=name, padding=padding, state=state, style='Primary.TButton', takefocus=takefocus, text=text, textvariable=textvariable, underline=underline, width=width)
+        super().__init__(master, class_=class_, command=command, compound=compound, cursor=cursor, default=default, image=image, state=state, style='Primary.TButton', text=text, underline=underline, width=width)
 
 
 class ImportantFrame(ttk.Frame):
-    def __init__(self, master = None, *, border = ..., borderwidth = ..., class_ = "", cursor = "", height = 0, name = ..., padding = ..., relief = ..., takefocus = "", width = 0):
-        super().__init__(master, border=border, borderwidth=borderwidth, class_=class_, cursor=cursor, height=height, name=name, padding=padding, relief=relief, style='Important.TFrame', takefocus=takefocus, width=width)
+    def __init__(self, master = None, **kw):
+        super().__init__(master, style='Important.TFrame', **kw)
 
 
 class ImportantLabel(ttk.Label):
-    def __init__(self, master = None, *, anchor = ..., background = "", border = ..., borderwidth = ..., class_ = "", compound = "", cursor = "", image = "", justify = ..., name = ..., padding = ..., relief = ..., state = "normal", takefocus = "", text = "", textvariable = ..., underline = -1, width = "", wraplength = ...):
-        super().__init__(master, anchor=anchor, background=background, border=border, borderwidth=borderwidth, class_=class_, compound=compound, cursor=cursor, image=image, justify=justify, name=name, padding=padding, relief=relief, state=state, style="Important.TLabel", takefocus=takefocus, text=text, textvariable=textvariable, underline=underline, width=width, wraplength=wraplength)
+    def __init__(self, master = None, *, background = "", class_ = "", compound = "", cursor = "", image = "", state = "normal", takefocus = "", text = "", underline = -1, width = ""):
+        super().__init__(master, background=background, class_=class_, compound=compound, cursor=cursor, image=image, justify='center', state=state, style="Important.TLabel", takefocus=takefocus, text=text, underline=underline, width=width, wraplength=500)
 
 
 class __CloseDialogError(Exception): ...
@@ -326,6 +326,56 @@ PH_DATA: list[str] | None = None
 POINTS: int = 0
 GEN_SF: int = 0
 CUR_IMG_LINK = None
+
+
+def open_listbox(options: list | tuple, var: tk.Variable) -> None:
+    print(selected_game.get())
+    print(selected_episode.get())
+    print(selected_map.get())
+    print(selected_secrets.get())
+    
+    topl = tk.Toplevel(root)
+    topl.title("Listbox Window")
+    topl.focus_force()
+
+    listbox = tk.Listbox(topl, justify='center', font=BOLD_TEXT, selectbackground='#9797e6' if settings.theme == 'dark' else "#040437", selectforeground="#000000" if settings.theme == 'dark' else '#ffffff',
+                         selectmode='single', background='#1c1c1c' if settings.theme == 'dark' else '#fafafa', foreground='#ffffff' if settings.theme == 'dark' else "#000000")
+    listbox.pack(fill=tk.BOTH, expand=True)
+
+    for option in options:
+        listbox.insert(tk.END, option)
+
+    def save_to_variable():
+        try:
+            array = listbox.curselection()
+
+        except tk.TclError as e:
+            return handle_error(53, f"You must select one of the options.\n{e}")
+
+        if len(array) == 0:
+            return handle_error(53, "You must select one of the options.")
+        
+        selection = listbox.get(array[0])
+        var.set(selection)
+        
+        match str(var):
+            case 'GAME':
+                selected_episode.set(list(CUR_DB.structure[selected_game.get()].keys())[0])
+                selected_map.set(list(CUR_DB.structure[selected_game.get()][selected_episode.get()].keys())[0])
+                
+            case 'EPISODE':
+                selected_map.set(list(CUR_DB.structure[selected_game.get()][selected_episode.get()].keys())[0])
+            
+            case _:
+                print('map edited')
+                
+        topl.destroy()
+
+    topl.bind("<FocusOut>", lambda _:
+        topl.destroy())
+    # --
+    listbox.bind('<Double-Button-1>', lambda _:
+        save_to_variable())
 
 
 def generate_new_map_data(**kw) -> list[str] | int:
@@ -401,8 +451,14 @@ def generate_new_image(data: list[str], **kw) -> str:
     """
 
     db: Database = kw.get('database', CUR_DB)
-
-    x = random.choice(db.structure[data[0]][data[1]][data[2]]['screenshots'].remove(CUR_IMG_LINK))
+    
+    try:
+        x = random.choice(list(db.structure[data[0]][data[1]][data[2]]['screenshots']).copy().remove(CUR_IMG_LINK))
+    
+    except ValueError as e:
+        x = random.choice(list(db.structure['No Rest for the Living']['No Rest for the Living']['MAP03: Canyon of the Dead']['screenshots']).copy())
+        print('hey stfu')
+    
     return x
 
 
@@ -439,49 +495,29 @@ def generate_new_round(*_, first: dict[str, Any] = None, second: dict[str, Any] 
     CUR_DATA = a
     CUR_IMG_LINK = b
     PLAY_ITEMS.cur_img = resize_image(c, settings.image_width, settings.use_width_as_height, settings.image_ratio)
-
-
-def update_episode_widget(value: str) -> int:
-    print('2', value)
+    PLAY_ITEMS.cur_tk_img = ImageTk.PhotoImage(PLAY_ITEMS.cur_img)
+    PLAY_ITEMS.img_widget.configure(image=PLAY_ITEMS.cur_tk_img)
+    print(CUR_DATA)
     
-    PLAY_ITEMS.selected_episode.set(value)
-    PLAY_ITEMS.episode_ch.set_menu(PLAY_ITEMS.selected_episode.get(), *list(CUR_DB.structure[PLAY_ITEMS.selected_game.get()].keys()))
-    
-    PLAY_ITEMS.selected_map.set(list(CUR_DB.structure[PLAY_ITEMS.selected_game.get()][PLAY_ITEMS.selected_episode.get()].keys())[0])
-    PLAY_ITEMS.map_ch.set_menu(PLAY_ITEMS.selected_map.get(), *list(CUR_DB.structure[PLAY_ITEMS.selected_game.get()][PLAY_ITEMS.selected_episode.get()].keys()))
-    
-    print(PLAY_ITEMS.selected_episode.get(), PLAY_ITEMS.selected_map.get())
-        
-    return 0
-
-
-def update_game_widget(value: str) -> int:
-    print('1', value)
-    
-    PLAY_ITEMS.selected_game.set(value)
-    
-    print(PLAY_ITEMS.selected_game.get())
-    
-    return update_episode_widget(list(CUR_DB.structure[PLAY_ITEMS.selected_game.get()].keys())[0])
-
 
 def zoom_in_image():
     img_display = tk.Toplevel(root)
     img_display.geometry(f'{int(PLAY_ITEMS.cur_img.size[0] * settings.zoom_boost)}x{int(PLAY_ITEMS.cur_img.size[1] * settings.zoom_boost)}')
     img_display.title('Zoom In on Generated Image')
     img_display.resizable(False, False)
-    
+
     img_display.image = resize_image(PLAY_ITEMS.cur_img, settings.image_width * settings.zoom_boost, settings.use_width_as_height, settings.image_ratio)
-    
+
     img_display.actual_tk = ImageTk.PhotoImage(img_display.image)
-    
-    img_display.actual_tk.pack()
-    
+
+    img_display.label = ttk.Label(img_display, image=img_display.actual_tk)
+    img_display.label.pack()
+
     img_display.bind('<Button-1>', img_display.destroy)
     img_display.bind('<Button-3>', img_display.destroy)
-    
+
     img_display.wait_window()
-    
+
 
 def setup_play_screen():
     global CUR_DATA, POINTS, GEN_SF, CUR_IMG_LINK, PH_DATA
@@ -492,16 +528,11 @@ def setup_play_screen():
     GEN_SF = 0
     POINTS = 0
 
-    PLAY_ITEMS.selected_game = tk.StringVar(PLAY_ITEMS, list(CUR_DB.structure.keys())[0])
-    PLAY_ITEMS.selected_episode = tk.StringVar(PLAY_ITEMS, list(CUR_DB.structure[PLAY_ITEMS.selected_game.get()].keys())[0])
-    PLAY_ITEMS.selected_map = tk.StringVar(PLAY_ITEMS, list(CUR_DB.structure[PLAY_ITEMS.selected_game.get()][PLAY_ITEMS.selected_episode.get()].keys())[0])
-    PLAY_ITEMS.selected_secrets = tk.IntVar(PLAY_ITEMS, 0)
-
     PLAY_ITEMS.headframe = ttk.Frame(PLAY_ITEMS)
     PLAY_ITEMS.heading = ttk.Label(PLAY_ITEMS.headframe, text='Play', font=HEADING1, justify='left')
-    PLAY_ITEMS.f0 = ttk.Frame(master=PLAY_ITEMS.headframe)
+    PLAY_ITEMS.f0 = ImportantFrame(master=PLAY_ITEMS.headframe)
     PLAY_ITEMS.f1 = ttk.Frame(PLAY_ITEMS.headframe)
-    
+
     PLAY_ITEMS.mainframe = ttk.Frame(PLAY_ITEMS)
     PLAY_ITEMS.f2 = ttk.Frame(PLAY_ITEMS.mainframe)
     PLAY_ITEMS.f3 = ttk.Frame(PLAY_ITEMS.mainframe)
@@ -512,7 +543,7 @@ def setup_play_screen():
     PLAY_ITEMS.f8 = ttk.Frame(PLAY_ITEMS.f4)
     PLAY_ITEMS.f9 = ttk.Frame(PLAY_ITEMS.f8)
 
-    PLAY_ITEMS.database_label = ttk.Label(PLAY_ITEMS.f0, text="Using the defualt database." if CUR_DB.source == utils_constants.DEFAULT_DB_URL else f'Using database with link <{CUR_DB.source}>!')
+    PLAY_ITEMS.database_label = ImportantLabel(PLAY_ITEMS.f0, text="Using the default database." if CUR_DB.source == utils_constants.DEFAULT_DB_URL else f'Using database with link <{CUR_DB.source}>!')
     PLAY_ITEMS.points_label = ttk.Label(PLAY_ITEMS.f1, text=f'Points: {POINTS} / {GEN_SF}')
 
     if settings.use_width_as_height:
@@ -529,7 +560,7 @@ def setup_play_screen():
         )
 
     PLAY_ITEMS.cur_tk_img = ImageTk.PhotoImage(PLAY_ITEMS.cur_img)
-    
+
 
     PLAY_ITEMS.img_widget = ttk.Button(PLAY_ITEMS.f2, image=PLAY_ITEMS.cur_tk_img, command=zoom_in_image)
 
@@ -542,49 +573,54 @@ def setup_play_screen():
     PLAY_ITEMS.episode_label = ttk.Label(PLAY_ITEMS.f6, text='Episode', font=BOLD_TEXT)
     PLAY_ITEMS.map_label = ttk.Label(PLAY_ITEMS.f7, text='Map', font=BOLD_TEXT)
     PLAY_ITEMS.secrets_label = ttk.Label(PLAY_ITEMS.f8, text='Secrets', font=BOLD_TEXT)
-    
-    PLAY_ITEMS.game_ch = ttk.OptionMenu(PLAY_ITEMS.f5, PLAY_ITEMS.selected_game, PLAY_ITEMS.selected_game.get(), *list(CUR_DB.structure.keys()), command=update_game_widget)
-    PLAY_ITEMS.episode_ch = ttk.OptionMenu(PLAY_ITEMS.f6, PLAY_ITEMS.selected_episode, PLAY_ITEMS.selected_episode.get(), *list(CUR_DB.structure[PLAY_ITEMS.selected_game.get()].keys()), command=update_episode_widget)
-    PLAY_ITEMS.map_ch = ttk.OptionMenu(PLAY_ITEMS.f7, PLAY_ITEMS.selected_map, PLAY_ITEMS.selected_map.get(), *list(CUR_DB.structure[PLAY_ITEMS.selected_game.get()][PLAY_ITEMS.selected_episode.get()].keys()))
-    
+
+    PLAY_ITEMS.game_ch = ttk.Button(PLAY_ITEMS.f5, textvariable=selected_game, command=lambda:
+        open_listbox(list(CUR_DB.structure.keys()), selected_game))
+
+    PLAY_ITEMS.episode_ch = ttk.Button(PLAY_ITEMS.f6, textvariable=selected_episode, command=lambda:
+        open_listbox(list(CUR_DB.structure[selected_game.get()].keys()), selected_episode))
+
+    PLAY_ITEMS.map_ch = ttk.Button(PLAY_ITEMS.f7, textvariable=selected_map, command=lambda:
+        open_listbox(list(CUR_DB.structure[selected_game.get()][selected_episode.get()].keys()), selected_map))
+
     PLAY_ITEMS.secrets_minus = ttk.Button(PLAY_ITEMS.f9, text='-', command=lambda:
-        PLAY_ITEMS.selected_secrets.set(PLAY_ITEMS.selected_secrets.get() + 1))
-    PLAY_ITEMS.secrets_reset = ttk.Button(PLAY_ITEMS.f9, textvariable=PLAY_ITEMS.selected_secrets, command=lambda:
-        PLAY_ITEMS.selected_secrets.set(0))
+        selected_secrets.set(utils_constants.clamp(selected_secrets.get() - 1, 0, 99)))
+    PLAY_ITEMS.secrets_reset = ttk.Button(PLAY_ITEMS.f9, textvariable=selected_secrets, command=lambda:
+        selected_secrets.set(0))
     PLAY_ITEMS.secrets_plus = ttk.Button(PLAY_ITEMS.f9, text='+', command=lambda:
-        PLAY_ITEMS.selected_secrets.set(PLAY_ITEMS.selected_secrets.get() + 1))
-    
+        selected_secrets.set(utils_constants.clamp(selected_secrets.get() + 1, 0, 99)))
+
     # [*] Upper
     PLAY_ITEMS.heading.pack(ipadx=5, ipady=5, padx=5, pady=5)
     PLAY_ITEMS.database_label.pack(ipadx=5, ipady=5, padx=5, pady=5)
     PLAY_ITEMS.points_label.pack(ipadx=5, ipady=5, padx=5, pady=5)
     PLAY_ITEMS.f0.pack(ipadx=5, ipady=5, padx=5, pady=5)
     PLAY_ITEMS.f1.pack(ipadx=5, ipady=5, padx=5, pady=5)
-    
+
     # [*] Image
     PLAY_ITEMS.img_widget.pack(ipadx=5, ipady=5, padx=5, pady=5)
     PLAY_ITEMS.f2.grid(column=0, row=0, padx=5, pady=10, ipadx=5, ipady=10)
-    
+
     # [*] Generate/Guess
     PLAY_ITEMS.generation_butt.pack(ipadx=5, ipady=10, padx=5, pady=10)
     PLAY_ITEMS.guessing_butt.pack(ipadx=5, ipady=10, padx=5, pady=10)
     PLAY_ITEMS.f3.grid(column=1, row=0, padx=5, pady=10, ipadx=5, ipady=10)
-    
+
     # [*] Game
     PLAY_ITEMS.game_label.pack(ipadx=5, ipady=5, padx=5, pady=5)
     PLAY_ITEMS.game_ch.pack(ipadx=5, ipady=5, padx=5, pady=5)
     PLAY_ITEMS.f5.grid(column=0, row=0, padx=5, pady=5, ipadx=5, ipady=5)
-    
+
     # [*] Episode
     PLAY_ITEMS.episode_label.pack(ipadx=5, ipady=5, padx=5, pady=5)
     PLAY_ITEMS.episode_ch.pack(ipadx=5, ipady=5, padx=5, pady=5)
     PLAY_ITEMS.f6.grid(column=1, row=0, padx=5, pady=5, ipadx=5, ipady=5)
-    
+
     # [*] Map
     PLAY_ITEMS.map_label.pack(ipadx=5, ipady=5, padx=5, pady=5)
     PLAY_ITEMS.map_ch.pack(ipadx=5, ipady=5, padx=5, pady=5)
     PLAY_ITEMS.f7.grid(column=0, row=1, padx=5, pady=5, ipadx=5, ipady=5)
-    
+
     # [*] Secrets
     PLAY_ITEMS.secrets_label.pack(ipadx=5, ipady=5, padx=5, pady=5)
     PLAY_ITEMS.secrets_minus.grid(column=0, row=0, padx=5, pady=5, ipadx=5, ipady=5)
@@ -592,12 +628,12 @@ def setup_play_screen():
     PLAY_ITEMS.secrets_plus.grid(column=2, row=0, padx=5, pady=5, ipadx=5, ipady=5)
     PLAY_ITEMS.f9.pack(ipadx=5, ipady=5, padx=5, pady=5)
     PLAY_ITEMS.f8.grid(column=1, row=1, padx=5, pady=5, ipadx=5, ipady=5)
-    
+
     # [*] Play Screen
     PLAY_ITEMS.headframe.pack(ipadx=5, ipady=5, padx=5, pady=5)
     PLAY_ITEMS.mainframe.pack(ipadx=5, ipady=5, padx=5, pady=5)
     PLAY_ITEMS.f4.pack(ipadx=5, ipady=5, padx=5, pady=5)
-    
+
     PLAY_ITEMS.pack()
 
 
@@ -664,10 +700,8 @@ class Database:
 
         self.add()
         self.search()
-        
+
         CUR_DB = self
-        
-        setup_play_screen()
 
     set_as_primary = use
 
@@ -682,7 +716,7 @@ class Database:
         ## Alias
         - **Database.append**
         """
-        
+
         if kw.get('index', 1) == 0 and self._SOURCE != utils_constants.DEFAULT_DB_URL:
             return handle_error(50, "Cannot replace the Default Database in the list.", icon='error')
 
@@ -864,8 +898,8 @@ class Database:
             random.choice(list(self._DB['struct'].keys()))
         ]
 
-        choices.append(random.choice(self._DB['struct'][choices[0]]))
-        choices.append(random.choice(self._DB['struct'][choices[0]][choices[1]]))
+        choices.append(random.choice(list(self._DB['struct'][choices[0]].keys())))
+        choices.append(random.choice(list(self._DB['struct'][choices[0]][choices[1]].keys())))
         # [<] no need to append the details, that can be done manually after
 
         return choices.copy()
@@ -1048,6 +1082,11 @@ if not add_database(utils_constants.DEFAULT_DB_URL, index=0):
 
 DATABASES[0].use()
 
+selected_game = tk.StringVar(root, list(CUR_DB.structure.keys())[0], 'GAME')
+selected_episode = tk.StringVar(root, list(CUR_DB.structure[selected_game.get()].keys())[0], 'EPISODE')
+selected_map = tk.StringVar(root, list(CUR_DB.structure[selected_game.get()][selected_episode.get()].keys())[0], 'MAP')
+selected_secrets = tk.IntVar(root, 0, 'SECRETS')
+
 
 # [*] Sidebar Buttons
 play_img = resize_image(
@@ -1060,10 +1099,7 @@ play_tk = ImageTk.PhotoImage(play_img)
 
 play_butt = ttk.Button(sidebar, image=play_tk, width=50, command=setup_play_screen)
 
-play_butt.grid(column=0, row=0, ipadx=5, ipady=5, padx=5, pady=5)
-
-database_bar.pack()
-game_frame.pack()
+play_butt.pack(side='top', ipadx=5, ipady=5, padx=5, pady=5)
 
 sidebar.grid(column=0, row=0)
 main_frame.grid(column=1, row=0)
@@ -1077,7 +1113,7 @@ style.configure('TLabel', font=REGULAR_TEXT)
 style.configure('TButton', font=SECONDARY_BUTTON)
 style.configure('Primary.TButton', font=PRIMARY_BUTTON, foreground='#5bcff1' if settings.theme == 'dark' else '#040929')
 style.configure('Important.TFrame', background='#f17b7b' if settings.theme == 'dark' else "#5a0606")
-style.configure('Important.TLabel', font=BOLD_TEXT, foreground='#000000' if settings.theme == 'dark' else "#ffffff")
+style.configure('Important.TLabel', font=BOLD_TEXT, foreground='#000000' if settings.theme == 'dark' else "#ffffff", background='#f17b7b' if settings.theme == 'dark' else "#5a0606")
 style.configure('TEntry', font=SUBTITLE, background='#9c9c9c' if settings.theme == 'dark' else "#0e0e0e", foreground='#000000' if settings.theme == 'dark' else '#ffffff')
 
 settings.save_settings()
