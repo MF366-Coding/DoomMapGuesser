@@ -7,10 +7,11 @@ import pywinstyles
 import random
 import os
 import sys
+import pyclip
 import simple_webbrowser
 from PIL import ImageTk, Image
 from core import utils_constants
-from core.database_handler import get_database, get_image
+from core.database_handler import get_database, get_image, __CloseDialogError
 from core.settings import SettingsObject
 
 
@@ -52,11 +53,12 @@ def __send_responsive_dialog(*args):
     __icon_widget = ttk.Label(__window, image=__window.__icon)
     __label = ttk.Label(__window, text=args[2], wraplength=args[3], font=args[4])
 
-    __icon_widget.grid(column=0, row=0, padx=5, pady=5, ipadx=5, ipady=5)
-    __label.grid(column=1, row=0, padx=5, pady=5, ipadx=5, ipady=5)
+    __icon_widget.grid(column=0, row=0, padx=5 // int(settings.small_fonts + 1), pady=5 , ipadx=5 // int(settings.small_fonts + 1), ipady=5)
+    __label.grid(column=1, row=0, padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5)
 
-    __window.bind('<Button-1>', __stop_dialog)
-    __window.bind('<Button-3>', __stop_dialog)
+    __window.bind('<Double-Button-1>', __stop_dialog)
+    __window.bind('<Double-Button-3>', lambda _:
+        pyclip.copy(args[2]))
 
     __window.wait_window()
 
@@ -92,10 +94,10 @@ def __send_responsive_dialog_with_buttons(button_args: list[dict[str, Any]], *ar
     __icon_widget = ttk.Label(__frame, image=__window.__icon)
     __label = ttk.Label(__frame, text=args[2], wraplength=args[3], font=args[4])
 
-    __icon_widget.grid(column=0, row=0, padx=5, pady=5, ipadx=5, ipady=5)
-    __label.grid(column=1, row=0, padx=5, pady=5, ipadx=5, ipady=5)
+    __icon_widget.grid(column=0, row=0, padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5)
+    __label.grid(column=1, row=0, padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5)
 
-    __frame.pack(padx=5, pady=5, ipadx=5, ipady=5)
+    __frame.pack(padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5)
 
     __BUTTONS = []
 
@@ -132,14 +134,14 @@ def __send_responsive_dialog_with_buttons(button_args: list[dict[str, Any]], *ar
             __BUTTONS.append(ttk.Button(__window, **__buttargs))
 
     for __butt in __BUTTONS:
-        __butt.pack(side='right', padx=5, pady=5, ipadx=5, ipady=5)
+        __butt.pack(side='right', padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5)
 
     __window.wait_window()
 
 
 root = tk.Tk()
 root.title(f'DoomMapGuesser by MF366 - {utils_constants.VERSION}')
-root.geometry('900x700')
+# /-/ root.resizable(False, False)
 
 
 def handle_error(code: int, message: str, **kw) -> int:
@@ -285,17 +287,17 @@ main_frame = ttk.Frame(root, width=820)
 database_bar = ttk.Frame(main_frame, height=80)
 game_frame = ttk.Frame(main_frame)
 
-HEADING1 = Font(root, family="SUSE ExtraBold", size=30)
-HEADING2 = Font(root, family="SUSE Bold", size=22)
-HEADING3 = Font(root, family='SUSE Semibold', size=17)
+HEADING1 = Font(root, family="SUSE ExtraBold", size=22 if settings.small_fonts else 30)
+HEADING2 = Font(root, family="SUSE Bold", size=20 if settings.small_fonts else 22)
+HEADING3 = Font(root, family='SUSE Semibold', size=16 if settings.small_fonts else 17)
 SUBTITLE = Font(root, family='SUSE Regular', size=12)
-REGULAR_TEXT = Font(root, family='SUSE Regular', size=14)
-LIGHT_TEXT = Font(root, family='SUSE Light', size=14)
-XLIGHT_TEXT = Font(root, family='SUSE ExtraLight', size=14)
-THIN_TEXT = Font(root, family='SUSE Thin', size=14)
-BOLD_TEXT = Font(root, family='SUSE Medium', size=14)
-PRIMARY_BUTTON = Font(root, family='SUSE Semibold', size=12, underline=False)
-SECONDARY_BUTTON = Font(root, family='SUSE Light', size=12)
+REGULAR_TEXT = Font(root, family='SUSE Regular', size=12 if settings.small_fonts else 14)
+LIGHT_TEXT = Font(root, family='SUSE Light', size=12 if settings.small_fonts else 14)
+XLIGHT_TEXT = Font(root, family='SUSE ExtraLight', size=12 if settings.small_fonts else 14)
+THIN_TEXT = Font(root, family='SUSE Thin', size=12 if settings.small_fonts else 14)
+BOLD_TEXT = Font(root, family='SUSE Medium', size=12 if settings.small_fonts else 14)
+PRIMARY_BUTTON = Font(root, family='SUSE Semibold', size=10 if settings.small_fonts else 12, underline=False)
+SECONDARY_BUTTON = Font(root, family='SUSE Light', size=10 if settings.small_fonts else 12)
 
 PLAY_ITEMS = ttk.Frame(main_frame)
 
@@ -316,7 +318,6 @@ class ImportantLabel(ttk.Label):
         super().__init__(master, background=background, class_=class_, compound=compound, cursor=cursor, image=image, justify='center', state=state, style="Important.TLabel", takefocus=takefocus, text=text, underline=underline, width=width, wraplength=500)
 
 
-class __CloseDialogError(Exception): ...
 class __InvalidButtonAction(Exception): ...
 
 
@@ -335,10 +336,12 @@ def open_listbox(options: list | tuple, var: tk.Variable) -> None:
     print(selected_secrets.get())
     
     topl = tk.Toplevel(root)
-    topl.title("Listbox Window")
+    topl.title("DoomMapGuesser - Pick an Option")
+    topl.geometry('600x400')
+    topl.resizable(False, False)
     topl.focus_force()
 
-    listbox = tk.Listbox(topl, justify='center', font=BOLD_TEXT, selectbackground='#9797e6' if settings.theme == 'dark' else "#040437", selectforeground="#000000" if settings.theme == 'dark' else '#ffffff',
+    listbox = tk.Listbox(topl, justify='left', font=BOLD_TEXT, selectbackground='#9797e6' if settings.theme == 'dark' else "#040437", selectforeground="#000000" if settings.theme == 'dark' else '#ffffff',
                          selectmode='single', background='#1c1c1c' if settings.theme == 'dark' else '#fafafa', foreground='#ffffff' if settings.theme == 'dark' else "#000000")
     listbox.pack(fill=tk.BOTH, expand=True)
 
@@ -453,11 +456,13 @@ def generate_new_image(data: list[str], **kw) -> str:
     db: Database = kw.get('database', CUR_DB)
     
     try:
-        x = random.choice(list(db.structure[data[0]][data[1]][data[2]]['screenshots']).copy().remove(CUR_IMG_LINK))
+        y = list(db.structure[data[0]][data[1]][data[2]]['screenshots']).copy()
+        y.remove(CUR_IMG_LINK)
+        x = random.choice(y)
+        del y
     
-    except ValueError as e:
-        x = random.choice(list(db.structure['No Rest for the Living']['No Rest for the Living']['MAP03: Canyon of the Dead']['screenshots']).copy())
-        print('hey stfu')
+    except (ValueError, IndexError):
+        x = random.choice(list(db.structure[data[0]][data[1]][data[2]]['screenshots']).copy())
     
     return x
 
@@ -490,14 +495,58 @@ def generate_new_round(*_, first: dict[str, Any] = None, second: dict[str, Any] 
 
     else:
         c = get_selected_image(b, **third)
+        
+    if isinstance(a, int):
+        return a
+    
+    if isinstance(b, int):
+        return b
+    
+    if isinstance(c, int):
+        return c
 
     GEN_SF += 4
     CUR_DATA = a
     CUR_IMG_LINK = b
+    PLAY_ITEMS.og_img = c
     PLAY_ITEMS.cur_img = resize_image(c, settings.image_width, settings.use_width_as_height, settings.image_ratio)
     PLAY_ITEMS.cur_tk_img = ImageTk.PhotoImage(PLAY_ITEMS.cur_img)
     PLAY_ITEMS.img_widget.configure(image=PLAY_ITEMS.cur_tk_img)
+    
+    PLAY_ITEMS.points_label.configure(text=f'Points: {POINTS} / {GEN_SF - 4}')
+    
     print(CUR_DATA)
+
+
+def final_guess(*_, first: dict[str, Any] = None, second: dict[str, Any] = None, third: dict[str, Any] = None):
+    global POINTS
+    
+    final_score = 0
+    
+    if selected_game.get() == CUR_DATA[0]:
+        final_score += 1
+        
+    if selected_episode.get() == CUR_DATA[1]:
+        final_score += 1
+    
+    if selected_map.get() == CUR_DATA[2]:
+        final_score += 1
+        
+    if selected_secrets.get() == CUR_DB.structure[CUR_DATA[0]][CUR_DATA[1]][CUR_DATA[2]]['secrets']:
+        final_score += 1
+
+    send_dialog('star', "DoomMapGuesser - Your Guess", f"""Final Score: {final_score}/4
+--
+An X means a correct answer.
+--
+[{'X' if selected_game.get() == CUR_DATA[0] else '  '}] Game
+[{'X' if selected_episode.get() == CUR_DATA[1] else '  '}] Episode
+[{'X' if selected_map.get() == CUR_DATA[2] else '  '}] Map
+[{'X' if selected_secrets.get() == CUR_DB.structure[CUR_DATA[0]][CUR_DATA[1]][CUR_DATA[2]]['secrets'] else '  '}] Secrets""")
+    
+    POINTS += final_score
+    
+    generate_new_round(first=first, second=second, third=third)
     
 
 def zoom_in_image():
@@ -506,23 +555,27 @@ def zoom_in_image():
     img_display.title('Zoom In on Generated Image')
     img_display.resizable(False, False)
 
-    img_display.image = resize_image(PLAY_ITEMS.cur_img, settings.image_width * settings.zoom_boost, settings.use_width_as_height, settings.image_ratio)
+    img_display.image = resize_image(PLAY_ITEMS.og_img, settings.image_width * settings.zoom_boost, settings.use_width_as_height, settings.image_ratio)
 
     img_display.actual_tk = ImageTk.PhotoImage(img_display.image)
 
     img_display.label = ttk.Label(img_display, image=img_display.actual_tk)
     img_display.label.pack()
 
-    img_display.bind('<Button-1>', img_display.destroy)
-    img_display.bind('<Button-3>', img_display.destroy)
+    img_display.bind('<Double-Button-1>', lambda _:
+        img_display.destroy())
+    img_display.bind('<Double-Button-3>', lambda _:
+        img_display.destroy())
 
     img_display.wait_window()
 
 
 def setup_play_screen():
     global CUR_DATA, POINTS, GEN_SF, CUR_IMG_LINK, PH_DATA
+    
+    play_butt.configure(state=tk.DISABLED)
 
-    PH_DATA = [random.randint(10, 99) for _ in range(3)]
+    PH_DATA = [random.randint(10, 99) for _ in range(3)] # [<] avoid cheating somehow lol
     CUR_DATA = PH_DATA.copy()
     CUR_IMG_LINK = None
     GEN_SF = 0
@@ -552,8 +605,10 @@ def setup_play_screen():
     else:
         PLAY_ITEMS.f2.configure(width=int(settings.image_width + 20))
 
+    PLAY_ITEMS.og_img = Image.open(os.path.join(ASSETS_PATH, 'errors', 'image_none_yet.png'))
+    
     PLAY_ITEMS.cur_img = resize_image(
-            Image.open(os.path.join(ASSETS_PATH, 'errors', 'image_none_yet.png')),
+            PLAY_ITEMS.og_img,
             settings.image_width,
             settings.use_width_as_height,
             settings.image_ratio
@@ -561,13 +616,11 @@ def setup_play_screen():
 
     PLAY_ITEMS.cur_tk_img = ImageTk.PhotoImage(PLAY_ITEMS.cur_img)
 
-
     PLAY_ITEMS.img_widget = ttk.Button(PLAY_ITEMS.f2, image=PLAY_ITEMS.cur_tk_img, command=zoom_in_image)
 
     PLAY_ITEMS.generation_butt = ttk.Button(PLAY_ITEMS.f3, text="Generate", command=generate_new_round)
 
-    PLAY_ITEMS.guessing_butt = ttk.Button(PLAY_ITEMS.f3, text='Guess', command=lambda:
-        handle_error(11, "Not implemented yet!", icon='warning')) # TODO
+    PLAY_ITEMS.guessing_butt = ttk.Button(PLAY_ITEMS.f3, text='Guess', command=final_guess)
 
     PLAY_ITEMS.game_label = ttk.Label(PLAY_ITEMS.f5, text='Game', font=BOLD_TEXT)
     PLAY_ITEMS.episode_label = ttk.Label(PLAY_ITEMS.f6, text='Episode', font=BOLD_TEXT)
@@ -591,51 +644,80 @@ def setup_play_screen():
         selected_secrets.set(utils_constants.clamp(selected_secrets.get() + 1, 0, 99)))
 
     # [*] Upper
-    PLAY_ITEMS.heading.pack(ipadx=5, ipady=5, padx=5, pady=5)
-    PLAY_ITEMS.database_label.pack(ipadx=5, ipady=5, padx=5, pady=5)
-    PLAY_ITEMS.points_label.pack(ipadx=5, ipady=5, padx=5, pady=5)
-    PLAY_ITEMS.f0.pack(ipadx=5, ipady=5, padx=5, pady=5)
-    PLAY_ITEMS.f1.pack(ipadx=5, ipady=5, padx=5, pady=5)
+    PLAY_ITEMS.heading.pack(side='left', ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1), padx=5 // int(settings.small_fonts + 1), pady=5)
+    PLAY_ITEMS.database_label.pack(side='right', ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1), padx=5 // int(settings.small_fonts + 1), pady=5)
+    PLAY_ITEMS.points_label.pack(ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1), padx=5 // int(settings.small_fonts + 1), pady=5)
+    PLAY_ITEMS.f0.pack(ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1), padx=5 // int(settings.small_fonts + 1), pady=5)
+    PLAY_ITEMS.f1.pack(ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1), padx=5 // int(settings.small_fonts + 1), pady=5)
 
     # [*] Image
-    PLAY_ITEMS.img_widget.pack(ipadx=5, ipady=5, padx=5, pady=5)
-    PLAY_ITEMS.f2.grid(column=0, row=0, padx=5, pady=10, ipadx=5, ipady=10)
+    PLAY_ITEMS.img_widget.pack(ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1), padx=5 // int(settings.small_fonts + 1), pady=5)
+    PLAY_ITEMS.f2.grid(column=0, row=0)
 
     # [*] Generate/Guess
-    PLAY_ITEMS.generation_butt.pack(ipadx=5, ipady=10, padx=5, pady=10)
-    PLAY_ITEMS.guessing_butt.pack(ipadx=5, ipady=10, padx=5, pady=10)
-    PLAY_ITEMS.f3.grid(column=1, row=0, padx=5, pady=10, ipadx=5, ipady=10)
+    PLAY_ITEMS.generation_butt.pack(ipadx=5 // int(settings.small_fonts + 1), ipady=10, padx=5 // int(settings.small_fonts + 1), pady=10)
+    PLAY_ITEMS.guessing_butt.pack(ipadx=5 // int(settings.small_fonts + 1), ipady=10, padx=5 // int(settings.small_fonts + 1), pady=10)
+    PLAY_ITEMS.f3.grid(column=1, row=0, padx=5 // int(settings.small_fonts + 1), pady=10, ipadx=5 // int(settings.small_fonts + 1), ipady=10)
 
     # [*] Game
-    PLAY_ITEMS.game_label.pack(ipadx=5, ipady=5, padx=5, pady=5)
-    PLAY_ITEMS.game_ch.pack(ipadx=5, ipady=5, padx=5, pady=5)
-    PLAY_ITEMS.f5.grid(column=0, row=0, padx=5, pady=5, ipadx=5, ipady=5)
+    PLAY_ITEMS.game_label.pack(ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1), padx=5 // int(settings.small_fonts + 1), pady=5)
+    PLAY_ITEMS.game_ch.pack(ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1), padx=5 // int(settings.small_fonts + 1), pady=5)
+    PLAY_ITEMS.f5.grid(column=0, row=0, padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5)
 
     # [*] Episode
-    PLAY_ITEMS.episode_label.pack(ipadx=5, ipady=5, padx=5, pady=5)
-    PLAY_ITEMS.episode_ch.pack(ipadx=5, ipady=5, padx=5, pady=5)
-    PLAY_ITEMS.f6.grid(column=1, row=0, padx=5, pady=5, ipadx=5, ipady=5)
+    PLAY_ITEMS.episode_label.pack(ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1), padx=5 // int(settings.small_fonts + 1), pady=5)
+    PLAY_ITEMS.episode_ch.pack(ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1), padx=5 // int(settings.small_fonts + 1), pady=5)
+    PLAY_ITEMS.f6.grid(column=1, row=0, padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5)
 
     # [*] Map
-    PLAY_ITEMS.map_label.pack(ipadx=5, ipady=5, padx=5, pady=5)
-    PLAY_ITEMS.map_ch.pack(ipadx=5, ipady=5, padx=5, pady=5)
-    PLAY_ITEMS.f7.grid(column=0, row=1, padx=5, pady=5, ipadx=5, ipady=5)
+    PLAY_ITEMS.map_label.pack(ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1), padx=5 // int(settings.small_fonts + 1), pady=5)
+    PLAY_ITEMS.map_ch.pack(ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1), padx=5 // int(settings.small_fonts + 1), pady=5)
+    PLAY_ITEMS.f7.grid(column=0, row=1, padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5)
 
     # [*] Secrets
-    PLAY_ITEMS.secrets_label.pack(ipadx=5, ipady=5, padx=5, pady=5)
-    PLAY_ITEMS.secrets_minus.grid(column=0, row=0, padx=5, pady=5, ipadx=5, ipady=5)
-    PLAY_ITEMS.secrets_reset.grid(column=1, row=0, padx=5, pady=5, ipadx=5, ipady=5)
-    PLAY_ITEMS.secrets_plus.grid(column=2, row=0, padx=5, pady=5, ipadx=5, ipady=5)
-    PLAY_ITEMS.f9.pack(ipadx=5, ipady=5, padx=5, pady=5)
-    PLAY_ITEMS.f8.grid(column=1, row=1, padx=5, pady=5, ipadx=5, ipady=5)
+    PLAY_ITEMS.secrets_label.pack(ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1), padx=5 // int(settings.small_fonts + 1), pady=5)
+    PLAY_ITEMS.secrets_minus.grid(column=0, row=0, padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5)
+    PLAY_ITEMS.secrets_reset.grid(column=1, row=0, padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5)
+    PLAY_ITEMS.secrets_plus.grid(column=2, row=0, padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5)
+    PLAY_ITEMS.f9.pack(ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1), padx=5 // int(settings.small_fonts + 1), pady=5)
+    PLAY_ITEMS.f8.grid(column=1, row=1, padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5)
 
     # [*] Play Screen
-    PLAY_ITEMS.headframe.pack(ipadx=5, ipady=5, padx=5, pady=5)
-    PLAY_ITEMS.mainframe.pack(ipadx=5, ipady=5, padx=5, pady=5)
-    PLAY_ITEMS.f4.pack(ipadx=5, ipady=5, padx=5, pady=5)
+    PLAY_ITEMS.headframe.pack(ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1), padx=5 // int(settings.small_fonts + 1), pady=5)
+    PLAY_ITEMS.mainframe.pack(ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1), padx=5 // int(settings.small_fonts + 1), pady=5)
+    PLAY_ITEMS.f4.pack(ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1), padx=5 // int(settings.small_fonts + 1), pady=5)
 
     PLAY_ITEMS.pack()
 
+
+def open_database_editor(): # TODO
+    database_win = tk.Toplevel(root)
+    chosen_db = tk.StringVar(database_win, DATABASES[0].source)
+    
+    f_controls = ttk.Frame(database_win)
+    
+    title = ttk.Label(database_win, text='Database Settings', font=HEADING2)
+    db_picker = ttk.Label(f_controls, textvariable=chosen_db, font=LIGHT_TEXT)
+    mark_as_default = ttk.Button(f_controls, 'Use')
+
+
+def open_settings():    
+    settings_win = tk.Toplevel(root)
+    
+    chosen_theme = tk.StringVar(settings_win, settings.theme)
+    
+    f0 = ttk.Frame(settings_win)
+    f_theme = ttk.Frame(settings_win)
+    f_database = ttk.Frame(settings_win)
+    
+    heading = ttk.Label(f0, text=f'DoomMapGuesser {utils_constants.VERSION}', font=HEADING1)
+    subtitle = ttk.Label(f0, text='Made my MF366 with <3', font=SUBTITLE)
+    
+    theme_start = ttk.Label(f_theme, text="Theme", font=HEADING2)
+    theme_desc = ttk.Label(f_theme, text='You must restart DoomMapGuesser to apply the changes.')
+    theme_picker = ttk.OptionMenu(f_theme, chosen_theme, settings.theme, 'Autodetect', "Light", "Dark")
+    
+    
 
 class Database:
     def __init__(self, source: str):
@@ -1099,7 +1181,7 @@ play_tk = ImageTk.PhotoImage(play_img)
 
 play_butt = ttk.Button(sidebar, image=play_tk, width=50, command=setup_play_screen)
 
-play_butt.pack(side='top', ipadx=5, ipady=5, padx=5, pady=5)
+play_butt.pack(side='top', ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1), padx=5 // int(settings.small_fonts + 1), pady=5)
 
 sidebar.grid(column=0, row=0)
 main_frame.grid(column=1, row=0)

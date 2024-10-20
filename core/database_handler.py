@@ -6,6 +6,7 @@ import io
 
 # pylint: disable=W0718
 
+class __CloseDialogError(Exception): ...
 
 class StatusCodeNot200(Exception): ...
 

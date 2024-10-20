@@ -4,6 +4,7 @@ darkdetect==0.8.0
 idna==3.10
 numerize==0.12
 Pillow==10.4.0
+pyclip==0.7.0
 pywinstyles==1.8
 requests==2.32.3
 simple_webbrowser==0.2.2

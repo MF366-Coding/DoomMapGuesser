@@ -10,6 +10,11 @@ from typing import Any
 
 # pylint: disable=W0718
 
+class __CloseDialogError(Exception): ...
+
+
+REGULAR_KEYS: tuple[str] = ("theme", "databases", "imageRatio", "imageWidth", "widthIsHeight", "checkUpdates", "autoUpdateLevel", "excludeRule", "zoomBoost", "smallFonts")
+
 
 class StrictModeError(Exception): ... # [<] teachers be like :| (this was such a stupid comment, gawdamn)
 
@@ -32,7 +37,7 @@ class SettingsObject:
         """
         
         self._PATH = kw.get('overwrite', given_path)
-        self._HANDLER = handler
+        self.error_handler = handler
         self._SETTINGS: dict[str, int | bool | str | float | list[list[str, str, str]] | None] = initial_settings
         self._BE_STRICT = kw.get('strict', True)
         
@@ -45,31 +50,31 @@ class SettingsObject:
                 self._SETTINGS = json.load(f)
                 
         except FileNotFoundError as e:
-            self._HANDLER(44, f"FATAL ERROR\nSettings file could not be found!\n{e}")
+            self.error_handler(44, f"FATAL ERROR\nSettings file could not be found!\n{e}")
             sys.exit()
             
         except PermissionError as e:
-            self._HANDLER(43, f"FATAL ERROR\nMissing permissions to read the settings file\n{e}")
+            self.error_handler(43, f"FATAL ERROR\nMissing permissions to read the settings file\n{e}")
             sys.exit()
             
         except UnicodeError as e:
-            self._HANDLER(42, f"FATAL ERROR\nSystem failed to translate the Unicode characters in the settings file\n{e}")
+            self.error_handler(42, f"FATAL ERROR\nSystem failed to translate the Unicode characters in the settings file\n{e}")
             sys.exit()
             
         except json.JSONDecodeError as e:
-            self._HANDLER(1, f"FATAL ERROR\nJSON file could not be parsed correctly.\n{e}")    
+            self.error_handler(1, f"FATAL ERROR\nJSON file could not be parsed correctly.\n{e}")    
             sys.exit()
             
         except Exception as e:
-            self._HANDLER(3, f"FATAL ERROR\nUnknown error when attempting to parse the settings.\n{e}")
+            self.error_handler(3, f"FATAL ERROR\nUnknown error when attempting to parse the settings.\n{e}")
             sys.exit()
         
         it_happened = False # [i] variable that indicates whether an expected key is... gone... (this sounds stupid)
         
-        for ek in ("theme", "databases", "imageRatio", "imageWidth", "widthIsHeight", "checkUpdates", "autoUpdateLevel", "excludeRule", "zoomBoost", "seasonalEasterEggs"):
+        for ek in REGULAR_KEYS:
             if ek not in self._SETTINGS:
                 it_happened = True
-                self._HANDLER(2, f"FATAL ERROR\nMissing a key in the settings file.\nMissing key:\n'{ek}'")
+                self.error_handler(2, f"FATAL ERROR\nMissing a key in the settings file.\nMissing key:\n'{ek}'")
                 continue
             
             continue
@@ -104,23 +109,23 @@ class SettingsObject:
                 json.dump(obj, f, indent=kw.get("indent", 4))
         
         except FileNotFoundError as e:
-            self._HANDLER(44, f"FATAL ERROR\nSettings file could not be found!\n{e}")
+            self.error_handler(44, f"FATAL ERROR\nSettings file could not be found!\n{e}")
             sys.exit()
             
         except PermissionError as e:
-            self._HANDLER(43, f"FATAL ERROR\nMissing permissions to write to the settings file\n{e}")
+            self.error_handler(43, f"FATAL ERROR\nMissing permissions to write to the settings file\n{e}")
             sys.exit()
             
         except UnicodeError as e:
-            self._HANDLER(42, f"FATAL ERROR\nSystem failed to translate the Unicode characters\n{e}")
+            self.error_handler(42, f"FATAL ERROR\nSystem failed to translate the Unicode characters\n{e}")
             sys.exit()
             
         except json.JSONDecodeError as e:
-            self._HANDLER(1, f"FATAL ERROR\nJSON file could not be parsed correctly\n{e}")    
+            self.error_handler(1, f"FATAL ERROR\nJSON file could not be parsed correctly\n{e}")    
             sys.exit()
             
         except Exception as e:
-            self._HANDLER(3, f"FATAL ERROR\nUnknown error when attempting to write to the settings\n{e}")
+            self.error_handler(3, f"FATAL ERROR\nUnknown error when attempting to write to the settings\n{e}")
             sys.exit()
 
     @property
@@ -240,22 +245,21 @@ class SettingsObject:
         self._SETTINGS['autoUpdateLevel'] = value
         
     @property
-    def seasonal_easter_eggs(self) -> int:
-        return self._SETTINGS['seasonalEasterEggs']
+    def small_fonts(self) -> bool:
+        return self._SETTINGS['smallFonts']
     
-    @seasonal_easter_eggs.setter
-    def seasonal_easter_eggs(self, value: int):
+    @small_fonts.setter
+    def small_fonts(self, value: bool):
         """
-        # seasonal_easter_eggs
+        # small_fonts
         
-        **Key name:** `seasonalEasterEggs`
+        **Key name:** `smallFonts`
 
-        0. **Disabled**
-        1. **Enabled** (Default)
-        2. **Only the ones that do not interfere with gameplay**
+        0. **Disabled**, which allows for the best UI experience
+        1. **Enabled**, which allows for DoomMapGuesser to be played in smaller monitors
         """
         
-        self._SETTINGS['seasonalEasterEgg'] = value
+        self._SETTINGS['smallFonts'] = value
         
     @property
     def exclude_rule_for_e3m1_e3m9(self, **kw) -> str | None:
@@ -307,7 +311,7 @@ class SettingsObject:
             if not isinstance(value, (int, str, float, list, bool)):
                 raise ValueError('can only assign int, str, list[str] or boolean using SettingsObject.__setitem__')
             
-            if key not in ("theme", "databases", "imageRatio", "imageWidth", "widthIsHeight", "checkUpdates", "seasonalEasterEggs", "excludeRule", "autoUpdateLevel", "zoomBoost"):
+            if key not in REGULAR_KEYS:
                 raise KeyError('strict mode in SettingsObject does not allow for assigning new keys')
             
         self._SETTINGS[key] = value

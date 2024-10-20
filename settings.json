@@ -1,12 +1,12 @@
 {
-    "theme": 2,
+    "theme": 0,
     "databases": [],
     "imageRatio": "detect",
     "imageWidth": 500,
+    "smallFonts": false,
     "widthIsHeight": false,
     "checkUpdates": true,
     "autoUpdateLevel": 0,
     "excludeRule": "both",
-    "seasonalEasterEggs": 1,
-    "zoomBoost": 1.5
+    "zoomBoost": 2
 }
