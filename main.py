@@ -292,9 +292,9 @@ HEADING2 = Font(root, family="SUSE Bold", size=20 if settings.small_fonts else 2
 HEADING3 = Font(root, family='SUSE Semibold', size=16 if settings.small_fonts else 17)
 SUBTITLE = Font(root, family='SUSE Regular', size=12)
 REGULAR_TEXT = Font(root, family='SUSE Regular', size=12 if settings.small_fonts else 14)
-LIGHT_TEXT = Font(root, family='SUSE Light', size=12 if settings.small_fonts else 14)
-XLIGHT_TEXT = Font(root, family='SUSE ExtraLight', size=12 if settings.small_fonts else 14)
-THIN_TEXT = Font(root, family='SUSE Thin', size=12 if settings.small_fonts else 14)
+LIGHT_TEXT = Font(root, family='SUSE Light', size=10 if settings.small_fonts else 12)
+XLIGHT_TEXT = Font(root, family='SUSE ExtraLight', size=10 if settings.small_fonts else 12)
+THIN_TEXT = Font(root, family='SUSE Thin', size=10 if settings.small_fonts else 12)
 BOLD_TEXT = Font(root, family='SUSE Medium', size=12 if settings.small_fonts else 14)
 PRIMARY_BUTTON = Font(root, family='SUSE Semibold', size=10 if settings.small_fonts else 12, underline=False)
 SECONDARY_BUTTON = Font(root, family='SUSE Light', size=10 if settings.small_fonts else 12)
@@ -690,18 +690,148 @@ def setup_play_screen():
     PLAY_ITEMS.pack()
 
 
-def open_database_editor(): # TODO
-    database_win = tk.Toplevel(root)
-    chosen_db = tk.StringVar(database_win, DATABASES[0].source)
+def open_database_editor(master: tk.Toplevel) -> None:
+    def run_button(action: int, **kw) -> None | int | Database | bool:
+        match action:
+            case 0:
+                DATABASES[chosen_db_index.get()].use()
+                settings.databases = [i.source for i in DATABASES]
+                
+                settings.save_settings()
+                database_win.destroy()
+                master.destroy()
+                PLAY_ITEMS.destroy()
+                play_butt.configure(state=tk.ACTIVE)
+                root.focus_force()
+                return
+                
+            case 1:
+                chosen_db_index.set(chosen_db_index.get() - 1)
+                chosen_db.set(DATABASES[chosen_db_index.get()].source[:90] if len(DATABASES[chosen_db_index.get()].source) > 90 else DATABASES[chosen_db_index.get()].source)
+                down.configure(state=tk.ACTIVE)
+                
+                if chosen_db.get() == DATABASES[0].source:
+                    up.configure(state=tk.DISABLED)
+                    return
+                
+            case 2:                
+                chosen_db_index.set(chosen_db_index.get() + 1)
+                chosen_db.set(DATABASES[chosen_db_index.get()].source[:90] if len(DATABASES[chosen_db_index.get()].source) > 90 else DATABASES[chosen_db_index.get()].source)
+                up.configure(state=tk.ACTIVE)
+                
+                if chosen_db.get() == DATABASES[-1].source:
+                    down.configure(state=tk.DISABLED)
+                    return
+                
+            case 3:
+                return DATABASES[chosen_db_index.get()].remove()
+            
+            case 4:
+                input_text: str = add_db_entry.get()
+                
+                if len(input_text) == 0:
+                    return handle_error(54, "URL expected, yet DoomMapGuesser received nothing.")
+                
+                test_var = get_database(add_db_entry, handle_error)
+                
+                if isinstance(test_var, int):
+                    del test_var
+                    return handle_error(54, "This database cannot be used by DoomMapGuesser. Please refer to the previously showed error.")
+                    
+                del test_var
+                
+                return add_database(input_text)
+            
+            case 5:
+                add_db_entry.delete(0, tk.END)
+                return
+            
+            case 6:
+                input_text: str = add_db_entry.get()
+                
+                if len(input_text) == 0:
+                    return handle_error(54, "URL expected, yet DoomMapGuesser received nothing.")
+                
+                return simple_webbrowser.website(input_text)
+
+            case 7:
+                database_win.destroy()
+                master.destroy()
+                PLAY_ITEMS.destroy()
+                play_butt.configure(state=tk.ACTIVE)
+                root.focus_force()
+                return
+            
+            case _:
+                print('wrong action ID')
+
+    database_win = tk.Toplevel(master)
+    chosen_db_index = tk.IntVar(database_win, 0)
+    chosen_db = tk.StringVar(database_win, DATABASES[0].source[:90] if len(DATABASES[0].source) > 90 else DATABASES[0].source)
     
+    f_existing = ttk.Frame(database_win)
     f_controls = ttk.Frame(database_win)
     
-    title = ttk.Label(database_win, text='Database Settings', font=HEADING2)
-    db_picker = ttk.Label(f_controls, textvariable=chosen_db, font=LIGHT_TEXT)
-    mark_as_default = ttk.Button(f_controls, 'Use')
+    title = ttk.Label(database_win, text='Database Settings', font=HEADING1)
+    existing = ttk.Label(database_win, text='Select a Database...', font=HEADING2)
+    new = ttk.Label(database_win, text='...or add a new one', font=HEADING2)
+    
+    db_picker = ttk.Button(f_existing, textvariable=chosen_db, width=120, command=lambda:
+        simple_webbrowser.website(chosen_db.get()))
+    
+    up = ttk.Button(f_existing, text='↑', command=lambda:
+        run_button(1))
+    down = ttk.Button(f_existing, text='↓', command=lambda:
+        run_button(2))
+    remove = ttk.Button(f_existing, text='X', command=lambda:
+        run_button(3))
+    
+    add_db_entry = ttk.Entry(f_controls, validate_command=lambda:
+        run_button(4))
+    add_db_button = ttk.Button(f_controls, text='+', command=lambda: # [i] if the user doesn't hit enter they could always use the button, right?
+        run_button(4))
+    cancel_add_db = ttk.Button(f_controls, text='X', command=lambda:
+        run_button(5))
+    test_db_butt = ttk.Button(f_controls, text='Test', command=lambda:
+        run_button(6))
+    
+    apply = ttk.Button(database_win, text='Apply', command=lambda:
+        run_button(0))
+    cancel = ttk.Button(database_win, text='Cancel', command=lambda:
+        run_button(7))
+    
+    warning_label_1 = ttk.Label(database_win, text='Sorting databases can only be done by editing the actual JSON file. This interface is intended for users that lack programming skills.', font=LIGHT_TEXT)
+    warning_label_2 = ttk.Label(database_win, text='Databases should be raw JSON. An example is the default database. It\'s highly recommended to also host it in a safe way that promotes easy access from scripts, such as GitHub.', font=LIGHT_TEXT)
+
+    existing.pack(side='left', padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
+    
+    title.pack(side='left', padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
+    
+    db_picker.grid(column=0, row=0, padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
+    up.grid(column=1, row=0, padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
+    down.grid(column=2, row=0, padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
+    remove.grid(column=3, row=0, padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
+    
+    f_existing.pack(side='left', padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
+    
+    warning_label_1.pack(side='left', padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
+    
+    new.pack(side='left', padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
+    
+    add_db_entry.grid(column=0, row=0, padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
+    add_db_button.grid(column=1, row=0, padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
+    test_db_butt.grid(column=0, row=1, padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
+    cancel_add_db.grid(column=1, row=1, padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
+    
+    f_controls.pack(side='left', padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
+    
+    warning_label_2.pack(side='left', padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
+    
+    apply.pack(side='right', padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
+    cancel.pack(side='right', padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
 
 
-def open_settings():    
+def open_settings(): # TODO
     settings_win = tk.Toplevel(root)
     
     chosen_theme = tk.StringVar(settings_win, settings.theme)
