@@ -12,7 +12,7 @@ import simple_webbrowser
 from PIL import ImageTk, Image
 from core import utils_constants
 from core.database_handler import get_database, get_image, __CloseDialogError
-from core.settings import SettingsObject
+from core.settings import __SettingsObjectCopy, SettingsObject
 
 
 LATEST = None
@@ -786,7 +786,7 @@ def open_database_editor(master: tk.Toplevel) -> None:
     remove = ttk.Button(f_existing, text='X', command=lambda:
         run_button(3))
     
-    add_db_entry = ttk.Entry(f_controls, validate_command=lambda:
+    add_db_entry = ttk.Entry(f_controls, validate='key', validate_command=lambda:
         run_button(4))
     add_db_button = ttk.Button(f_controls, text='+', command=lambda: # [i] if the user doesn't hit enter they could always use the button, right?
         run_button(4))
@@ -800,8 +800,8 @@ def open_database_editor(master: tk.Toplevel) -> None:
     cancel = ttk.Button(database_win, text='Cancel', command=lambda:
         run_button(7))
     
-    warning_label_1 = ttk.Label(database_win, text='Sorting databases can only be done by editing the actual JSON file. This interface is intended for users that lack programming skills.', font=LIGHT_TEXT)
-    warning_label_2 = ttk.Label(database_win, text='Databases should be raw JSON. An example is the default database. It\'s highly recommended to also host it in a safe way that promotes easy access from scripts, such as GitHub.', font=LIGHT_TEXT)
+    warning_label_1 = ttk.Label(database_win, text='Sorting databases can only be done by editing the actual JSON file. This interface is intended for users that lack programming skills.', font=LIGHT_TEXT, wraplenght=500)
+    warning_label_2 = ttk.Label(database_win, text='Databases should be raw JSON. An example is the default database. It\'s highly recommended to also host it in a safe way that promotes easy access from scripts, such as GitHub.', font=LIGHT_TEXT, wraplenght=500)
 
     existing.pack(side='left', padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
     
@@ -830,23 +830,86 @@ def open_database_editor(master: tk.Toplevel) -> None:
     apply.pack(side='right', padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
     cancel.pack(side='right', padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
 
+    master.wm_protocol('WM_DELETE_WINDOW', lambda:
+        run_button(7))
+    
 
 def open_settings(): # TODO
+    def run_button(action: int):
+        match action:
+            case 1:
+                open_database_editor(settings_win)
+                
+            case 2:
+                # TODO
+                return handle_error(11, "Not implemented yet!", icon='warning')
+        
+        return
+    
     settings_win = tk.Toplevel(root)
     
-    chosen_theme = tk.StringVar(settings_win, settings.theme)
+    cur_settings: __SettingsObjectCopy = settings.copy
     
-    f0 = ttk.Frame(settings_win)
-    f_theme = ttk.Frame(settings_win)
-    f_database = ttk.Frame(settings_win)
+    chosen_theme = tk.StringVar(settings_win, cur_settings.theme)
+    chosen_ratio = tk.StringVar(settings_win, cur_settings.image_ratio)
+    width_is_height = tk.StringVar(settings_win, cur_settings.use_width_as_height)
+    zoom_boost = tk.StringVar(settings_win, cur_settings.zoom_boost)
+    updates_startup = tk.StringVar(settings_win, cur_settings.check_for_updates_on_startup)
+    smol_fonts_var = tk.StringVar(settings_win, cur_settings.small_fonts)
+    exclude_rule_var = tk.StringVar(settings_win, 'Show both')
     
-    heading = ttk.Label(f0, text=f'DoomMapGuesser {utils_constants.VERSION}', font=HEADING1)
-    subtitle = ttk.Label(f0, text='Made my MF366 with <3', font=SUBTITLE)
+    f_heading = ttk.Frame(settings_win)
+    f_full = ttk.Frame(settings_win)
+    f_theme = ttk.Frame(f_full)
+    f_database = ttk.Frame(f_full)
+    f_image = ttk.Frame(f_full)
+    f_inner_image = ttk.Frame(f_image)
+    f_updates = ttk.Frame(f_full)
+    f_small_fonts = ttk.Frame(f_full)
+    f_rule = ttk.Frame(f_full)
+    
+    heading = ttk.Label(f_heading, text=f'DoomMapGuesser {utils_constants.VERSION}', font=HEADING1)
+    subtitle = ttk.Label(f_heading, text='Made my MF366 with <3', font=SUBTITLE)
     
     theme_start = ttk.Label(f_theme, text="Theme", font=HEADING2)
     theme_desc = ttk.Label(f_theme, text='You must restart DoomMapGuesser to apply the changes.')
-    theme_picker = ttk.OptionMenu(f_theme, chosen_theme, settings.theme, 'Autodetect', "Light", "Dark")
+    theme_picker = ttk.OptionMenu(f_theme, chosen_theme, cur_settings.theme, 'Autodetect', "Light", "Dark")
     
+    db_start = ttk.Label(f_database, text='Databases', font=HEADING2)
+    db_button = ttk.Button(f_database, text='Open Database Settings ↗', command=lambda:
+        run_button(1))
+    
+    image_start = ttk.Label(f_image, text='Image', font=HEADING2)
+    
+    ratio_label = ttk.Label(f_inner_image, text='Image Ratio: ')
+    ratio_picker = ttk.OptionMenu(f_inner_image, chosen_ratio, cur_settings.image_ratio, 'Autodetect', "1:1 (Square)", "16:9 (Landscape)")
+    
+    wanted_width_label = ttk.Label(f_inner_image, text='Desired Width: ')
+    wanted_width_entry = ttk.Entry(f_inner_image)
+    
+    reverse_width_height = ttk.Checkbutton(f_inner_image, variable=width_is_height, text='Use the value above as the desired height')
+    
+    zoom_label = ttk.Label(f_inner_image, text='Zoom Level/Boost: ')
+    zoom_picker = ttk.OptionMenu(f_theme, zoom_boost, cur_settings.zoom_boost, '0.5x', "1x", "1.5x", '2x', '2.5x', '3x', '3.5x', '4x', '4.5x', '5x')
+    
+    check_updates_label = ttk.Label(f_updates, text='Updates', font=HEADING2)
+    check_update_now = ttk.Button(f_updates, text='Check for Updates Now', command=lambda:
+        run_button(2))
+    check_update_startup = ttk.Checkbutton(f_updates, text='Check for Updates on Startup', variable=updates_startup)
+    check_updates_info = ttk.Label(f_updates, text='The choice of not including Autoupdating was made during the development.', wraplength=500, font=LIGHT_TEXT)
+    
+    misc_start = ttk.Label(f_small_fonts, text='Small Fonts Mode', font=HEADING2)
+    smol_fonts_warn = ttk.Label(f_small_fonts, text='The Small Fonts Mode allows for a smaller window size, meaning DoomMapGuesser can be played in smaller monitors as well.', font=LIGHT_TEXT, wraplength=500)
+    smol_fonts = ttk.Checkbutton(f_small_fonts, text='Enable Small Fonts Mode', variable=smol_fonts_var)
+    
+    exclude_rule = ttk.Label(f_rule, text='Exclusion Rule: Hell Keep V.S. Warrens', font=HEADING2)
+    rule_warn = ttk.Label(f_rule, text='As the creator of DoomMapGuesser, I am fully aware it might be hard to distinguish Hell Keep from Warrens in the context of guessing. Custom databases may also have maps that are very similar to each other, too. Solution: force DoomMapGuesser to exclude one, both or none!', font=LIGHT_TEXT, wraplength=500)
+    exclude_rule_picker = ttk.OptionMenu(f_rule, exclude_rule_var, 'Show both', 'Show neither', "Show Hell Keep, don't show Warrens", "Show Warrens, don't show Hell Keep", "Show both")
+    
+    save = PrimaryButton(settings_win, text='Save and Close Settings', command=lambda:
+        run_button(0))
+    cancel = ttk.Button(settings_win, text='Cancel and Discard Changes', command=lambda:
+        run_button(3))
     
 
 class Database:

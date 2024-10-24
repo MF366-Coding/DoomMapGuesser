@@ -6,7 +6,6 @@
     "smallFonts": false,
     "widthIsHeight": false,
     "checkUpdates": true,
-    "autoUpdateLevel": 0,
     "excludeRule": "both",
     "zoomBoost": 2
 }
