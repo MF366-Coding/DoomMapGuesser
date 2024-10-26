@@ -2,6 +2,9 @@ from typing import Any
 
 
 DEFAULT_DB_URL = "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuesser/main/.github/ss_db.json"
+REPO_URL = 'https://github.com/MF366-Coding/DoomMapGuesser'
+LATEST_URL = 'https://github.com/MF366-Coding/DoomMapGuesser/releases/latest'
+LATEST_JSON_URL = "https://api.github.com/repos/MF366-Coding/DoomMapGuesser/releases/latest"
 VERSION = 'v2.0.0'
 
 def nullish_operator(value: Any, new_value: Any) -> Any:

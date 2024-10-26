@@ -10,9 +10,9 @@ import sys
 import pyclip
 import simple_webbrowser
 from PIL import ImageTk, Image
-from core import utils_constants
-from core.database_handler import get_database, get_image, __CloseDialogError
-from core.settings import __SettingsObjectCopy, SettingsObject
+from core import utils_constants as consts
+from core.database_handler import get_database, get_image, check_for_updates, __CloseDialogError
+from core.settings import SettingsObject
 
 
 LATEST = None
@@ -117,21 +117,12 @@ def __send_responsive_dialog_with_buttons(button_args: list[dict[str, Any]], *ar
 
             __buttargs.pop('command')
 
-            if __buttargs['type'] == 'PRIMARY':
-                __BUTTONS.append(PrimaryButton(__window, command=__com, **__buttargs))
-
-            else:
-                __buttargs.pop('type')
-                __BUTTONS.append(ttk.Button(__window, command=__com, **__buttargs))
-
+            __buttargs.pop('type')
+            __BUTTONS.append(ttk.Button(__window, command=__com, **__buttargs))
             continue
 
-        if __buttargs['type'] == 'PRIMARY':
-            __BUTTONS.append(PrimaryButton(__window, **__buttargs))
-
-        else:
-            __buttargs.pop('type')
-            __BUTTONS.append(ttk.Button(__window, **__buttargs))
+        __buttargs.pop('type')
+        __BUTTONS.append(ttk.Button(__window, **__buttargs))
 
     for __butt in __BUTTONS:
         __butt.pack(side='right', padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5)
@@ -140,13 +131,13 @@ def __send_responsive_dialog_with_buttons(button_args: list[dict[str, Any]], *ar
 
 
 root = tk.Tk()
-root.title(f'DoomMapGuesser by MF366 - {utils_constants.VERSION}')
+root.title(f'DoomMapGuesser by MF366 - {consts.VERSION}')
 # /-/ root.resizable(False, False)
 
 
 def handle_error(code: int, message: str, **kw) -> int:
     try:
-        __send_responsive_dialog(kw.get('icon', 'error'), f"DoomMapGuesser - Error #{code}", f"=== Error #{code} ===\n{message}", kw.get('wraplenght', 400), kw.get('overwrite_font', SUBTITLE), kw.get('root_of', root))
+        __send_responsive_dialog(kw.get('icon', 'error'), f"DoomMapGuesser - Error #{code}", f"=== Error #{code} ===\n{message}", kw.get('wraplength', 400), kw.get('overwrite_font', SUBTITLE), kw.get('root_of', root))
 
     except FileNotFoundError as e:
         return handle_error(10, f"Invalid icon. A valid icon bust be the name of an image - without extension - that is inside:\nassets/icons/universal\n\n{e}")
@@ -160,9 +151,9 @@ def handle_error(code: int, message: str, **kw) -> int:
     return code
 
 
-def send_dialog(dtype: str, title: str, message: str, wraplenght: int = 400, root_of: tk.Tk | tk.Toplevel = root, **kw) -> int | None:
+def send_dialog(dtype: str, title: str, message: str, wraplength: int = 400, root_of: tk.Tk | tk.Toplevel = root, **kw) -> int | None:
     try:
-        __send_responsive_dialog(dtype, title, message, wraplenght, kw.get('overwrite_font', SUBTITLE), root_of)
+        __send_responsive_dialog(dtype, title, message, wraplength, kw.get('overwrite_font', SUBTITLE), root_of)
 
     except FileNotFoundError as e:
         return handle_error(10, f"Invalid icon. A valid icon bust be the name of an image - without extension - that is inside:\nassets/icons/universal\n\n{e}")
@@ -174,9 +165,9 @@ def send_dialog(dtype: str, title: str, message: str, wraplenght: int = 400, roo
         return handle_error(15, f"An invalid key was parsed.\n{e}")
 
 
-def send_dialog_with_buttons(dtype: str, title: str, message: str, button_args: list[dict[str, Any]], wraplenght: int = 400, root_of: tk.Tk | tk.Toplevel = root, **kw) -> int | None:
+def send_dialog_with_buttons(dtype: str, title: str, message: str, button_args: list[dict[str, Any]], wraplength: int = 400, root_of: tk.Tk | tk.Toplevel = root, **kw) -> int | None:
     try:
-        __send_responsive_dialog_with_buttons(button_args, dtype, title, message, wraplenght, kw.get('overwrite_font', SUBTITLE), root_of)
+        __send_responsive_dialog_with_buttons(button_args, dtype, title, message, wraplength, kw.get('overwrite_font', SUBTITLE), root_of)
 
     except FileNotFoundError as e:
         return handle_error(9, f"Invalid icon. A valid icon bust be the name of an image - without extension - that is inside:\nassets/icons/universal\n\n{e}")
@@ -197,7 +188,11 @@ def send_dialog_with_buttons(dtype: str, title: str, message: str, button_args: 
 settings = SettingsObject(CONFIG_PATH, handler=handle_error)
 
 
-nl = utils_constants.nullish_operator
+nl = consts.nullish_operator
+
+
+def check_for_dmg_updates(warn_if_match: bool = False) -> int | bool:
+    return check_for_updates(consts.VERSION, (consts.LATEST_JSON_URL, consts.LATEST_URL), (handle_error, send_dialog, send_dialog_with_buttons)), warn_if_match
 
 
 def autodetect_theme(configs: SettingsObject) -> None:
@@ -302,12 +297,6 @@ SECONDARY_BUTTON = Font(root, family='SUSE Light', size=10 if settings.small_fon
 PLAY_ITEMS = ttk.Frame(main_frame)
 
 
-class PrimaryButton(ttk.Button):
-    def __init__(self, master = None, *, class_ = "", command = "", compound = "", cursor = "", default = "normal", image = "", state = "normal", text = "", underline = -1, width = "", **kw):
-        kw.pop('type', None)
-        super().__init__(master, class_=class_, command=command, compound=compound, cursor=cursor, default=default, image=image, state=state, style='Primary.TButton', text=text, underline=underline, width=width)
-
-
 class ImportantFrame(ttk.Frame):
     def __init__(self, master = None, **kw):
         super().__init__(master, style='Important.TFrame', **kw)
@@ -334,7 +323,7 @@ def open_listbox(options: list | tuple, var: tk.Variable) -> None:
     print(selected_episode.get())
     print(selected_map.get())
     print(selected_secrets.get())
-    
+
     topl = tk.Toplevel(root)
     topl.title("DoomMapGuesser - Pick an Option")
     topl.geometry('600x400')
@@ -357,21 +346,21 @@ def open_listbox(options: list | tuple, var: tk.Variable) -> None:
 
         if len(array) == 0:
             return handle_error(53, "You must select one of the options.")
-        
+
         selection = listbox.get(array[0])
         var.set(selection)
-        
+
         match str(var):
             case 'GAME':
                 selected_episode.set(list(CUR_DB.structure[selected_game.get()].keys())[0])
                 selected_map.set(list(CUR_DB.structure[selected_game.get()][selected_episode.get()].keys())[0])
-                
+
             case 'EPISODE':
                 selected_map.set(list(CUR_DB.structure[selected_game.get()][selected_episode.get()].keys())[0])
-            
+
             case _:
                 print('map edited')
-                
+
         topl.destroy()
 
     topl.bind("<FocusOut>", lambda _:
@@ -454,16 +443,16 @@ def generate_new_image(data: list[str], **kw) -> str:
     """
 
     db: Database = kw.get('database', CUR_DB)
-    
+
     try:
         y = list(db.structure[data[0]][data[1]][data[2]]['screenshots']).copy()
         y.remove(CUR_IMG_LINK)
         x = random.choice(y)
         del y
-    
+
     except (ValueError, IndexError):
         x = random.choice(list(db.structure[data[0]][data[1]][data[2]]['screenshots']).copy())
-    
+
     return x
 
 
@@ -495,13 +484,13 @@ def generate_new_round(*_, first: dict[str, Any] = None, second: dict[str, Any] 
 
     else:
         c = get_selected_image(b, **third)
-        
+
     if isinstance(a, int):
         return a
-    
+
     if isinstance(b, int):
         return b
-    
+
     if isinstance(c, int):
         return c
 
@@ -512,26 +501,26 @@ def generate_new_round(*_, first: dict[str, Any] = None, second: dict[str, Any] 
     PLAY_ITEMS.cur_img = resize_image(c, settings.image_width, settings.use_width_as_height, settings.image_ratio)
     PLAY_ITEMS.cur_tk_img = ImageTk.PhotoImage(PLAY_ITEMS.cur_img)
     PLAY_ITEMS.img_widget.configure(image=PLAY_ITEMS.cur_tk_img)
-    
+
     PLAY_ITEMS.points_label.configure(text=f'Points: {POINTS} / {GEN_SF - 4}')
-    
+
     print(CUR_DATA)
 
 
 def final_guess(*_, first: dict[str, Any] = None, second: dict[str, Any] = None, third: dict[str, Any] = None):
     global POINTS
-    
+
     final_score = 0
-    
+
     if selected_game.get() == CUR_DATA[0]:
         final_score += 1
-        
+
     if selected_episode.get() == CUR_DATA[1]:
         final_score += 1
-    
+
     if selected_map.get() == CUR_DATA[2]:
         final_score += 1
-        
+
     if selected_secrets.get() == CUR_DB.structure[CUR_DATA[0]][CUR_DATA[1]][CUR_DATA[2]]['secrets']:
         final_score += 1
 
@@ -543,11 +532,11 @@ An X means a correct answer.
 [{'X' if selected_episode.get() == CUR_DATA[1] else '  '}] Episode
 [{'X' if selected_map.get() == CUR_DATA[2] else '  '}] Map
 [{'X' if selected_secrets.get() == CUR_DB.structure[CUR_DATA[0]][CUR_DATA[1]][CUR_DATA[2]]['secrets'] else '  '}] Secrets""")
-    
+
     POINTS += final_score
-    
+
     generate_new_round(first=first, second=second, third=third)
-    
+
 
 def zoom_in_image():
     img_display = tk.Toplevel(root)
@@ -572,7 +561,7 @@ def zoom_in_image():
 
 def setup_play_screen():
     global CUR_DATA, POINTS, GEN_SF, CUR_IMG_LINK, PH_DATA
-    
+
     play_butt.configure(state=tk.DISABLED)
 
     PH_DATA = [random.randint(10, 99) for _ in range(3)] # [<] avoid cheating somehow lol
@@ -596,7 +585,7 @@ def setup_play_screen():
     PLAY_ITEMS.f8 = ttk.Frame(PLAY_ITEMS.f4)
     PLAY_ITEMS.f9 = ttk.Frame(PLAY_ITEMS.f8)
 
-    PLAY_ITEMS.database_label = ImportantLabel(PLAY_ITEMS.f0, text="Using the default database." if CUR_DB.source == utils_constants.DEFAULT_DB_URL else f'Using database with link <{CUR_DB.source}>!')
+    PLAY_ITEMS.database_label = ImportantLabel(PLAY_ITEMS.f0, text="Using the default database." if CUR_DB.source == consts.DEFAULT_DB_URL else f'Using database with link <{CUR_DB.source}>!')
     PLAY_ITEMS.points_label = ttk.Label(PLAY_ITEMS.f1, text=f'Points: {POINTS} / {GEN_SF}')
 
     if settings.use_width_as_height:
@@ -606,7 +595,7 @@ def setup_play_screen():
         PLAY_ITEMS.f2.configure(width=int(settings.image_width + 20))
 
     PLAY_ITEMS.og_img = Image.open(os.path.join(ASSETS_PATH, 'errors', 'image_none_yet.png'))
-    
+
     PLAY_ITEMS.cur_img = resize_image(
             PLAY_ITEMS.og_img,
             settings.image_width,
@@ -637,11 +626,11 @@ def setup_play_screen():
         open_listbox(list(CUR_DB.structure[selected_game.get()][selected_episode.get()].keys()), selected_map))
 
     PLAY_ITEMS.secrets_minus = ttk.Button(PLAY_ITEMS.f9, text='-', command=lambda:
-        selected_secrets.set(utils_constants.clamp(selected_secrets.get() - 1, 0, 99)))
+        selected_secrets.set(consts.clamp(selected_secrets.get() - 1, 0, 99)))
     PLAY_ITEMS.secrets_reset = ttk.Button(PLAY_ITEMS.f9, textvariable=selected_secrets, command=lambda:
         selected_secrets.set(0))
     PLAY_ITEMS.secrets_plus = ttk.Button(PLAY_ITEMS.f9, text='+', command=lambda:
-        selected_secrets.set(utils_constants.clamp(selected_secrets.get() + 1, 0, 99)))
+        selected_secrets.set(consts.clamp(selected_secrets.get() + 1, 0, 99)))
 
     # [*] Upper
     PLAY_ITEMS.heading.pack(side='left', ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1), padx=5 // int(settings.small_fonts + 1), pady=5)
@@ -690,174 +679,234 @@ def setup_play_screen():
     PLAY_ITEMS.pack()
 
 
-def open_database_editor(master: tk.Toplevel) -> None:
+def open_database_editor(master: tk.Toplevel, copy: Any) -> None:
     def run_button(action: int, **kw) -> None | int | Database | bool:
         match action:
             case 0:
                 DATABASES[chosen_db_index.get()].use()
-                settings.databases = [i.source for i in DATABASES]
-                
-                settings.save_settings()
+                copy.databases = [i.source for i in DATABASES]
+
+                copy.save_settings()
                 database_win.destroy()
                 master.destroy()
-                PLAY_ITEMS.destroy()
+                
+                for child in list(PLAY_ITEMS.children.values()):
+                    child.destroy()
+
                 play_butt.configure(state=tk.ACTIVE)
                 root.focus_force()
                 return
-                
+
             case 1:
                 chosen_db_index.set(chosen_db_index.get() - 1)
-                chosen_db.set(DATABASES[chosen_db_index.get()].source[:90] if len(DATABASES[chosen_db_index.get()].source) > 90 else DATABASES[chosen_db_index.get()].source)
-                down.configure(state=tk.ACTIVE)
                 
+                try:
+                    chosen_db.set(DATABASES[chosen_db_index.get()].source[:90] if len(DATABASES[chosen_db_index.get()].source) > 90 else DATABASES[chosen_db_index.get()].source)
+                
+                except IndexError:
+                    chosen_db_index.set(chosen_db_index.get() + 1)
+                    return
+                    
+                down.configure(state=tk.ACTIVE)
+
                 if chosen_db.get() == DATABASES[0].source:
                     up.configure(state=tk.DISABLED)
                     return
-                
-            case 2:                
+
+            case 2:
                 chosen_db_index.set(chosen_db_index.get() + 1)
-                chosen_db.set(DATABASES[chosen_db_index.get()].source[:90] if len(DATABASES[chosen_db_index.get()].source) > 90 else DATABASES[chosen_db_index.get()].source)
-                up.configure(state=tk.ACTIVE)
                 
+                try:
+                    chosen_db.set(DATABASES[chosen_db_index.get()].source[:90] if len(DATABASES[chosen_db_index.get()].source) > 90 else DATABASES[chosen_db_index.get()].source)
+                
+                except IndexError:
+                    chosen_db_index.set(chosen_db_index.get() - 1)
+                    return
+                
+                up.configure(state=tk.ACTIVE)
+
                 if chosen_db.get() == DATABASES[-1].source:
                     down.configure(state=tk.DISABLED)
                     return
-                
+
             case 3:
                 return DATABASES[chosen_db_index.get()].remove()
-            
+
             case 4:
                 input_text: str = add_db_entry.get()
-                
+
                 if len(input_text) == 0:
                     return handle_error(54, "URL expected, yet DoomMapGuesser received nothing.")
-                
-                test_var = get_database(add_db_entry, handle_error)
-                
+
+                test_var = get_database(add_db_entry.get(), handle_error)
+
                 if isinstance(test_var, int):
                     del test_var
                     return handle_error(54, "This database cannot be used by DoomMapGuesser. Please refer to the previously showed error.")
-                    
+
                 del test_var
-                
+
                 return add_database(input_text)
-            
+
             case 5:
                 add_db_entry.delete(0, tk.END)
                 return
-            
+
             case 6:
                 input_text: str = add_db_entry.get()
-                
+
                 if len(input_text) == 0:
                     return handle_error(54, "URL expected, yet DoomMapGuesser received nothing.")
-                
+
                 return simple_webbrowser.website(input_text)
 
             case 7:
                 database_win.destroy()
                 master.destroy()
-                PLAY_ITEMS.destroy()
+                
+                for child in list(PLAY_ITEMS.children.values()):
+                    child.destroy()
+                
                 play_butt.configure(state=tk.ACTIVE)
                 root.focus_force()
                 return
-            
+
             case _:
                 print('wrong action ID')
 
     database_win = tk.Toplevel(master)
+    database_win.title('DoomMapGuesser - Database Editor')
+    apply_theme_to_titlebar(database_win, settings)
+    
     chosen_db_index = tk.IntVar(database_win, 0)
     chosen_db = tk.StringVar(database_win, DATABASES[0].source[:90] if len(DATABASES[0].source) > 90 else DATABASES[0].source)
-    
+
     f_existing = ttk.Frame(database_win)
     f_controls = ttk.Frame(database_win)
-    
+
     title = ttk.Label(database_win, text='Database Settings', font=HEADING1)
     existing = ttk.Label(database_win, text='Select a Database...', font=HEADING2)
     new = ttk.Label(database_win, text='...or add a new one', font=HEADING2)
-    
+
     db_picker = ttk.Button(f_existing, textvariable=chosen_db, width=120, command=lambda:
         simple_webbrowser.website(chosen_db.get()))
-    
+
     up = ttk.Button(f_existing, text='↑', command=lambda:
         run_button(1))
     down = ttk.Button(f_existing, text='↓', command=lambda:
         run_button(2))
     remove = ttk.Button(f_existing, text='X', command=lambda:
         run_button(3))
-    
-    add_db_entry = ttk.Entry(f_controls, validate='key', validate_command=lambda:
-        run_button(4))
+
+    add_db_entry = ttk.Entry(f_controls)
     add_db_button = ttk.Button(f_controls, text='+', command=lambda: # [i] if the user doesn't hit enter they could always use the button, right?
         run_button(4))
     cancel_add_db = ttk.Button(f_controls, text='X', command=lambda:
         run_button(5))
     test_db_butt = ttk.Button(f_controls, text='Test', command=lambda:
         run_button(6))
-    
+
     apply = ttk.Button(database_win, text='Apply', command=lambda:
         run_button(0))
     cancel = ttk.Button(database_win, text='Cancel', command=lambda:
         run_button(7))
-    
-    warning_label_1 = ttk.Label(database_win, text='Sorting databases can only be done by editing the actual JSON file. This interface is intended for users that lack programming skills.', font=LIGHT_TEXT, wraplenght=500)
-    warning_label_2 = ttk.Label(database_win, text='Databases should be raw JSON. An example is the default database. It\'s highly recommended to also host it in a safe way that promotes easy access from scripts, such as GitHub.', font=LIGHT_TEXT, wraplenght=500)
 
-    existing.pack(side='left', padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
+    warning_label_1 = ttk.Label(database_win, text='Sorting databases can only be done by editing the actual JSON file. This interface is intended for users that lack programming skills.', font=LIGHT_TEXT, wraplength=400)
+    warning_label_2 = ttk.Label(database_win, text='Databases should be raw JSON. An example is the default database. It\'s highly recommended to also host it in a safe way that promotes easy access from scripts, such as GitHub.', font=LIGHT_TEXT, wraplength=400)
+
+    title.pack(padx=5 // int(copy.small_fonts + 1), pady=5 // int(copy.small_fonts + 1), ipadx=5 // int(copy.small_fonts + 1), ipady=5 // int(copy.small_fonts + 1))
     
-    title.pack(side='left', padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
-    
-    db_picker.grid(column=0, row=0, padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
-    up.grid(column=1, row=0, padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
-    down.grid(column=2, row=0, padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
-    remove.grid(column=3, row=0, padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
-    
-    f_existing.pack(side='left', padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
-    
-    warning_label_1.pack(side='left', padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
-    
-    new.pack(side='left', padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
-    
-    add_db_entry.grid(column=0, row=0, padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
-    add_db_button.grid(column=1, row=0, padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
-    test_db_butt.grid(column=0, row=1, padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
-    cancel_add_db.grid(column=1, row=1, padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
-    
-    f_controls.pack(side='left', padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
-    
-    warning_label_2.pack(side='left', padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
-    
-    apply.pack(side='right', padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
-    cancel.pack(side='right', padx=5 // int(settings.small_fonts + 1), pady=5 // int(settings.small_fonts + 1), ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1))
+    existing.pack(padx=5 // int(copy.small_fonts + 1), pady=5 // int(copy.small_fonts + 1), ipadx=5 // int(copy.small_fonts + 1), ipady=5 // int(copy.small_fonts + 1))
+
+    db_picker.grid(column=0, row=0, padx=5 // int(copy.small_fonts + 1), pady=5 // int(copy.small_fonts + 1), ipadx=5 // int(copy.small_fonts + 1), ipady=5 // int(copy.small_fonts + 1))
+    up.grid(column=1, row=0, padx=5 // int(copy.small_fonts + 1), pady=5 // int(copy.small_fonts + 1), ipadx=5 // int(copy.small_fonts + 1), ipady=5 // int(copy.small_fonts + 1))
+    down.grid(column=2, row=0, padx=5 // int(copy.small_fonts + 1), pady=5 // int(copy.small_fonts + 1), ipadx=5 // int(copy.small_fonts + 1), ipady=5 // int(copy.small_fonts + 1))
+    remove.grid(column=3, row=0, padx=5 // int(copy.small_fonts + 1), pady=5 // int(copy.small_fonts + 1), ipadx=5 // int(copy.small_fonts + 1), ipady=5 // int(copy.small_fonts + 1))
+
+    f_existing.pack(padx=5 // int(copy.small_fonts + 1), pady=5 // int(copy.small_fonts + 1), ipadx=5 // int(copy.small_fonts + 1), ipady=5 // int(copy.small_fonts + 1))
+
+    warning_label_1.pack(padx=5 // int(copy.small_fonts + 1), pady=5 // int(copy.small_fonts + 1), ipadx=5 // int(copy.small_fonts + 1), ipady=5 // int(copy.small_fonts + 1))
+
+    new.pack(padx=5 // int(copy.small_fonts + 1), pady=5 // int(copy.small_fonts + 1), ipadx=5 // int(copy.small_fonts + 1), ipady=5 // int(copy.small_fonts + 1))
+
+    add_db_entry.grid(column=0, row=0, padx=5 // int(copy.small_fonts + 1), pady=5 // int(copy.small_fonts + 1), ipadx=5 // int(copy.small_fonts + 1), ipady=5 // int(copy.small_fonts + 1))
+    add_db_button.grid(column=1, row=0, padx=5 // int(copy.small_fonts + 1), pady=5 // int(copy.small_fonts + 1), ipadx=5 // int(copy.small_fonts + 1), ipady=5 // int(copy.small_fonts + 1))
+    test_db_butt.grid(column=0, row=1, padx=5 // int(copy.small_fonts + 1), pady=5 // int(copy.small_fonts + 1), ipadx=5 // int(copy.small_fonts + 1), ipady=5 // int(copy.small_fonts + 1))
+    cancel_add_db.grid(column=1, row=1, padx=5 // int(copy.small_fonts + 1), pady=5 // int(copy.small_fonts + 1), ipadx=5 // int(copy.small_fonts + 1), ipady=5 // int(copy.small_fonts + 1))
+
+    f_controls.pack(padx=5 // int(copy.small_fonts + 1), pady=5 // int(copy.small_fonts + 1), ipadx=5 // int(copy.small_fonts + 1), ipady=5 // int(copy.small_fonts + 1))
+
+    warning_label_2.pack(padx=5 // int(copy.small_fonts + 1), pady=5 // int(copy.small_fonts + 1), ipadx=5 // int(copy.small_fonts + 1), ipady=5 // int(copy.small_fonts + 1))
+
+    apply.pack(side='right', padx=5 // int(copy.small_fonts + 1), pady=5 // int(copy.small_fonts + 1), ipadx=5 // int(copy.small_fonts + 1), ipady=5 // int(copy.small_fonts + 1))
+    cancel.pack(side='right', padx=5 // int(copy.small_fonts + 1), pady=5 // int(copy.small_fonts + 1), ipadx=5 // int(copy.small_fonts + 1), ipady=5 // int(copy.small_fonts + 1))
 
     master.wm_protocol('WM_DELETE_WINDOW', lambda:
         run_button(7))
-    
 
-def open_settings(): # TODO
+
+def open_settings():
+    TRANSLATION: dict[str | None, str] = {
+        'warrens': "Show Warrens, don't show Hell Keep",
+        'hell_keep': "Show Hell Keep, don't show Warrens",
+        'both': 'Show both',
+        None: 'Show neither'
+    }
+
+    REV_TRANSLATION: dict[str, str | None] = {v: k for k, v in TRANSLATION.items()}
+
     def run_button(action: int):
         match action:
+            case 0:
+                cur_settings.exclude_rule_for_e3m1_e3m9 = REV_TRANSLATION[exclude_rule_var.get()]
+                cur_settings.theme = chosen_theme.get().lower()
+                cur_settings.image_ratio = chosen_ratio.get()
+                cur_settings.use_width_as_height = bool(width_is_height.get())
+                cur_settings.zoom_boost = float(zoom_boost.get()[:-1])
+                cur_settings.check_for_updates_on_startup = bool(updates_startup.get())
+                cur_settings.small_fonts = bool(smol_fonts_var.get())
+
+                cur_settings.save_settings()
+                settings_win.destroy()
+                for child in list(PLAY_ITEMS.children.values()):
+                    child.destroy()
+                play_butt.configure(state=tk.ACTIVE)
+                root.focus_force()
+                return
+
             case 1:
-                open_database_editor(settings_win)
-                
+                open_database_editor(settings_win, cur_settings)
+
             case 2:
-                # TODO
-                return handle_error(11, "Not implemented yet!", icon='warning')
-        
-        return
-    
+                return check_for_dmg_updates(True)
+
+            case 3:
+                settings_win.destroy()
+                
+                for child in list(PLAY_ITEMS.children.values()):
+                    child.destroy()
+                    
+                play_butt.configure(state=tk.ACTIVE)
+                root.focus_force()
+                return
+
+            case _:
+                print('wrong action ID')
+
     settings_win = tk.Toplevel(root)
-    
-    cur_settings: __SettingsObjectCopy = settings.copy
-    
-    chosen_theme = tk.StringVar(settings_win, cur_settings.theme)
+    settings_win.title('DoomMapGuesser - Settings')
+    apply_theme_to_titlebar(settings_win, settings)
+
+    cur_settings = settings.copy
+
+    chosen_theme = tk.StringVar(settings_win, cur_settings.theme.title())
     chosen_ratio = tk.StringVar(settings_win, cur_settings.image_ratio)
-    width_is_height = tk.StringVar(settings_win, cur_settings.use_width_as_height)
+    width_is_height = tk.IntVar(settings_win, cur_settings.use_width_as_height)
     zoom_boost = tk.StringVar(settings_win, cur_settings.zoom_boost)
-    updates_startup = tk.StringVar(settings_win, cur_settings.check_for_updates_on_startup)
-    smol_fonts_var = tk.StringVar(settings_win, cur_settings.small_fonts)
-    exclude_rule_var = tk.StringVar(settings_win, 'Show both')
-    
+    updates_startup = tk.IntVar(settings_win, cur_settings.check_for_updates_on_startup)
+    smol_fonts_var = tk.IntVar(settings_win, cur_settings.small_fonts)
+    exclude_rule_var = tk.StringVar(settings_win, TRANSLATION[cur_settings.exclude_rule_for_e3m1_e3m9])
+
     f_heading = ttk.Frame(settings_win)
     f_full = ttk.Frame(settings_win)
     f_theme = ttk.Frame(f_full)
@@ -867,50 +916,101 @@ def open_settings(): # TODO
     f_updates = ttk.Frame(f_full)
     f_small_fonts = ttk.Frame(f_full)
     f_rule = ttk.Frame(f_full)
-    
-    heading = ttk.Label(f_heading, text=f'DoomMapGuesser {utils_constants.VERSION}', font=HEADING1)
-    subtitle = ttk.Label(f_heading, text='Made my MF366 with <3', font=SUBTITLE)
-    
+
+    heading = ttk.Label(f_heading, text=f'DoomMapGuesser {consts.VERSION}', font=HEADING1)
+    subtitle = ttk.Label(f_heading, text='Made by MF366 with <3', font=SUBTITLE)
+
     theme_start = ttk.Label(f_theme, text="Theme", font=HEADING2)
-    theme_desc = ttk.Label(f_theme, text='You must restart DoomMapGuesser to apply the changes.')
-    theme_picker = ttk.OptionMenu(f_theme, chosen_theme, cur_settings.theme, 'Autodetect', "Light", "Dark")
-    
+    theme_desc = ttk.Label(f_theme, text='You must restart DoomMapGuesser to apply the changes.', font=LIGHT_TEXT)
+    theme_picker = ttk.OptionMenu(f_theme, chosen_theme, cur_settings.theme.title(), 'Auto', "Light", "Dark")
+
     db_start = ttk.Label(f_database, text='Databases', font=HEADING2)
     db_button = ttk.Button(f_database, text='Open Database Settings ↗', command=lambda:
         run_button(1))
-    
+
     image_start = ttk.Label(f_image, text='Image', font=HEADING2)
-    
+
     ratio_label = ttk.Label(f_inner_image, text='Image Ratio: ')
     ratio_picker = ttk.OptionMenu(f_inner_image, chosen_ratio, cur_settings.image_ratio, 'Autodetect', "1:1 (Square)", "16:9 (Landscape)")
-    
+
     wanted_width_label = ttk.Label(f_inner_image, text='Desired Width: ')
     wanted_width_entry = ttk.Entry(f_inner_image)
-    
-    reverse_width_height = ttk.Checkbutton(f_inner_image, variable=width_is_height, text='Use the value above as the desired height')
-    
+    wanted_width_entry.insert(0, str(cur_settings.image_width))
+
+    reverse_width_height = ttk.Checkbutton(f_image, variable=width_is_height, text='Use the value above as the desired height')
+
     zoom_label = ttk.Label(f_inner_image, text='Zoom Level/Boost: ')
-    zoom_picker = ttk.OptionMenu(f_theme, zoom_boost, cur_settings.zoom_boost, '0.5x', "1x", "1.5x", '2x', '2.5x', '3x', '3.5x', '4x', '4.5x', '5x')
-    
+    zoom_picker = ttk.OptionMenu(f_inner_image, zoom_boost, cur_settings.zoom_boost, '0.5x', "1x", "1.5x", '2x', '2.5x', '3x', '3.5x', '4x', '4.5x', '5x')
+
     check_updates_label = ttk.Label(f_updates, text='Updates', font=HEADING2)
     check_update_now = ttk.Button(f_updates, text='Check for Updates Now', command=lambda:
         run_button(2))
     check_update_startup = ttk.Checkbutton(f_updates, text='Check for Updates on Startup', variable=updates_startup)
-    check_updates_info = ttk.Label(f_updates, text='The choice of not including Autoupdating was made during the development.', wraplength=500, font=LIGHT_TEXT)
-    
-    misc_start = ttk.Label(f_small_fonts, text='Small Fonts Mode', font=HEADING2)
-    smol_fonts_warn = ttk.Label(f_small_fonts, text='The Small Fonts Mode allows for a smaller window size, meaning DoomMapGuesser can be played in smaller monitors as well.', font=LIGHT_TEXT, wraplength=500)
+    check_updates_info = ttk.Label(f_updates, text='The choice of not including Autoupdating was made during the development.', wraplength=300, font=LIGHT_TEXT, justify='center')
+
+    smol_start = ttk.Label(f_small_fonts, text='Small Fonts Mode', font=HEADING2)
+    smol_fonts_warn = ttk.Label(f_small_fonts, text='The Small Fonts Mode allows for a smaller window size, meaning DoomMapGuesser can be played in smaller monitors as well.', font=LIGHT_TEXT, wraplength=400, justify='center')
     smol_fonts = ttk.Checkbutton(f_small_fonts, text='Enable Small Fonts Mode', variable=smol_fonts_var)
-    
-    exclude_rule = ttk.Label(f_rule, text='Exclusion Rule: Hell Keep V.S. Warrens', font=HEADING2)
-    rule_warn = ttk.Label(f_rule, text='As the creator of DoomMapGuesser, I am fully aware it might be hard to distinguish Hell Keep from Warrens in the context of guessing. Custom databases may also have maps that are very similar to each other, too. Solution: force DoomMapGuesser to exclude one, both or none!', font=LIGHT_TEXT, wraplength=500)
-    exclude_rule_picker = ttk.OptionMenu(f_rule, exclude_rule_var, 'Show both', 'Show neither', "Show Hell Keep, don't show Warrens", "Show Warrens, don't show Hell Keep", "Show both")
-    
-    save = PrimaryButton(settings_win, text='Save and Close Settings', command=lambda:
+
+    exclude_rule = ttk.Label(f_rule, text='Exclusion Rule: Hell Keep V.S. Warrens', font=HEADING2, wraplength=300)
+    rule_warn = ttk.Label(f_rule, text='As the creator of DoomMapGuesser, I am fully aware it might be hard to distinguish Hell Keep from Warrens in the context of guessing. Custom databases may also have maps that are very similar to each other, too. Solution: force DoomMapGuesser to exclude one, both or none!', font=LIGHT_TEXT, wraplength=300, justify='center')
+    exclude_rule_picker = ttk.OptionMenu(f_rule, exclude_rule_var, TRANSLATION[cur_settings.exclude_rule_for_e3m1_e3m9], 'Show neither', "Show Hell Keep, don't show Warrens", "Show Warrens, don't show Hell Keep", "Show both")
+
+    save = ttk.Button(settings_win, text='Save and Close Settings', command=lambda:
         run_button(0))
     cancel = ttk.Button(settings_win, text='Cancel and Discard Changes', command=lambda:
         run_button(3))
     
+    heading.pack(padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    subtitle.pack(padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    f_heading.pack(padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+
+    theme_start.pack(padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    theme_desc.pack(padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    theme_picker.pack(padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    f_theme.grid(column=0, row=0, padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    
+    db_start.pack(padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    db_button.pack(padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    f_database.grid(column=1, row=0, padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    
+    image_start.pack(padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    
+    ratio_label.grid(column=0, row=0, padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    ratio_picker.grid(column=1, row=0, padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    
+    zoom_label.grid(column=0, row=1, padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    zoom_picker.grid(column=1, row=1, padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    
+    wanted_width_label.grid(column=0, row=2, padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    wanted_width_entry.grid(column=1, row=2, padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    
+    f_inner_image.pack(padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    
+    reverse_width_height.pack(padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    f_image.grid(column=2, row=0, padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    
+    check_updates_label.pack(padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    check_update_now.pack(padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    check_update_startup.pack(padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    check_updates_info.pack(padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    f_updates.grid(column=0, row=1, padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    
+    smol_start.pack(padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    smol_fonts_warn.pack(padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    smol_fonts.pack(padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    f_small_fonts.grid(column=1, row=1, padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    
+    exclude_rule.pack(padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    rule_warn.pack(padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    exclude_rule_picker.pack(padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    f_rule.grid(column=2, row=1, padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    
+    f_full.pack(padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    
+    save.pack(side='right', padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+    cancel.pack(side='right', padx=5 // int(cur_settings.small_fonts + 1), pady=5 // int(cur_settings.small_fonts + 1), ipadx=5 // int(cur_settings.small_fonts + 1), ipady=5 // int(cur_settings.small_fonts + 1))
+
 
 class Database:
     def __init__(self, source: str):
@@ -992,7 +1092,7 @@ class Database:
         - **Database.append**
         """
 
-        if kw.get('index', 1) == 0 and self._SOURCE != utils_constants.DEFAULT_DB_URL:
+        if kw.get('index', 1) == 0 and self._SOURCE != consts.DEFAULT_DB_URL:
             return handle_error(50, "Cannot replace the Default Database in the list.", icon='error')
 
         if self.search():
@@ -1351,7 +1451,7 @@ DATABASES: list[Database] = []
 for i in settings.databases:
     add_database(i)
 
-if not add_database(utils_constants.DEFAULT_DB_URL, index=0):
+if not add_database(consts.DEFAULT_DB_URL, index=0):
     handle_error(47, "CRITICAL ERROR\nUnable to obtain/verify the default database.")
     sys.exit()
 
@@ -1376,6 +1476,18 @@ play_butt = ttk.Button(sidebar, image=play_tk, width=50, command=setup_play_scre
 
 play_butt.pack(side='top', ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1), padx=5 // int(settings.small_fonts + 1), pady=5)
 
+settings_img = resize_image(
+    Image.open(os.path.join(ICONS_PATH, settings.theme, 'settings.png')),
+    50,
+    aspect_ratio='1:1'
+)
+
+settings_tk = ImageTk.PhotoImage(settings_img)
+
+settings_butt = ttk.Button(sidebar, image=settings_tk, width=50, command=open_settings)
+
+settings_butt.pack(side='bottom', ipadx=5 // int(settings.small_fonts + 1), ipady=5 // int(settings.small_fonts + 1), padx=5 // int(settings.small_fonts + 1), pady=5)
+
 sidebar.grid(column=0, row=0)
 main_frame.grid(column=1, row=0)
 
@@ -1386,10 +1498,11 @@ style = ttk.Style(root)
 style.theme_use(f"sun-valley-{settings.theme}")
 style.configure('TLabel', font=REGULAR_TEXT)
 style.configure('TButton', font=SECONDARY_BUTTON)
-style.configure('Primary.TButton', font=PRIMARY_BUTTON, foreground='#5bcff1' if settings.theme == 'dark' else '#040929')
 style.configure('Important.TFrame', background='#f17b7b' if settings.theme == 'dark' else "#5a0606")
 style.configure('Important.TLabel', font=BOLD_TEXT, foreground='#000000' if settings.theme == 'dark' else "#ffffff", background='#f17b7b' if settings.theme == 'dark' else "#5a0606")
-style.configure('TEntry', font=SUBTITLE, background='#9c9c9c' if settings.theme == 'dark' else "#0e0e0e", foreground='#000000' if settings.theme == 'dark' else '#ffffff')
+style.configure('TEntry', font=SUBTITLE, background='#9c9c9c' if settings.theme == 'dark' else "#0e0e0e", foreground='#ffffff' if settings.theme == 'dark' else '#000000')
+style.configure('TOptionMenu', font=SUBTITLE)
+style.configure('TCheckbutton', font=BOLD_TEXT)
 
 settings.save_settings()
 

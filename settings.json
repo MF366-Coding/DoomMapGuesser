@@ -3,9 +3,9 @@
     "databases": [],
     "imageRatio": "detect",
     "imageWidth": 500,
-    "smallFonts": false,
+    "smallFonts": true,
     "widthIsHeight": false,
     "checkUpdates": true,
     "excludeRule": "both",
-    "zoomBoost": 2
+    "zoomBoost": 2.0
 }
