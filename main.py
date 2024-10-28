@@ -156,7 +156,7 @@ def send_dialog(dtype: str, title: str, message: str, wraplength: int = 400, roo
         __send_responsive_dialog(dtype, title, message, wraplength, kw.get('overwrite_font', SUBTITLE), root_of)
 
     except FileNotFoundError as e:
-        return handle_error(10, f"Invalid icon. A valid icon bust be the name of an image - without extension - that is inside:\nassets/icons/universal\n\n{e}")
+        return handle_error(10, f"Invalid icon. A valid icon must be the name of an image - without extension - that is inside:\nassets/icons/universal\n\n{e}")
 
     except __CloseDialogError as e:
         return handle_error(12, f"Failed to close dialog by left/right clicking.\n{e}")
@@ -245,11 +245,11 @@ def resize_image(image: Image.Image, wanted_width: int, width_is_height: bool = 
         new_height = None
 
     match aspect_ratio:
-        case '1:1':
+        case '1:1' | '1:1 (Square)':
             new_width = nl(new_width, wanted_width)
             new_height = nl(new_height, wanted_width)
 
-        case "16:9":
+        case "16:9" | '16:9 (Landscape)':
             if new_width is None:
                 new_width = int(new_height * (16 / 9))
 
@@ -570,6 +570,11 @@ def setup_play_screen():
     GEN_SF = 0
     POINTS = 0
 
+    selected_game.set(list(CUR_DB.structure.keys())[0])
+    selected_episode.set(list(CUR_DB.structure[selected_game.get()].keys())[0])
+    selected_map.set(list(CUR_DB.structure[selected_game.get()][selected_episode.get()].keys())[0])
+    selected_secrets.set(0)
+    
     PLAY_ITEMS.headframe = ttk.Frame(PLAY_ITEMS)
     PLAY_ITEMS.heading = ttk.Label(PLAY_ITEMS.headframe, text='Play', font=HEADING1, justify='left')
     PLAY_ITEMS.f0 = ImportantFrame(master=PLAY_ITEMS.headframe)
@@ -683,6 +688,8 @@ def open_database_editor(master: tk.Toplevel, copy: Any) -> None:
     def run_button(action: int, **kw) -> None | int | Database | bool:
         match action:
             case 0:
+                DATABASES[chosen_db_index.get()].obtain()
+                DATABASES[chosen_db_index.get()].verify()
                 DATABASES[chosen_db_index.get()].use()
                 copy.databases = [i.source for i in DATABASES]
 
@@ -698,21 +705,8 @@ def open_database_editor(master: tk.Toplevel, copy: Any) -> None:
                 return
 
             case 1:
-                chosen_db_index.set(chosen_db_index.get() - 1)
-                
-                try:
-                    chosen_db.set(DATABASES[chosen_db_index.get()].source[:90] if len(DATABASES[chosen_db_index.get()].source) > 90 else DATABASES[chosen_db_index.get()].source)
-                
-                except IndexError:
-                    chosen_db_index.set(chosen_db_index.get() + 1)
-                    return
-                    
-                down.configure(state=tk.ACTIVE)
-
-                if chosen_db.get() == DATABASES[0].source:
-                    up.configure(state=tk.DISABLED)
-                    return
-
+                print('no longer available')
+            
             case 2:
                 chosen_db_index.set(chosen_db_index.get() + 1)
                 
@@ -720,18 +714,19 @@ def open_database_editor(master: tk.Toplevel, copy: Any) -> None:
                     chosen_db.set(DATABASES[chosen_db_index.get()].source[:90] if len(DATABASES[chosen_db_index.get()].source) > 90 else DATABASES[chosen_db_index.get()].source)
                 
                 except IndexError:
-                    chosen_db_index.set(chosen_db_index.get() - 1)
-                    return
+                    chosen_db_index.set(0)
+                    chosen_db.set(DATABASES[chosen_db_index.get()].source[:90] if len(DATABASES[chosen_db_index.get()].source) > 90 else DATABASES[chosen_db_index.get()].source)
                 
-                up.configure(state=tk.ACTIVE)
-
-                if chosen_db.get() == DATABASES[-1].source:
-                    down.configure(state=tk.DISABLED)
-                    return
+                return
 
             case 3:
-                return DATABASES[chosen_db_index.get()].remove()
+                DATABASES[chosen_db_index.get()].remove()
+                
+                chosen_db_index.set(0)
+                chosen_db.set(DATABASES[chosen_db_index.get()].source[:90] if len(DATABASES[chosen_db_index.get()].source) > 90 else DATABASES[chosen_db_index.get()].source)
 
+                return
+                
             case 4:
                 input_text: str = add_db_entry.get()
 
@@ -745,6 +740,7 @@ def open_database_editor(master: tk.Toplevel, copy: Any) -> None:
                     return handle_error(54, "This database cannot be used by DoomMapGuesser. Please refer to the previously showed error.")
 
                 del test_var
+                add_db_entry.delete(0, tk.END)
 
                 return add_database(input_text)
 
@@ -791,14 +787,12 @@ def open_database_editor(master: tk.Toplevel, copy: Any) -> None:
     db_picker = ttk.Button(f_existing, textvariable=chosen_db, width=120, command=lambda:
         simple_webbrowser.website(chosen_db.get()))
 
-    up = ttk.Button(f_existing, text='↑', command=lambda:
-        run_button(1))
     down = ttk.Button(f_existing, text='↓', command=lambda:
         run_button(2))
     remove = ttk.Button(f_existing, text='X', command=lambda:
         run_button(3))
 
-    add_db_entry = ttk.Entry(f_controls)
+    add_db_entry = ttk.Entry(f_controls, font=SUBTITLE)
     add_db_button = ttk.Button(f_controls, text='+', command=lambda: # [i] if the user doesn't hit enter they could always use the button, right?
         run_button(4))
     cancel_add_db = ttk.Button(f_controls, text='X', command=lambda:
@@ -811,17 +805,16 @@ def open_database_editor(master: tk.Toplevel, copy: Any) -> None:
     cancel = ttk.Button(database_win, text='Cancel', command=lambda:
         run_button(7))
 
-    warning_label_1 = ttk.Label(database_win, text='Sorting databases can only be done by editing the actual JSON file. This interface is intended for users that lack programming skills.', font=LIGHT_TEXT, wraplength=400)
-    warning_label_2 = ttk.Label(database_win, text='Databases should be raw JSON. An example is the default database. It\'s highly recommended to also host it in a safe way that promotes easy access from scripts, such as GitHub.', font=LIGHT_TEXT, wraplength=400)
+    warning_label_1 = ttk.Label(database_win, text='Sorting databases can only be done by editing the actual JSON file. This interface is intended for users that lack programming skills.', font=LIGHT_TEXT, wraplength=400, justify='center')
+    warning_label_2 = ttk.Label(database_win, text='Databases should be raw JSON. An example is the default database. It\'s highly recommended to also host it in a safe way that promotes easy access from scripts, such as GitHub.', font=LIGHT_TEXT, wraplength=400, justify='center')
 
     title.pack(padx=5 // int(copy.small_fonts + 1), pady=5 // int(copy.small_fonts + 1), ipadx=5 // int(copy.small_fonts + 1), ipady=5 // int(copy.small_fonts + 1))
     
     existing.pack(padx=5 // int(copy.small_fonts + 1), pady=5 // int(copy.small_fonts + 1), ipadx=5 // int(copy.small_fonts + 1), ipady=5 // int(copy.small_fonts + 1))
 
     db_picker.grid(column=0, row=0, padx=5 // int(copy.small_fonts + 1), pady=5 // int(copy.small_fonts + 1), ipadx=5 // int(copy.small_fonts + 1), ipady=5 // int(copy.small_fonts + 1))
-    up.grid(column=1, row=0, padx=5 // int(copy.small_fonts + 1), pady=5 // int(copy.small_fonts + 1), ipadx=5 // int(copy.small_fonts + 1), ipady=5 // int(copy.small_fonts + 1))
-    down.grid(column=2, row=0, padx=5 // int(copy.small_fonts + 1), pady=5 // int(copy.small_fonts + 1), ipadx=5 // int(copy.small_fonts + 1), ipady=5 // int(copy.small_fonts + 1))
-    remove.grid(column=3, row=0, padx=5 // int(copy.small_fonts + 1), pady=5 // int(copy.small_fonts + 1), ipadx=5 // int(copy.small_fonts + 1), ipady=5 // int(copy.small_fonts + 1))
+    down.grid(column=1, row=0, padx=5 // int(copy.small_fonts + 1), pady=5 // int(copy.small_fonts + 1), ipadx=5 // int(copy.small_fonts + 1), ipady=5 // int(copy.small_fonts + 1))
+    remove.grid(column=2, row=0, padx=5 // int(copy.small_fonts + 1), pady=5 // int(copy.small_fonts + 1), ipadx=5 // int(copy.small_fonts + 1), ipady=5 // int(copy.small_fonts + 1))
 
     f_existing.pack(padx=5 // int(copy.small_fonts + 1), pady=5 // int(copy.small_fonts + 1), ipadx=5 // int(copy.small_fonts + 1), ipady=5 // int(copy.small_fonts + 1))
 
@@ -865,11 +858,19 @@ def open_settings():
                 cur_settings.zoom_boost = float(zoom_boost.get()[:-1])
                 cur_settings.check_for_updates_on_startup = bool(updates_startup.get())
                 cur_settings.small_fonts = bool(smol_fonts_var.get())
+                
+                try:
+                    cur_settings.image_width = int(wanted_width_entry.get())
+                    
+                except TypeError:
+                    return handle_error(55, "Bad Image Width.\nThe image width must always be an integer, even if when resized becomes a float.")
 
                 cur_settings.save_settings()
                 settings_win.destroy()
+                
                 for child in list(PLAY_ITEMS.children.values()):
                     child.destroy()
+                
                 play_butt.configure(state=tk.ACTIVE)
                 root.focus_force()
                 return
@@ -934,7 +935,7 @@ def open_settings():
     ratio_picker = ttk.OptionMenu(f_inner_image, chosen_ratio, cur_settings.image_ratio, 'Autodetect', "1:1 (Square)", "16:9 (Landscape)")
 
     wanted_width_label = ttk.Label(f_inner_image, text='Desired Width: ')
-    wanted_width_entry = ttk.Entry(f_inner_image)
+    wanted_width_entry = ttk.Entry(f_inner_image, font=SUBTITLE)
     wanted_width_entry.insert(0, str(cur_settings.image_width))
 
     reverse_width_height = ttk.Checkbutton(f_image, variable=width_is_height, text='Use the value above as the desired height')
@@ -1099,7 +1100,7 @@ class Database:
             DATABASES[self._INDEX] = self
 
         else:
-            if kw.get('index', -2) == -2:
+            if kw.get('index', None) is None:
                 DATABASES.append(self)
 
             else:
@@ -1167,6 +1168,10 @@ class Database:
             self._DB = {}
             return handle_error(19, "The database structure is not correct. WARRENS and HELL_KEEP require each other, so the user might leave both undefined or define both, but cannot define only one of them.")
 
+        if w is not None and hk is not None:
+            if w == hk:
+                return handle_error(19, "The database structure is not correct. WARRENS and HELL_KEEP must not point to the same map.")
+        
         # [!?] Rule 2: overall structure should be correct
         if self._DB.get('struct', None) is None:
             self._DB = {}
@@ -1213,7 +1218,7 @@ class Database:
                         return handle_error(25, "An integer between 0 and 99, both ends included, must be the match for the key 'secrets'.")
 
         # [!?] Rule 3: WARRENS and HELL_KEEP are pointing to valid maps
-        if w is None or hk is None:
+        if w is not None and hk is not None:
             w_list = w.split('///')
             hk_list = hk.split('///')
 
@@ -1432,8 +1437,8 @@ class Database:
 
 def add_database(source: str, *_, index: int | None = None) -> Database | bool:
     new_database = Database(source=source)
-    new_database.get()
-
+    new_database.obtain()
+    
     if new_database.database is None:
         return False
 
@@ -1501,7 +1506,6 @@ style.configure('TButton', font=SECONDARY_BUTTON)
 style.configure('Important.TFrame', background='#f17b7b' if settings.theme == 'dark' else "#5a0606")
 style.configure('Important.TLabel', font=BOLD_TEXT, foreground='#000000' if settings.theme == 'dark' else "#ffffff", background='#f17b7b' if settings.theme == 'dark' else "#5a0606")
 style.configure('TEntry', font=SUBTITLE, background='#9c9c9c' if settings.theme == 'dark' else "#0e0e0e", foreground='#ffffff' if settings.theme == 'dark' else '#000000')
-style.configure('TOptionMenu', font=SUBTITLE)
 style.configure('TCheckbutton', font=BOLD_TEXT)
 
 settings.save_settings()
