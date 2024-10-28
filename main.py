@@ -132,7 +132,7 @@ def __send_responsive_dialog_with_buttons(button_args: list[dict[str, Any]], *ar
 
 root = tk.Tk()
 root.title(f'DoomMapGuesser by MF366 - {consts.VERSION}')
-# /-/ root.resizable(False, False)
+root.resizable(False, True)
 
 
 def handle_error(code: int, message: str, **kw) -> int:
@@ -772,6 +772,7 @@ def open_database_editor(master: tk.Toplevel, copy: Any) -> None:
 
     database_win = tk.Toplevel(master)
     database_win.title('DoomMapGuesser - Database Editor')
+    database_win.resizable(False, False)
     apply_theme_to_titlebar(database_win, settings)
     
     chosen_db_index = tk.IntVar(database_win, 0)
@@ -896,6 +897,7 @@ def open_settings():
 
     settings_win = tk.Toplevel(root)
     settings_win.title('DoomMapGuesser - Settings')
+    settings_win.resizable(False, False)
     apply_theme_to_titlebar(settings_win, settings)
 
     cur_settings = settings.copy
@@ -1496,6 +1498,8 @@ settings_butt.pack(side='bottom', ipadx=5 // int(settings.small_fonts + 1), ipad
 sidebar.grid(column=0, row=0)
 main_frame.grid(column=1, row=0)
 
+
+
 # [!?] https://github.com/rdbende/Sun-Valley-ttk-theme (Sun Valley theme)
 # [<] Credits to rdbende
 root.tk.call("source", os.path.join(THEME_PATH))
@@ -1509,5 +1513,8 @@ style.configure('TEntry', font=SUBTITLE, background='#9c9c9c' if settings.theme 
 style.configure('TCheckbutton', font=BOLD_TEXT)
 
 settings.save_settings()
+
+if settings.check_for_updates_on_startup:
+    check_for_dmg_updates()
 
 root.mainloop()

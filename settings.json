@@ -2,7 +2,7 @@
     "theme": 0,
     "databases": [],
     "imageRatio": "detect",
-    "imageWidth": 500,
+    "imageWidth": 400,
     "smallFonts": true,
     "widthIsHeight": false,
     "checkUpdates": true,
