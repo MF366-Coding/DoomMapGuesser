@@ -6,147 +6,19 @@
             "E3: Inferno": {
                 "E3M1: Hell Keep": {
                     "screenshots": [
-                        "https://doomwiki.org/w/images/f/fd/E3m1_exit.PNG",
-                        "https://doomwiki.org/w/images/a/aa/E3M1_starting_switch.png",
-                        "https://doomwiki.org/w/images/1/18/E3M1_keep_entrance.png",
-                        "https://doomwiki.org/w/images/9/98/E3m1_infighting.PNG",
-                        "https://doomwiki.org/w/images/5/5f/E3m1_shotgun.PNG",
-                        "https://doomwiki.org/w/images/7/77/E3m1_outside.PNG",
-                        "https://doomwiki.org/w/images/f/fc/E3m1_demons.PNG",
-                        "https://doomwiki.org/w/images/d/d3/E3m1_room.PNG"
+                        "https://doomwiki.org/w/images/5/5f/E3m1_shotgun.PNG"
                     ],
                     "secrets": 1
                 },
-                "E3M2: Slough of Despair": {
-                    "screenshots": [
-                        "https://doomwiki.org/w/images/6/6b/E3M2_start.png",
-                        "https://doomwiki.org/w/images/7/7c/E3m2_lostsoul.PNG",
-                        "https://doomwiki.org/w/images/a/aa/E3m2_lake.PNG",
-                        "https://doomwiki.org/w/images/7/71/E3m2_sergeants.PNG",
-                        "https://doomwiki.org/w/images/9/9b/E3m2_sphere.PNG",
-                        "https://doomwiki.org/w/images/8/84/E3m2_key.PNG",
-                        "https://doomwiki.org/w/images/e/e1/E3m2_skull.PNG",
-                        "https://doomwiki.org/w/images/1/1e/E3m2_exit.PNG",
-                        "https://doomwiki.org/w/images/6/6b/E3m2_items.PNG"
-                    ],
-                    "secrets": 3
-                },
-                "E3M3: Pandemonium": {
-                    "screenshots": [
-                        "https://doomwiki.org/w/images/3/34/E3M3_start.png",
-                        "https://doomwiki.org/w/images/c/c6/E3M3_initial_area.png",
-                        "https://doomwiki.org/w/images/1/13/E3m3_shotgun.PNG",
-                        "https://doomwiki.org/w/images/e/e5/E3m3_danger.PNG",
-                        "https://doomwiki.org/w/images/f/fe/E3m3_maze.PNG",
-                        "https://doomwiki.org/w/images/1/16/E3m3_maze2.PNG",
-                        "https://doomwiki.org/w/images/5/55/E3m3_cage.PNG",
-                        "https://doomwiki.org/w/images/b/bf/E3m3_longcorridor.PNG",
-                        "https://doomwiki.org/w/images/9/99/E3m3_hellgrowth.png",
-                        "https://doomwiki.org/w/images/6/65/E3M3_upstairs.png",
-                        "https://doomwiki.org/w/images/2/23/E3m3_stairs.PNG",
-                        "https://doomwiki.org/w/images/2/26/E3M3_northern.png",
-                        "https://doomwiki.org/w/images/f/f1/E3M3_exit.png",
-                        "https://doomwiki.org/w/images/2/24/E3M3_secret_bridge.png",
-                        "https://doomwiki.org/w/images/e/e2/E3m3lava.png"
-                    ],
-                    "secrets": 6
-                },
-                "E3M4: House of Pain": {
-                    "screenshots": [
-                        "https://doomwiki.org/w/images/4/4c/E3M4_start.png",
-                        "https://doomwiki.org/w/images/8/8a/E3m4_optional1.PNG",
-                        "https://doomwiki.org/w/images/2/2d/E3m4_optional2.PNG",
-                        "https://doomwiki.org/w/images/8/8f/E3m4_crushing1.PNG",
-                        "https://doomwiki.org/w/images/8/88/E3m4_crushing2.PNG",
-                        "https://doomwiki.org/w/images/1/11/E3m4_room.PNG",
-                        "https://doomwiki.org/w/images/b/b6/E3m4_marble2.png",
-                        "https://doomwiki.org/w/images/6/68/E3m4_marble1.PNG",
-                        "https://doomwiki.org/w/images/2/2f/E3m4_key1.PNG",
-                        "https://doomwiki.org/w/images/b/b8/E3m4_baron.Png",
-                        "https://doomwiki.org/w/images/9/93/E3m4_berserk.PNG",
-                        "https://doomwiki.org/w/images/7/71/E3m4_danger.PNG",
-                        "https://doomwiki.org/w/images/b/b2/E3m4_star1.PNG",
-                        "https://doomwiki.org/w/images/8/86/E3m4_exit.PNG",
-                        "https://doomwiki.org/w/images/d/d0/E3m4_enemies.PNG",
-                        "https://doomwiki.org/w/images/6/6b/E3M4_end.png"
-                    ],
-                    "secrets": 4
-                },
-                "E3M5: Unholy Cathedral": {
-                    "screenshots": [
-                        "https://doomwiki.org/w/images/7/75/E3M5_start.png",
-                        "https://doomwiki.org/w/images/3/3d/E3M5_left_door.png",
-                        "https://doomwiki.org/w/images/5/54/E3M5_central_entrance.png",
-                        "https://doomwiki.org/w/images/a/a8/E3M5_lava_room.png",
-                        "https://doomwiki.org/w/images/6/64/E3m5_columns.PNG",
-                        "https://doomwiki.org/w/images/6/6b/E3m5_dark2.png",
-                        "https://doomwiki.org/w/images/f/fe/E3M5_teleporters.png",
-                        "https://doomwiki.org/w/images/0/07/E3M5_central_baron.png",
-                        "https://doomwiki.org/w/images/f/f1/E3m5_dark.PNG",
-                        "https://doomwiki.org/w/images/4/4a/E3m5_corridor.PNG",
-                        "https://doomwiki.org/w/images/4/4b/E3M5_eastern_room.png",
-                        "https://doomwiki.org/w/images/a/ad/E3m5_danger.PNG",
-                        "https://doomwiki.org/w/images/6/61/E3m5_teleporter.PNG",
-                        "https://doomwiki.org/w/images/d/d4/E3m5_key.PNG",
-                        "https://doomwiki.org/w/images/e/ec/E3m5_hellspawn1.PNG",
-                        "https://doomwiki.org/w/images/c/c7/E3m5_hellspawn2.PNG",
-                        "https://doomwiki.org/w/images/a/ac/E3M5_exit.png",
-                        "https://doomwiki.org/w/images/4/49/E3m5_secret1.PNG"
-                    ],
-                    "secrets": 10
-                },
-                "E3M6: Mt. Erebus": {
-                    "screenshots": [
-                        "https://doomwiki.org/w/images/8/81/E3M6_start.png",
-                        "https://doomwiki.org/w/images/5/57/E3m6_protected.PNG",
-                        "https://doomwiki.org/w/images/5/5a/E3m6_optional.PNG",
-                        "https://doomwiki.org/w/images/b/b9/E3m6_attack.PNG",
-                        "https://doomwiki.org/w/images/e/eb/E3m6_marble.PNG",
-                        "https://doomwiki.org/w/images/9/95/E3m6_inside.PNG",
-                        "https://doomwiki.org/w/images/6/68/E3m6_key.PNG",
-                        "https://doomwiki.org/w/images/7/7c/E3m6_wood.PNG",
-                        "https://doomwiki.org/w/images/9/9b/E3m6_three.PNG",
-                        "https://doomwiki.org/w/images/1/1f/E3m6_water.PNG",
-                        "https://doomwiki.org/w/images/9/93/E3M6_regular_exit.png"
-                    ],
-                    "secrets": 3
-                },
-                "E3M7: Limbo": {
-                    "screenshots": [
-                        "https://doomwiki.org/w/images/4/43/E3m7_start.PNG",
-                        "https://doomwiki.org/w/images/d/d8/E3m7_key.PNG",
-                        "https://doomwiki.org/w/images/b/bf/E3m7_pentagram.PNG",
-                        "https://doomwiki.org/w/images/8/81/E3m7_center.PNG",
-                        "https://doomwiki.org/w/images/b/b6/E3m7_north.PNG",
-                        "https://doomwiki.org/w/images/9/9d/E3m7_reddoor.PNG",
-                        "https://doomwiki.org/w/images/1/15/E3m7_bridge.PNG",
-                        "https://doomwiki.org/w/images/c/c4/E3m7_bloodystairs.PNG",
-                        "https://doomwiki.org/w/images/f/fd/E3m7_BFG.PNG",
-                        "https://doomwiki.org/w/images/2/29/E3m7_yellow.PNG",
-                        "https://doomwiki.org/w/images/5/56/E3m7_exit.PNG",
-                        "https://doomwiki.org/w/images/7/71/E3M7_exit_door.png"
-                    ],
-                    "secrets": 4
-                },
                 "E3M8: Dis": {
                     "screenshots": [
-                        "https://doomwiki.org/w/images/c/cd/E3m8_start.PNG",
-                        "https://doomwiki.org/w/images/6/6a/E3m8_boss.PNG",
-                        "https://doomwiki.org/w/images/b/b5/E3m8_megaarmor.PNG",
-                        "https://doomwiki.org/w/images/2/2e/E3m8_corner.PNG",
-                        "https://doomwiki.org/w/images/5/58/E3M8_boss_dying.png"
+                        "https://doomwiki.org/w/images/6/6a/E3m8_boss.PNG"
                     ],
                     "secrets": 0
                 },
                 "E3M9: Warrens": {
                     "screenshots": [
-                        "https://doomwiki.org/w/images/a/a0/E3m9_arena.PNG",
-                        "https://doomwiki.org/w/images/e/e9/E3m9_demons.PNG",
-                        "https://doomwiki.org/w/images/0/0e/E3m9_baron.PNG",
-                        "https://doomwiki.org/w/images/e/ed/E3m9_cacodemons.PNG",
-                        "https://doomwiki.org/w/images/c/ce/E3m9_room.PNG",
-                        "https://doomwiki.org/w/images/7/70/E3m9_trap.PNG",
-                        "https://doomwiki.org/w/images/7/78/E3m9_secret.PNG"
+                        "https://doomwiki.org/w/images/a/a0/E3m9_arena.PNG"
                     ],
                     "secrets": 1
                 }
