@@ -107,19 +107,25 @@ def check_for_updates(app_version: str, urls: tuple[str], handlers: Any, warn_if
         body = data['body']
     
     except StatusCodeNot200:
-        return handlers[0](31, f"The Status Code of URL...\n\n{urls[0]}\n\n...is not 200, meaning DoomMapGuesser is unable to access the latest release.")
+        return handlers[0](36, f"The Status Code of URL...\n\n{urls[0]}\n\n...is not 200, meaning DoomMapGuesser is unable to access the latest release.")
     
     except (requests.exceptions.ConnectionError, requests.exceptions.HTTPError):
-        return handlers[0](24, "Unable to connect via HTTP. This might be caused by a bad Internet connection.")
+        return handlers[0](33, "Unable to connect via HTTP. This might be caused by a bad Internet connection.")
     
     except (TimeoutError, requests.exceptions.Timeout):
-        return handlers[0](21, f"The URL...\n\n({urls[0]})\n\n...took too long to respond to the GET request.")
+        return handlers[0](34, f"The URL...\n\n({urls[0]})\n\n...took too long to respond to the GET request.")
     
     except (requests.exceptions.InvalidURL, requests.exceptions.InvalidSchema, requests.exceptions.MissingSchema):
-        return handlers[0](27, f"The URL...\n\n({urls[0]})\n\n...is invalid.")
+        return handlers[0](35, f"The URL...\n\n({urls[0]})\n\n...is invalid.")
+    
+    except UnicodeError as e:
+        return handlers[0](39, f"Failed to translate the website's data to valid Unicode.\n{e}")
+        
+    except json.JSONDecodeError as e:
+        return handlers[0](38, f"Failed to decode JSON data from release stored at:\n\n{urls[0]}\n\nAre you sure this URL points to a JSON/raw JSON object?\n{e}")
     
     except Exception as e:
-        return handlers[0](28, f"Unknown error when trying to obtain the data on the latest release.\nError Details:\n{e}")
+        return handlers[0](37, f"Unknown error when trying to obtain the data on the latest release.\nError Details:\n{e}")
     
     if app_version != latest:
         handlers[2]('info', 'DoomMapGuesser - Update Available', f"A new update for DoomMapGuesser is available!\n\nWhat's new in DoomMapGuesser {latest}?\n{body}", [
