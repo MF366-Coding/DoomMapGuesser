@@ -10,9 +10,12 @@ import sys
 import pyclip
 import simple_webbrowser
 from PIL import ImageTk, Image
+import requests as _
 from core import utils_constants as consts
 from core.database_handler import get_database, get_image, check_for_updates, __CloseDialogError
 from core.settings import SettingsObject
+
+del _
 
 
 LATEST = None
@@ -319,11 +322,6 @@ CUR_IMG_LINK = None
 
 
 def open_listbox(options: list | tuple, var: tk.Variable) -> None:
-    print(selected_game.get())
-    print(selected_episode.get())
-    print(selected_map.get())
-    print(selected_secrets.get())
-
     topl = tk.Toplevel(root)
     topl.title("DoomMapGuesser - Pick an Option")
     topl.geometry('600x400')
@@ -359,7 +357,7 @@ def open_listbox(options: list | tuple, var: tk.Variable) -> None:
                 selected_map.set(list(CUR_DB.structure[selected_game.get()][selected_episode.get()].keys())[0])
 
             case _:
-                print('map edited')
+                pass
 
         topl.destroy()
 
@@ -503,8 +501,6 @@ def generate_new_round(*_, first: dict[str, Any] = None, second: dict[str, Any] 
     PLAY_ITEMS.img_widget.configure(image=PLAY_ITEMS.cur_tk_img)
 
     PLAY_ITEMS.points_label.configure(text=f'Points: {POINTS} / {GEN_SF - 4}')
-
-    print(CUR_DATA)
 
 
 def final_guess(*_, first: dict[str, Any] = None, second: dict[str, Any] = None, third: dict[str, Any] = None):
