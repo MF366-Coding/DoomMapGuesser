@@ -377,8 +377,10 @@ namespace DoomMapGuessr
 
 		}
 
-		// todo: implement this method (see DownloadSqliteDatabaseAsync in this file)
-		private static void DownloadSqliteDatabase() => throw new NotImplementedException();
+        // TODO: implement this method (see DownloadSqliteDatabaseAsync in this file)
+        // XXX: very important: we are not throwing NotImplemented solely cuz it breaks design mode
+        // XXX: THIS HAS TO BE CHANGED LATER
+        private static void DownloadSqliteDatabase() { }
 
 		public static async Task PrepareRequirementsAsync(string[] args)
 		{

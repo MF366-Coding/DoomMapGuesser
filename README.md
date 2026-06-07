@@ -24,7 +24,7 @@ screenshots and WADs!
 ### Version 3 *(WIP - coming out soon!)*
 Currently in development, version 3 will include several new exciting features, such as:
 
-* **GeoGuessr ame mode.** Now, instead of having to simply guess what's the game, the episode and the map, you can guess
+* **GeoGuessr game mode.** Now, instead of having to simply guess what's the game, the episode and the map, you can guess
   exactly where it was taken, and coordinates count!</li>
 * **Inclusion of [Legacy of Rust](https://doomwiki.org/wiki/Legacy_of_Rust).** Legacy of Rust will be included as a game
   in this major update.
