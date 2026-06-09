@@ -1,4 +1,4 @@
-﻿namespace DoomMapGuessr.Data.Entities
+﻿ namespace DoomMapGuessr.Data.Entities
 {
 
     /// <summary>

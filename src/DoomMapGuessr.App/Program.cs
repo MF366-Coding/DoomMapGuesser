@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 
 using Avalonia;
 
+using DoomMapGuessr.Data.Connection;
 using DoomMapGuessr.Helpers;
 using DoomMapGuessr.Services.Cache;
 using DoomMapGuessr.Services.Cache.Abstractions;
@@ -90,6 +91,8 @@ namespace DoomMapGuessr
                                             services.AddSingleton<GeoModeViewModel>();
                                             services.AddSingleton<AchievementsUnlockablesViewModel>();
                                             services.AddSingleton<SettingsPageViewModel>();
+
+                                            services.AddSingleton<SqLiteConnectionFactory>();
 
                                         }
                      );
@@ -395,12 +398,6 @@ namespace DoomMapGuessr
 
             await DownloadSqliteDatabaseAsync();
 
-        }
-
-        // todo: close SqLite connection
-        ~Program()
-        {
-            /*ApplicationState.Shared.SqliteConnection?.Close();*/
         }
 
     }
