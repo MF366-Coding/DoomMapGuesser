@@ -19,7 +19,6 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 using Avalonia;
@@ -37,374 +36,373 @@ using Microsoft.Extensions.Hosting;
 namespace DoomMapGuessr
 {
 
-	internal sealed class Program
-	{
+    internal sealed class Program
+    {
 
-		private const string TRUE = "1";
-		private const string FALSE = "0";
+        private const string TRUE = "1";
+        private const string FALSE = "0";
 
-		private const string DB_URL = "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuessr/refs/heads/main/data/MAPDAT3.db";
-		private const string CACHED_DB_ENTRYNAME = "iDBcV30";
+        private const string DB_URL = "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuessr/refs/heads/main/data/MAPDAT4.db";
+        private const string DB_DOLU_URL = "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuessr/refs/heads/main/data/dolu.dt";
+        private const string CACHED_DB_ENTRYNAME = "B59A426";
 
-		public static IHost Host { get; private set; } = null!;
+        // DAY_TICKS constant was obtained using C# interactive mode and DateTime
+        private const long DAY_TICKS = 864000000000;
+        private const long WEEK_TICKS = DAY_TICKS * 7;
+        private const long MONTH_TICKS = DAY_TICKS * 30; // ticks in a 30-day month
+        private const long TRIMESTER_TICKS = DAY_TICKS * 90; // ticks in a trimester where every month has 30 days
+        private const long SEMESTER_TICKS = DAY_TICKS * 180; // ticks in a semester where every month has 30 days
+        private const long YEAR_TICKS = DAY_TICKS * 365; // ignoring leap years cuz physics says so :)
 
-		public static string AppDataDirectory =>
-			Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "dev.mf366.doommapguessr");
+        public static IHost Host { get; private set; } = null!;
 
-		// Avalonia configuration, don't remove; also used by visual designer.
-		public static AppBuilder BuildAvaloniaApp() =>
-			AppBuilder.Configure<App>()
-					  .UsePlatformDetect()
-					  .WithInterFont()
-					  .LogToTrace();
+        public static string AppDataDirectory =>
+            Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "dev.mf366.doommapguessr");
 
-		public static IHostBuilder CreateHostBuilder(
-			string[] args
-		) =>
-			Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args)
-					 .ConfigureServices((
-											ctx,
-											services
-										) =>
-										{
+        // Avalonia configuration, don't remove; also used by visual designer.
+        public static AppBuilder BuildAvaloniaApp() =>
+            AppBuilder.Configure<App>()
+                      .UsePlatformDetect()
+                      .WithInterFont()
+                      .LogToTrace();
 
-											services.AddSingleton<ISettingsService>(_ => new IniSettingsService(
-																						Path.Join(AppDataDirectory, "config.ini")
-																					)
-											);
+        public static IHostBuilder CreateHostBuilder(
+            string[] args
+        ) =>
+            Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args)
+                     .ConfigureServices((
+                                            ctx,
+                                            services
+                                        ) =>
+                                        {
 
-											services.AddSingleton<IFullCachingService>(_ => new CachingService(Path.Join(AppDataDirectory, "AppCache")));
+                                            services.AddSingleton<ISettingsService>(_ => new IniSettingsService(
+                                                                                        Path.Join(AppDataDirectory, "config.ini")
+                                                                                    )
+                                            );
 
-											services.AddSingleton<MainWindowViewModel>();
-											services.AddSingleton<MainWindowViewModel>();
-											services.AddSingleton<HomePageViewModel>();
-											services.AddSingleton<ClassicModeViewModel>();
-											services.AddSingleton<GeoModeViewModel>();
-											services.AddSingleton<AchievementsUnlockablesViewModel>();
-											services.AddSingleton<SettingsPageViewModel>();
+                                            services.AddSingleton<IFullCachingService>(_ => new CachingService(Path.Join(AppDataDirectory, "AppCache")));
 
-										}
-					 );
+                                            services.AddSingleton<MainWindowViewModel>();
+                                            services.AddSingleton<MainWindowViewModel>();
+                                            services.AddSingleton<HomePageViewModel>();
+                                            services.AddSingleton<ClassicModeViewModel>();
+                                            services.AddSingleton<GeoModeViewModel>();
+                                            services.AddSingleton<AchievementsUnlockablesViewModel>();
+                                            services.AddSingleton<SettingsPageViewModel>();
 
-		public static void PrepareApplicationSettings(
-        			ISettingsService settings
-        		)
-        		{
+                                        }
+                     );
 
-        			if (settings is IniSettingsService { IsIniParsed: false } ini)
-        				ini.Load().Parse();
+        public static void PrepareApplicationSettings(
+                    ISettingsService settings
+                )
+        {
 
-        			#region Language Settings
+            if (settings is IniSettingsService { IsIniParsed: false } ini)
+                ini.Load().Parse();
 
-        			if (!settings.Contains("Language.?"))
-        				settings.Set<string?>("Language.*", null);
+            #region Language Settings
 
-        			if (!settings.Contains("Language.Culture"))
-        			{
+            if (!settings.Contains("Language.?"))
+                settings.Set<string?>("Language.*", null);
 
-        				settings.Set(
-        					"Language.Culture", App.AllowedCultures.Contains(App.SystemCulture.Name, StringComparer.OrdinalIgnoreCase)
-        											? App.SystemCulture.Name
-        											: App.AllowedCultures[0]
-        				);
+            if (!settings.Contains("Language.Culture"))
+            {
 
-        			}
+                settings.Set(
+                    "Language.Culture", App.AllowedCultures.Contains(App.SystemCulture.Name, StringComparer.OrdinalIgnoreCase)
+                                            ? App.SystemCulture.Name
+                                            : App.AllowedCultures[0]
+                );
 
-        			#endregion
+            }
 
-        			#region GUI Settings
+            #endregion
 
-        			if (!settings.Contains("GUI.?"))
-        				settings.Set<string?>("GUI.*", null);
+            #region GUI Settings
 
-        			if (!settings.Contains("GUI.FollowSystem"))
-        				settings.Set("GUI.FollowSystem", 1);
+            if (!settings.Contains("GUI.?"))
+                settings.Set<string?>("GUI.*", null);
 
-        			if (!settings.Contains("GUI.DarkTheme"))
-        				settings.Set("GUI.DarkTheme", 1);
+            if (!settings.Contains("GUI.FollowSystem"))
+                settings.Set("GUI.FollowSystem", 1);
 
-        			#endregion
+            if (!settings.Contains("GUI.DarkTheme"))
+                settings.Set("GUI.DarkTheme", 1);
 
-        			#region Database Settings
+            #endregion
 
-        			if (!settings.Contains("Database.?"))
-        				settings.Set<string?>("Database.*", null);
+            #region Database Settings
 
-        			if (!settings.Contains("Database.CheckPeriodicityMode"))
-        				settings.Set("Database.CheckPeriodicityMode", 4); // check weekly
+            if (!settings.Contains("Database.?"))
+                settings.Set<string?>("Database.*", null);
 
-        			if (!settings.Contains("Database.DateOfLastCheck"))
-        				settings.Set("Database.DateOfLastCheck", new DateTime(0).Ticks.ToString());
+            if (!settings.Contains("Database.CheckPeriodicityMode"))
+                settings.Set("Database.CheckPeriodicityMode", 4); // check weekly
 
-        			#endregion
+            if (!settings.Contains("Database.DateOfLastCheck"))
+                settings.Set("Database.DateOfLastCheck", new DateTime(0).Ticks.ToString());
 
-        			#region Update Settings
+            #endregion
 
-        			if (!settings.Contains("Update.?"))
-        				settings.Set<string?>("Update.*", null);
+            #region Update Settings
 
-        			if (!settings.Contains("Update.Check"))
-        				settings.Set("Update.Check", 1); // 1 for always check, 0 for never check
+            if (!settings.Contains("Update.?"))
+                settings.Set<string?>("Update.*", null);
 
-        			#endregion
+            if (!settings.Contains("Update.Check"))
+                settings.Set("Update.Check", 1); // 1 for always check, 0 for never check
 
-        			settings.Save();
+            #endregion
 
-        		}
+            settings.Save();
 
-		private static async Task PrepareApplicationSettingsAsync(
-			ISettingsService settings
-		)
-		{
+        }
 
-			if (settings is IniSettingsService { IsIniParsed: false } ini)
-				ini.Load().Parse();
+        private static async Task PrepareApplicationSettingsAsync(
+            ISettingsService settings
+        )
+        {
 
-			#region Language Settings
+            if (settings is IniSettingsService { IsIniParsed: false } ini)
+                ini.Load().Parse();
 
-			if (!settings.Contains("Language.?"))
-				settings.Set<string?>("Language.*", null);
+            #region Language Settings
 
-			if (!settings.Contains("Language.Culture") ||
-				!CultureInfo.GetCultures(CultureTypes.AllCultures)
-					.Any(
-						c => String.Equals(settings.GetString("Language.Culture"),
-							c.Name,
-							StringComparison.OrdinalIgnoreCase)
-					)
-				)
-			{
+            if (!settings.Contains("Language.?"))
+                settings.Set<string?>("Language.*", null);
 
-				settings.Set(
-					"Language.Culture", App.AllowedCultures.Contains(App.SystemCulture.Name, StringComparer.OrdinalIgnoreCase)
-											? App.SystemCulture.Name
-											: App.AllowedCultures[0]
-				);
+            if (!settings.Contains("Language.Culture") ||
+                !CultureInfo.GetCultures(CultureTypes.AllCultures)
+                    .Any(
+                        c => String.Equals(settings.GetString("Language.Culture"),
+                            c.Name,
+                            StringComparison.OrdinalIgnoreCase)
+                    )
+                )
+            {
 
-			}
+                settings.Set(
+                    "Language.Culture", App.AllowedCultures.Contains(App.SystemCulture.Name, StringComparer.OrdinalIgnoreCase)
+                                            ? App.SystemCulture.Name
+                                            : App.AllowedCultures[0]
+                );
 
-			#endregion
+            }
 
-			#region GUI Settings
+            #endregion
 
-			if (!settings.Contains("GUI.?"))
-				settings.Set<string?>("GUI.*", null);
+            #region GUI Settings
 
-			var followSystem = settings.GetString("GUI.FollowSystem");
+            if (!settings.Contains("GUI.?"))
+                settings.Set<string?>("GUI.*", null);
 
-			if (!settings.Contains("GUI.FollowSystem") || (followSystem != FALSE && followSystem != TRUE))
-				settings.Set("GUI.FollowSystem", 1);
+            string? followSystem = settings.GetString("GUI.FollowSystem");
 
-			var darkTheme = settings.GetString("GUI.DarkTheme");
+            if (!settings.Contains("GUI.FollowSystem") || (followSystem != FALSE && followSystem != TRUE))
+                settings.Set("GUI.FollowSystem", 1);
 
-			if (!settings.Contains("GUI.DarkTheme") || (darkTheme != FALSE && darkTheme != TRUE))
-				settings.Set("GUI.DarkTheme", 1);
+            string? darkTheme = settings.GetString("GUI.DarkTheme");
 
-			#endregion
+            if (!settings.Contains("GUI.DarkTheme") || (darkTheme != FALSE && darkTheme != TRUE))
+                settings.Set("GUI.DarkTheme", 1);
 
-			#region Database Settings
+            #endregion
 
-			if (!settings.Contains("Database.?"))
-				settings.Set<string?>("Database.*", null);
+            #region Database Settings
 
-			var periodicity = settings.GetInt32("Database.CheckPeriodicityMode");
+            if (!settings.Contains("Database.?"))
+                settings.Set<string?>("Database.*", null);
 
-			if (!settings.Contains("Database.CheckPeriodicityMode") || periodicity < 1 || periodicity > 9)
-				settings.Set("Database.CheckPeriodicityMode", 4); // check weekly
+            int periodicity = settings.GetInt32("Database.CheckPeriodicityMode");
 
-			if (!settings.Contains("Database.DateOfLastCheck") || settings.GetInt64("Database.DateOfLastCheck") == -1)
-				settings.Set("Database.DateOfLastCheck", new DateTime(0).Ticks.ToString());
+            if (!settings.Contains("Database.CheckPeriodicityMode") || periodicity < 1 || periodicity > 9)
+                settings.Set("Database.CheckPeriodicityMode", 4); // check weekly
 
-			#endregion
+            if (!settings.Contains("Database.DateOfLastCheck") || settings.GetInt64("Database.DateOfLastCheck") == -1)
+                settings.Set("Database.DateOfLastCheck", new DateTime(0).Ticks.ToString());
 
-			#region Update Settings
+            #endregion
 
-			if (!settings.Contains("Update.?"))
-				settings.Set<string?>("Update.*", null);
+            #region Update Settings
 
-			var checkUpd = settings.GetString("Update.Check");
+            if (!settings.Contains("Update.?"))
+                settings.Set<string?>("Update.*", null);
 
-			if (!settings.Contains("Update.Check") || (checkUpd != TRUE && checkUpd != FALSE))
-				settings.Set("Update.Check", 1); // 1 for always check, 0 for never check
+            string? checkUpd = settings.GetString("Update.Check");
 
-			#endregion
+            if (!settings.Contains("Update.Check") || (checkUpd != TRUE && checkUpd != FALSE))
+                settings.Set("Update.Check", 1); // 1 for always check, 0 for never check
 
-			await settings.SaveAsync();
+            #endregion
 
-		}
+            await settings.SaveAsync();
 
-		public static async Task<DatabaseFetchResult> DownloadSqliteDatabaseAsync()
-		{
+        }
 
-			// todo: fetch the database (even if it's the first time playing DoomMapGuessr)
+        private static async Task<DatabaseFetchResult> DownloadSqliteDatabase_CheckPeriodicallyAsync(bool cacheExists, long dateOfLastCheck, long tickDifference)
+        {
 
-			// xxx: make sure to respect caching settings
-			var settings = ApplicationServices.Get<ISettingsService>();
-			var cache = ApplicationServices.Get<IFullCachingService>();
+            var settings = ApplicationServices.Get<ISettingsService>();
+            var cache = ApplicationServices.Get<IFullCachingService>();
 
-			byte[] databaseBytes = [];
+            try
+            {
 
-			DateTime dateOfLastCheck = new(settings.GetInt64("Database.DateOfLastCheck"));
+                string doluString = (await DatabaseFetcher.FetchStringAsync(DB_DOLU_URL, default)).Trim();
+                long dateOfLastDatabaseUpdate = Int64.Parse(doluString);
 
-			switch (ApplicationServices.Get<ISettingsService>().GetInt32("Database.CheckPeriodicityMode"))
-			{
+                if ((dateOfLastDatabaseUpdate - dateOfLastCheck) < tickDifference && cacheExists)
+                    throw new DummyException("Use cached database instead");
 
-				// Always check, no cache
-				case 1:
-					try
-					{
-						databaseBytes = await DatabaseFetcher.FetchBytesAsync(DB_URL, default);
-					}
-					catch (HttpRequestException)
-					{
-						return DatabaseFetchResult.CheckErrorNoCache; // critical error
-					}
+                byte[] databaseBytes = await DatabaseFetcher.FetchBytesAsync(DB_URL, default);
+                await cache.SetAsync(CACHED_DB_ENTRYNAME, databaseBytes, CacheTarget.Persistent);
+                settings.Set("Database.DateOfLastCheck", DateTime.Now.Ticks);
 
-					return DatabaseFetchResult.CheckNoCache;
+            }
+            catch (Exception ex) when (ex is HttpRequestException or OverflowException or FormatException or DummyException)
+            {
 
-				// Always check and cache
-				case 2:
-					try
-					{
+                if (await cache.GetBytesAsync(CACHED_DB_ENTRYNAME) is null)
+                    return DatabaseFetchResult.CheckErrorNoCache; // critical error
 
-						databaseBytes = await DatabaseFetcher.FetchBytesAsync(DB_URL, default);
+            }
 
-						// todo: check whether the downloaded database is actually more recent
-						//		 if it is, cache it; if not, do not cache it
-						await cache.SetAsync(CACHED_DB_ENTRYNAME, databaseBytes, CacheTarget.Persistent);
+            return DatabaseFetchResult.CheckAndCache;
 
-					}
-					catch (HttpRequestException)
-					{
+        }
 
-						var bytes = await cache.GetBytesAsync(CACHED_DB_ENTRYNAME);
 
-						if (bytes is null)
-							return DatabaseFetchResult.CheckErrorNoCache; // critical error
+        public static async Task<DatabaseFetchResult> DownloadSqliteDatabaseAsync()
+        {
 
-						databaseBytes = bytes;
+            var settings = ApplicationServices.Get<ISettingsService>();
+            var cache = ApplicationServices.Get<IFullCachingService>();
 
-					}
+            long dateOfLastCheck = settings.GetInt64("Database.DateOfLastCheck");
+            bool databaseCacheExists = cache.Exists(CACHED_DB_ENTRYNAME);
 
-					return DatabaseFetchResult.CheckAndCache;
+            if (dateOfLastCheck < 1)
+            {
 
+                // will always try to cache if it's the first time playing
+                // ticks = 0 is not guaranteed to mean that it's the first time playing
+                // but it's a good aproximation
+                // also who the fuck playing DoomMapGuessr in the big 0001 :sob:
+                return await DownloadSqliteDatabase_CheckPeriodicallyAsync(databaseCacheExists, dateOfLastCheck, 1);
 
-				// todo: handle the remaining setting's values
+            }
 
-			}
+            return ApplicationServices.Get<ISettingsService>().GetInt32("Database.CheckPeriodicityMode") switch
+            {
 
-			/*
-			
-			// xxx: what is below, in this comment, is not valid
-			//      as we are going to use the dedicated project
-			//		(DoomMapGuessr.Data) instead :)
-	
-			byte[] bytes = await client.GetByteArrayAsync(DB_URL);
-			await ApplicationState.Shared.Cache!.SetAsync("__cached_db", bytes);
+                2 => await DownloadSqliteDatabase_CheckPeriodicallyAsync(databaseCacheExists, dateOfLastCheck, DAY_TICKS),
+                3 => await DownloadSqliteDatabase_CheckPeriodicallyAsync(databaseCacheExists, dateOfLastCheck, WEEK_TICKS),
+                4 => await DownloadSqliteDatabase_CheckPeriodicallyAsync(databaseCacheExists, dateOfLastCheck, MONTH_TICKS),
+                5 => await DownloadSqliteDatabase_CheckPeriodicallyAsync(databaseCacheExists, dateOfLastCheck, TRIMESTER_TICKS),
+                6 => await DownloadSqliteDatabase_CheckPeriodicallyAsync(databaseCacheExists, dateOfLastCheck, SEMESTER_TICKS),
+                7 => await DownloadSqliteDatabase_CheckPeriodicallyAsync(databaseCacheExists, dateOfLastCheck, YEAR_TICKS),
 
-			ApplicationState.Shared.SqliteConnection = new Microsoft.Data.Sqlite.SqliteConnection(
-				$"Data Source={Path.Join(ApplicationState.Shared.Cache!.CacheDirectory, "__cached_db")}"
-			);
+                8 when databaseCacheExists is false => DatabaseFetchResult.CheckErrorNoCache, // in this case, not an error, but still falls into the same category 
 
-			ApplicationState.Shared.SqliteConnection.Open();
-			*/
+                // this is case 1 (previously case 2) which is the default
+                _ => await DownloadSqliteDatabase_CheckPeriodicallyAsync(databaseCacheExists, dateOfLastCheck, 1) // at least 1 tick of difference
 
-			// todo: remove this "everything is valid" ahh return statement
-			//		 after implementing all necessary features
-			return default;
+            };
 
-		}
+        }
 
-		/// <summary>
-		/// DoomMapGuessr entry point.
-		/// </summary>
-		/// <param name="args">Commandline arguments</param>
-		/// <remarks>
-		/// Initialization code. Don't use any Avalonia, third-party APIs or any
-		/// SynchronizationContext-reliant code before AppMain is called: things aren't initialized
-		/// yet and stuff might break.
-		/// </remarks>
-		[STAThread]
-		public static async Task<int> Main(
-			string[] args
-		)
-		{
+        /// <summary>
+        /// DoomMapGuessr entry point.
+        /// </summary>
+        /// <param name="args">Commandline arguments</param>
+        /// <remarks>
+        /// Initialization code. Don't use any Avalonia, third-party APIs or any
+        /// SynchronizationContext-reliant code before AppMain is called: things aren't initialized
+        /// yet and stuff might break.
+        /// </remarks>
+        [STAThread]
+        public static async Task<int> Main(
+            string[] args
+        )
+        {
 
-			await PrepareRequirementsAsync(args);
+            await PrepareRequirementsAsync(args);
 
-			BuildAvaloniaApp()
-				#if DEBUG
-				.WithDeveloperTools()
-				#endif
-				.StartWithClassicDesktopLifetime(args);
+            BuildAvaloniaApp()
+#if DEBUG
+                .WithDeveloperTools()
+#endif
+                .StartWithClassicDesktopLifetime(args);
 
-			return 0;
+            return 0;
 
-		}
+        }
 
-		private static void PrepareDependencyInjection(string[] args)
-		{
+        private static void PrepareDependencyInjection(string[] args)
+        {
 
-			Host = CreateHostBuilder(args).Build();
-			Host.Start();
-			ApplicationServices.Root = Host.Services;
+            Host = CreateHostBuilder(args).Build();
+            Host.Start();
+            ApplicationServices.Root = Host.Services;
 
-		}
+        }
 
-		private static async Task PrepareDependencyInjectionAsync(string[] args)
-		{
+        private static async Task PrepareDependencyInjectionAsync(string[] args)
+        {
 
-			Host = CreateHostBuilder(args).Build();
-			await Host.StartAsync();
-			ApplicationServices.Root = Host.Services;
+            Host = CreateHostBuilder(args).Build();
+            await Host.StartAsync();
+            ApplicationServices.Root = Host.Services;
 
-		}
+        }
 
-		public static void PrepareRequirements(string[] args)
-		{
+        public static void PrepareRequirements(string[] args)
+        {
 
-			// Host and DI
-			PrepareDependencyInjection(args);
-			ApplicationServices.VersionInfo = new(Assembly.GetExecutingAssembly());
+            // Host and DI
+            PrepareDependencyInjection(args);
+            ApplicationServices.VersionInfo = new(Assembly.GetExecutingAssembly());
 
-			PrepareApplicationSettings(ApplicationServices.Get<ISettingsService>());
+            PrepareApplicationSettings(ApplicationServices.Get<ISettingsService>());
 
-			// Fetch latest release
-			if (ApplicationServices.Get<ISettingsService>().GetBoolean("Update.Check"))
-				ApplicationServices.SavedRelease = ReleaseFetcher.FetchLatest("mf366-dev", "DoomMapGuessr");
+            // Fetch latest release
+            if (ApplicationServices.Get<ISettingsService>().GetBoolean("Update.Check"))
+                ApplicationServices.SavedRelease = ReleaseFetcher.FetchLatest("mf366-dev", "DoomMapGuessr");
 
-			DownloadSqliteDatabase();
+            DownloadSqliteDatabase();
 
-		}
+        }
 
         // TODO: implement this method (see DownloadSqliteDatabaseAsync in this file)
         // XXX: very important: we are not throwing NotImplemented solely cuz it breaks design mode
         // XXX: THIS HAS TO BE CHANGED LATER
         private static void DownloadSqliteDatabase() { }
 
-		public static async Task PrepareRequirementsAsync(string[] args)
-		{
+        public static async Task PrepareRequirementsAsync(string[] args)
+        {
 
-			// Host and DI
-			await PrepareDependencyInjectionAsync(args);
-			ApplicationServices.VersionInfo = new(Assembly.GetExecutingAssembly());
+            // Host and DI
+            await PrepareDependencyInjectionAsync(args);
+            ApplicationServices.VersionInfo = new(Assembly.GetExecutingAssembly());
 
-			await PrepareApplicationSettingsAsync(ApplicationServices.Get<ISettingsService>());
+            await PrepareApplicationSettingsAsync(ApplicationServices.Get<ISettingsService>());
 
-			// Fetch latest release
-			if (ApplicationServices.Get<ISettingsService>().GetBoolean("Update.Check"))
-				ApplicationServices.SavedRelease = await ReleaseFetcher.FetchLatestAsync("mf366-dev", "DoomMapGuessr");
+            // Fetch latest release
+            if (ApplicationServices.Get<ISettingsService>().GetBoolean("Update.Check"))
+                ApplicationServices.SavedRelease = await ReleaseFetcher.FetchLatestAsync("mf366-dev", "DoomMapGuessr");
 
-			await DownloadSqliteDatabaseAsync();
+            await DownloadSqliteDatabaseAsync();
 
-		}
+        }
 
-		// todo: close SqLite connection
-		~Program()
-		{
-			/*ApplicationState.Shared.SqliteConnection?.Close();*/
-		}
+        // todo: close SqLite connection
+        ~Program()
+        {
+            /*ApplicationState.Shared.SqliteConnection?.Close();*/
+        }
 
-	}
+    }
 
 }

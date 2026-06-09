@@ -408,6 +408,11 @@ namespace DoomMapGuessr.Services.Cache
         ) =>
             Remove(key);
 
+        /// <inheritdoc/>
+        public bool Exists(string key) => memory.TryGetValue(key, out object? _)
+            || File.Exists(Path.Join(TemporaryCacheDirectory.FullName, key))
+            || File.Exists(Path.Join(PersistentCacheDirectory.FullName, key));
+
     }
 
 }

@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 
 
 [assembly:
-	SuppressMessage(
-		"Style", "IDE0046:Convert to conditional expression", Justification = "<Pending>", Scope = "member",
-		Target = "~M:DoomMapGuessr.Services.Settings.IniSettingsService.GetBoolean(System.String)~System.Boolean"
-	)]
+    SuppressMessage(
+        "Style", "IDE0046:Convert to conditional expression", Justification = "<Pending>", Scope = "member",
+        Target = "~M:DoomMapGuessr.Services.Settings.IniSettingsService.GetBoolean(System.String)~System.Boolean"
+    )]

@@ -14,35 +14,35 @@ using DoomMapGuessr.Strings;
 namespace DoomMapGuessr.ViewModels
 {
 
-	public partial class SettingsPageViewModel : ViewModelBase
-	{
+    public partial class SettingsPageViewModel : ViewModelBase
+    {
 
-		[ObservableProperty]
-		public partial int CurrentIndex { get; set; } = Array.IndexOf(
-			App.AllowedCultures, ApplicationServices.Get<ISettingsService>()
-													.GetString("Language.Culture")
-		);
+        [ObservableProperty]
+        public partial int CurrentIndex { get; set; } = Array.IndexOf(
+            App.AllowedCultures, ApplicationServices.Get<ISettingsService>()
+                                                    .GetString("Language.Culture")
+        );
 
-		[ObservableProperty]
-		public partial int Proportions { get; set; } = Math.Min(
-			Math.Clamp(
-				ApplicationServices.Get<ISettingsService>().GetInt32("Screenshots.Proportions"),
-				0, 3
-			),
-			0
-		);
+        [ObservableProperty]
+        public partial int Proportions { get; set; } = Math.Min(
+            Math.Clamp(
+                ApplicationServices.Get<ISettingsService>().GetInt32("Screenshots.Proportions"),
+                0, 3
+            ),
+            0
+        );
 
-		[ObservableProperty]
-		public partial bool CustomTheme { get; set; } = !ApplicationServices.Get<ISettingsService>()
-																			.GetBoolean("GUI.FollowSystem");
+        [ObservableProperty]
+        public partial bool CustomTheme { get; set; } = !ApplicationServices.Get<ISettingsService>()
+                                                                            .GetBoolean("GUI.FollowSystem");
 
-		[ObservableProperty]
-		public partial bool DarkTheme { get; set; } = ApplicationServices.Get<ISettingsService>()
-																		 .GetBoolean("GUI.DarkTheme");
+        [ObservableProperty]
+        public partial bool DarkTheme { get; set; } = ApplicationServices.Get<ISettingsService>()
+                                                                         .GetBoolean("GUI.DarkTheme");
 
-		[ObservableProperty]
-		public partial string[] LanguageComboBoxItems { get; set; } =
-		[
+        [ObservableProperty]
+        public partial string[] LanguageComboBoxItems { get; set; } =
+        [
 
 			// The comments to the right of the items
 			// are easy ways to match languages to codes.
@@ -58,59 +58,59 @@ namespace DoomMapGuessr.ViewModels
 
 		];
 
-		private void RunLanguageChangeProtocol()
-		{
+        private void RunLanguageChangeProtocol()
+        {
 
-			string culture = CurrentIndex == 0 // same as system
-								 ? App.AllowedCultures.Contains(
-									   CultureInfo.CurrentCulture.Name, StringComparer.OrdinalIgnoreCase
-								   )                                     // same as system is allowed
-									   ? CultureInfo.CurrentCulture.Name // same as system
-									   : App.AllowedCultures[1]          // en-US
-								 : App.AllowedCultures[CurrentIndex];
+            string culture = CurrentIndex == 0 // same as system
+                                 ? App.AllowedCultures.Contains(
+                                       CultureInfo.CurrentCulture.Name, StringComparer.OrdinalIgnoreCase
+                                   )                                     // same as system is allowed
+                                       ? CultureInfo.CurrentCulture.Name // same as system
+                                       : App.AllowedCultures[1]          // en-US
+                                 : App.AllowedCultures[CurrentIndex];
 
-			Resources.Culture = new(culture); // auto updates UI
-			CultureInfo.CurrentCulture = Resources.Culture;
+            Resources.Culture = new(culture); // auto updates UI
+            CultureInfo.CurrentCulture = Resources.Culture;
 
-			ApplicationServices.Get<ISettingsService>().Set("Language.Culture", culture);
+            ApplicationServices.Get<ISettingsService>().Set("Language.Culture", culture);
 
-		}
+        }
 
-		private void RunThemeChangeProtocol()
-		{
+        private void RunThemeChangeProtocol()
+        {
 
-			ApplicationServices.Get<ISettingsService>()
-							   .Set(
-								   "GUI.FollowSystem", CustomTheme
-														   ? "0"
-														   : "1"
-							   );
+            ApplicationServices.Get<ISettingsService>()
+                               .Set(
+                                   "GUI.FollowSystem", CustomTheme
+                                                           ? "0"
+                                                           : "1"
+                               );
 
-			ApplicationServices.Get<ISettingsService>()
-							   .Set(
-								   "GUI.DarkTheme", CustomTheme
-														? "1"
-														: "0"
-							   );
+            ApplicationServices.Get<ISettingsService>()
+                               .Set(
+                                   "GUI.DarkTheme", CustomTheme
+                                                        ? "1"
+                                                        : "0"
+                               );
 
-			_ = Application.Current?.RequestedThemeVariant = !CustomTheme
-																 ? ThemeVariant.Default
-																 : DarkTheme
-																	 ? ThemeVariant.Dark
-																	 : ThemeVariant.Light;
+            _ = Application.Current?.RequestedThemeVariant = !CustomTheme
+                                                                 ? ThemeVariant.Default
+                                                                 : DarkTheme
+                                                                     ? ThemeVariant.Dark
+                                                                     : ThemeVariant.Light;
 
-		}
+        }
 
-		[RelayCommand]
-		private void SaveSettings()
-		{
+        [RelayCommand]
+        private void SaveSettings()
+        {
 
-			RunLanguageChangeProtocol();
-			RunThemeChangeProtocol();
-			ApplicationServices.Get<ISettingsService>().Save();
+            RunLanguageChangeProtocol();
+            RunThemeChangeProtocol();
+            ApplicationServices.Get<ISettingsService>().Save();
 
-		}
+        }
 
-	}
+    }
 
 }
