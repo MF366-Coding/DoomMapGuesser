@@ -113,7 +113,14 @@ namespace DoomMapGuessr
             if (!settings.Contains("Language.?"))
                 settings.Set<string?>("Language.*", null);
 
-            if (!settings.Contains("Language.Culture"))
+            if (!settings.Contains("Language.Culture") ||
+                !CultureInfo.GetCultures(CultureTypes.AllCultures)
+                    .Any(
+                        c => String.Equals(settings.GetString("Language.Culture"),
+                            c.Name,
+                            StringComparison.OrdinalIgnoreCase)
+                    )
+                )
             {
 
                 settings.Set(
@@ -131,10 +138,14 @@ namespace DoomMapGuessr
             if (!settings.Contains("GUI.?"))
                 settings.Set<string?>("GUI.*", null);
 
-            if (!settings.Contains("GUI.FollowSystem"))
+            string? followSystem = settings.GetString("GUI.FollowSystem");
+
+            if (!settings.Contains("GUI.FollowSystem") || (followSystem != FALSE && followSystem != TRUE))
                 settings.Set("GUI.FollowSystem", 1);
 
-            if (!settings.Contains("GUI.DarkTheme"))
+            string? darkTheme = settings.GetString("GUI.DarkTheme");
+
+            if (!settings.Contains("GUI.DarkTheme") || (darkTheme != FALSE && darkTheme != TRUE))
                 settings.Set("GUI.DarkTheme", 1);
 
             #endregion
@@ -144,11 +155,26 @@ namespace DoomMapGuessr
             if (!settings.Contains("Database.?"))
                 settings.Set<string?>("Database.*", null);
 
-            if (!settings.Contains("Database.CheckPeriodicityMode"))
+            int periodicity = settings.GetInt32("Database.CheckPeriodicityMode");
+
+            if (!settings.Contains("Database.CheckPeriodicityMode") || periodicity < 1 || periodicity > 9)
                 settings.Set("Database.CheckPeriodicityMode", 4); // check weekly
 
-            if (!settings.Contains("Database.DateOfLastCheck"))
+            if (!settings.Contains("Database.DateOfLastCheck") || settings.GetInt64("Database.DateOfLastCheck") == -1)
                 settings.Set("Database.DateOfLastCheck", new DateTime(0).Ticks.ToString());
+
+            #endregion
+
+            #region Screenshot Settings
+
+            if (!settings.Contains("Screenshots.?"))
+                settings.Set<string?>("Screenshots.*", null);
+
+            if (!settings.Contains("Screenshots.AspectRatio"))
+                settings.Set("Screenshots.AspectRatio", 0);
+
+            if (!settings.Contains("Screenshots.ColorBlindness"))
+                settings.Set("Screenshots.ColorBlindness", 0);
 
             #endregion
 
@@ -157,7 +183,9 @@ namespace DoomMapGuessr
             if (!settings.Contains("Update.?"))
                 settings.Set<string?>("Update.*", null);
 
-            if (!settings.Contains("Update.Check"))
+            string? checkUpd = settings.GetString("Update.Check");
+
+            if (!settings.Contains("Update.Check") || (checkUpd != TRUE && checkUpd != FALSE))
                 settings.Set("Update.Check", 1); // 1 for always check, 0 for never check
 
             #endregion
@@ -228,6 +256,19 @@ namespace DoomMapGuessr
 
             if (!settings.Contains("Database.DateOfLastCheck") || settings.GetInt64("Database.DateOfLastCheck") == -1)
                 settings.Set("Database.DateOfLastCheck", new DateTime(0).Ticks.ToString());
+
+            #endregion
+
+            #region Screenshot Settings
+
+            if (!settings.Contains("Screenshots.?"))
+                settings.Set<string?>("Screenshots.*", null);
+
+            if (!settings.Contains("Screenshots.AspectRatio"))
+                settings.Set("Screenshots.AspectRatio", 0);
+
+            if (!settings.Contains("Screenshots.ColorBlindness"))
+                settings.Set("Screenshots.ColorBlindness", 0);
 
             #endregion
 

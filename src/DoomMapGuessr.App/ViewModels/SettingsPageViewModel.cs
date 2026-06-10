@@ -19,84 +19,76 @@ namespace DoomMapGuessr.ViewModels
     {
 
         [ObservableProperty]
-        public partial int CurrentIndex { get; set; } = Array.IndexOf(
+        public partial int Language_CurrentIndex { get; set; } = Array.IndexOf(
             App.AllowedCultures, ApplicationServices.Get<ISettingsService>()
                                                     .GetString("Language.Culture")
         );
 
         [ObservableProperty]
-        public partial Proportions Screenshots_Proportions { get; set; } = (Proportions)Math.Clamp(
-            ApplicationServices.Get<ISettingsService>().GetInt32("Screenshots.Proportions"),
+        public partial AspectRatio Screenshots_AspectRatio { get; set; } = (AspectRatio)Math.Clamp(
+            ApplicationServices.Get<ISettingsService>().GetInt32("Screenshots.AspectRatio"),
             0, 3
         );
 
         [ObservableProperty]
-        public partial bool CustomTheme { get; set; } = !ApplicationServices.Get<ISettingsService>()
+        public partial bool GUI_CustomTheme { get; set; } = !ApplicationServices.Get<ISettingsService>()
                                                                             .GetBoolean("GUI.FollowSystem");
 
         [ObservableProperty]
-        public partial bool DarkTheme { get; set; } = ApplicationServices.Get<ISettingsService>()
+        public partial bool GUI_DarkTheme { get; set; } = ApplicationServices.Get<ISettingsService>()
                                                                          .GetBoolean("GUI.DarkTheme");
 
         [ObservableProperty]
-        public partial string[] LanguageComboBoxItems { get; set; } =
+        public partial string[] Language_ComboBoxItems { get; set; } =
         [
 
-			// The comments to the right of the items
-			// are easy ways to match languages to codes.
-			// Item: Native name
-			// In comment, by this order:
-			// English name, ISO language name (2 letters),
-			// ISO language name (3 letters),
-			// Windows (3 letter language name), Windows LCID
-			Resources.Settings_Language_FollowSystem, // Same as System (Not Invariant)
-			"English (United States)",                // English (United States)			// en // eng // ENU // 1033
-			"Português (Brasil)",                     // Portuguese (Brazil)				// pt // por // PTB // 1046
-			"Português (Portugal)"                    // Portuguese (Portugal)			// pt // por // PTG // 2070
+            // The comments to the right of the items
+            // are easy ways to match languages to codes.
+            // Item: Native name
+            // In comment, by this order:
+            // English name, ISO language name (2 letters),
+            // ISO language name (3 letters),
+            // Windows (3 letter language name), Windows LCID
+            Resources.Settings_Language_FollowSystem, // Same as System (Not Invariant)
+            "English (United States)",                // English (United States)			// en // eng // ENU // 1033
+            "Português (Brasil)",                     // Portuguese (Brazil)				// pt // por // PTB // 1046
+            "Português (Portugal)"                    // Portuguese (Portugal)			    // pt // por // PTG // 2070
 
-		];
+        ];
 
         [ObservableProperty]
-        public partial int Screenshot_ColorBlindnessSetting { get; set; } = ApplicationServices.Get<ISettingsService>().GetInt32("Screenshots.ColorBlindness");
+        public partial ColorBlindness Screenshots_ColorBlindness { get; set; } = (ColorBlindness)Math.Clamp(
+            ApplicationServices.Get<ISettingsService>().GetInt32("Screenshots.ColorBlindness"),
+            0, 4
+        );
 
-        private void RunLanguageChangeProtocol()
+        private void RunLanguageChangeProtocol(ISettingsService settings)
         {
 
-            string culture = CurrentIndex == 0 // same as system
+            string culture = Language_CurrentIndex == 0 // same as system
                                  ? App.AllowedCultures.Contains(
                                        CultureInfo.CurrentCulture.Name, StringComparer.OrdinalIgnoreCase
                                    )                                     // same as system is allowed
                                        ? CultureInfo.CurrentCulture.Name // same as system
                                        : App.AllowedCultures[1]          // en-US
-                                 : App.AllowedCultures[CurrentIndex];
+                                 : App.AllowedCultures[Language_CurrentIndex];
 
             Resources.Culture = new(culture); // auto updates UI
             CultureInfo.CurrentCulture = Resources.Culture;
 
-            ApplicationServices.Get<ISettingsService>().Set("Language.Culture", culture);
+            settings.Set("Language.Culture", culture);
 
         }
 
-        private void RunThemeChangeProtocol()
+        private void RunThemeChangeProtocol(ISettingsService settings)
         {
 
-            ApplicationServices.Get<ISettingsService>()
-                               .Set(
-                                   "GUI.FollowSystem", CustomTheme
-                                                           ? "0"
-                                                           : "1"
-                               );
+            settings.Set("GUI.FollowSystem", GUI_CustomTheme ? "0" : "1");
+            settings.Set("GUI.DarkTheme", GUI_CustomTheme ? "1" : "0");
 
-            ApplicationServices.Get<ISettingsService>()
-                               .Set(
-                                   "GUI.DarkTheme", CustomTheme
-                                                        ? "1"
-                                                        : "0"
-                               );
-
-            _ = Application.Current?.RequestedThemeVariant = !CustomTheme
+            _ = Application.Current?.RequestedThemeVariant = !GUI_CustomTheme
                                                                  ? ThemeVariant.Default
-                                                                 : DarkTheme
+                                                                 : GUI_DarkTheme
                                                                      ? ThemeVariant.Dark
                                                                      : ThemeVariant.Light;
 
@@ -106,9 +98,14 @@ namespace DoomMapGuessr.ViewModels
         private void SaveSettings()
         {
 
-            RunLanguageChangeProtocol();
-            RunThemeChangeProtocol();
-            ApplicationServices.Get<ISettingsService>().Save();
+            var settings = ApplicationServices.Get<ISettingsService>();
+
+            RunLanguageChangeProtocol(settings);
+            RunThemeChangeProtocol(settings);
+
+            settings.Set("Screenshots.AspectRatio", (int)Screenshots_AspectRatio);
+            settings.Set("Screenshots.ColorBlindness", (int)Screenshots_ColorBlindness);
+            settings.Save();
 
         }
 

@@ -1,13 +1,13 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:DoomMapGuessr.ViewModels"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="clr-namespace:DoomMapGuessr.ViewModels"
 			 xmlns:enums="using:DoomMapGuessr.Enums"
-             xmlns:strings="clr-namespace:DoomMapGuessr.Strings"
-             mc:Ignorable="d" d:DesignWidth="1030" d:DesignHeight="720"
-             x:Class="DoomMapGuessr.Views.SettingsPage"
-             x:DataType="vm:SettingsPageViewModel">
+			 xmlns:strings="clr-namespace:DoomMapGuessr.Strings"
+			 mc:Ignorable="d" d:DesignWidth="1030" d:DesignHeight="720"
+			 x:Class="DoomMapGuessr.Views.SettingsPage"
+			 x:DataType="vm:SettingsPageViewModel">
 	<Design.DataContext>
 		<vm:SettingsPageViewModel />
 	</Design.DataContext>
@@ -27,8 +27,8 @@
 						</StackPanel>
 						<StackPanel Orientation="Horizontal" Spacing="8">
 							<TextBlock Margin="24,8,0,0" VerticalAlignment="Center" TextAlignment="Right"
-							           Text="{x:Static strings:Resources.Settings_Language_InputFieldPrompt}" />
-							<ComboBox Margin="0,8,0,0" SelectedIndex="{Binding CurrentIndex}" ItemsSource="{Binding LanguageComboBoxItems}" />
+									   Text="{x:Static strings:Resources.Settings_Language_InputFieldPrompt}" />
+							<ComboBox Margin="0,8,0,0" SelectedIndex="{Binding Language_CurrentIndex}" ItemsSource="{Binding Language_ComboBoxItems}" />
 						</StackPanel>
 					</StackPanel>
 				</Border>
@@ -40,13 +40,13 @@
 						</StackPanel>
 						<StackPanel Orientation="Vertical" Spacing="8">
 							<ToggleSwitch Margin="24,8,0,0" OnContent="{x:Static strings:Resources.Settings_UI_UseCustomTheme}"
-							              OffContent="{x:Static strings:Resources.Settings_UI_UseCustomTheme}"
-							              IsChecked="{Binding CustomTheme}" />
+										  OffContent="{x:Static strings:Resources.Settings_UI_UseCustomTheme}"
+										  IsChecked="{Binding GUI_CustomTheme}" />
 							<ToggleSwitch Name="DarkThemeToggleSwitch" Margin="48,0,0,0"
-							              OnContent="{x:Static strings:Resources.Settings_UI_DarkTheme}"
-							              OffContent="{x:Static strings:Resources.Settings_UI_DarkTheme}"
-							              IsChecked="{Binding DarkTheme}"
-							              IsEnabled="{Binding CustomTheme}" />
+										  OnContent="{x:Static strings:Resources.Settings_UI_DarkTheme}"
+										  OffContent="{x:Static strings:Resources.Settings_UI_DarkTheme}"
+										  IsChecked="{Binding GUI_DarkTheme}"
+										  IsEnabled="{Binding GUI_CustomTheme}" />
 						</StackPanel>
 					</StackPanel>
 				</Border>
@@ -59,39 +59,43 @@
 						<TextBlock Classes="h3" Margin="24,8,0,8" Text="{x:Static strings:Resources.Settings_AspectRatio}" />
 						<StackPanel Orientation="Horizontal" Spacing="8">
 							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
-							             Content="{x:Static strings:Resources.Settings_AspectRatio_MaintainProportions}"
-										 IsChecked="{Binding Screenshots_Proportions, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:Proportions.Maintain}}" />
+										 Content="{x:Static strings:Resources.Settings_AspectRatio_MaintainProportions}"
+										 IsChecked="{Binding Screenshots_AspectRatio, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:AspectRatio.Maintain}}" />
 							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
-										 IsChecked="{Binding Screenshots_Proportions, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:Proportions.Landscape16_9}}">
+										 IsChecked="{Binding Screenshots_AspectRatio, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:AspectRatio.Landscape16_9}}">
 								16:9
 							</RadioButton>
 							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
-										 IsChecked="{Binding Screenshots_Proportions, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:Proportions.Landscape4_3}}">
+										 IsChecked="{Binding Screenshots_AspectRatio, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:AspectRatio.Landscape4_3}}">
 								4:3
 							</RadioButton>
 							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
-										 IsChecked="{Binding Screenshots_Proportions, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:Proportions.Square1_1}}">
+										 IsChecked="{Binding Screenshots_AspectRatio, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:AspectRatio.Square1_1}}">
 								1:1
 							</RadioButton>
 						</StackPanel>
 						<TextBlock Classes="h3" Margin="24,8,0,8" Text="{x:Static strings:Resources.Generics_Color}" />
 						<StackPanel Orientation="Vertical" Spacing="8">
 							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
-							             Content="{x:Static strings:Resources.Settings_Color_MaintainColor}" />
+										 Content="{x:Static strings:Resources.Settings_Color_MaintainColor}"
+										 IsChecked="{Binding Screenshots_ColorBlindness, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ColorBlindness.MaintainColor}}" />
 							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
-							             Content="{x:Static strings:Resources.Settings_Color_Protanopia}" />
+										 Content="{x:Static strings:Resources.Settings_Color_Protanopia}"
+										 IsChecked="{Binding Screenshots_ColorBlindness, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ColorBlindness.Protanopia}}" />
 							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
-							             Content="{x:Static strings:Resources.Settings_Color_Deuteranopia}" />
+										 Content="{x:Static strings:Resources.Settings_Color_Deuteranopia}"
+										 IsChecked="{Binding Screenshots_ColorBlindness, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ColorBlindness.Deuteranopia}}" />
 							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
-							             Content="{x:Static strings:Resources.Settings_Color_Tritanopia}" />
+										 Content="{x:Static strings:Resources.Settings_Color_Tritanopia}"
+										 IsChecked="{Binding Screenshots_ColorBlindness, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ColorBlindness.Tritanopia}}" />
 							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
-							             Content="{x:Static strings:Resources.Settings_Color_Monochromacy}" />
+										 Content="{x:Static strings:Resources.Settings_Color_Monochromacy}"
+										 IsChecked="{Binding Screenshots_ColorBlindness, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ColorBlindness.Monochromacy}}" />
 						</StackPanel>
 						<TextBlock Classes="h3" Margin="24,8,0,8"
-						           Text="{x:Static strings:Resources.Settings_DoomScreenshots_SourceBlacklist}" />
+								   Text="{x:Static strings:Resources.Settings_DoomScreenshots_SourceBlacklist}" />
 						<StackPanel Orientation="Vertical" Spacing="8" Margin="48,0,0,0">
 							<ListBox MinWidth="50" CornerRadius="10">
-								<ListBoxItem>google.com</ListBoxItem>
 								<ListBoxItem>example.com</ListBoxItem>
 								<ListBoxItem>some-random-unsafe-site.nope</ListBoxItem>
 							</ListBox>

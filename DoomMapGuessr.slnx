@@ -9,64 +9,40 @@
 	<Folder Name="/Solution Items/">
 		<File Path=".github/workflows/release.yml" />
 		<File Path=".gitignore" />
-		<File Path="data/MAPDAT3.db" />
+		<File Path="data/MAPDAT4.db" />
 		<File Path="LICENSE.txt" />
 		<File Path="README.md" />
 	</Folder>
 	<Project Path="tests/DoomMapGuessr.Tests.csproj">
-		<Platform Solution="*|ARM32"
-		          Project="ARM32" />
-		<Platform Solution="*|ARM64"
-		          Project="ARM64" />
-		<Platform Solution="*|x64"
-		          Project="x64" />
+		<Platform Solution="*|ARM32" Project="ARM32" />
+		<Platform Solution="*|ARM64" Project="ARM64" />
+		<Platform Solution="*|x64" Project="x64" />
 	</Project>
 	<Project Path="src/DoomMapGuessr.App/DoomMapGuessr.App.csproj">
-		<Platform Solution="*|ARM32"
-		          Project="ARM32" />
-		<Platform Solution="*|ARM64"
-		          Project="ARM64" />
-		<Platform Solution="*|x64"
-		          Project="x64" />
-		<Platform Solution="*|x86"
-		          Project="x86" />
+		<Platform Solution="*|ARM32" Project="ARM32" />
+		<Platform Solution="*|ARM64" Project="ARM64" />
+		<Platform Solution="*|x64" Project="x64" />
+		<Platform Solution="*|x86" Project="x86" />
 	</Project>
-	<Project Path="src/DoomMapGuessr.Common/DoomMapGuessr.Common.csproj"
-	         Id="9b20e786-7082-4ee5-bb6c-f99652119b6e">
-		<Platform Solution="*|ARM32"
-		          Project="ARM32" />
-		<Platform Solution="*|ARM64"
-		          Project="ARM64" />
-		<Platform Solution="*|x64"
-		          Project="x64" />
-		<Platform Solution="*|x86"
-		          Project="x86" />
+	<Project Path="src/DoomMapGuessr.Common/DoomMapGuessr.Common.csproj" Id="9b20e786-7082-4ee5-bb6c-f99652119b6e">
+		<Platform Solution="*|ARM32" Project="ARM32" />
+		<Platform Solution="*|ARM64" Project="ARM64" />
+		<Platform Solution="*|x64" Project="x64" />
+		<Platform Solution="*|x86" Project="x86" />
 	</Project>
-	<Project Path="src/DoomMapGuessr.Data/DoomMapGuessr.Data.csproj"
-	         Id="e527ab23-52cf-4b83-963d-de1ff9d8c75c">
-		<Platform Solution="*|ARM32"
-		          Project="ARM32" />
-		<Platform Solution="*|ARM64"
-		          Project="ARM64" />
-		<Platform Solution="*|x64"
-		          Project="x64" />
+	<Project Path="src/DoomMapGuessr.Data/DoomMapGuessr.Data.csproj" Id="e527ab23-52cf-4b83-963d-de1ff9d8c75c">
+		<Platform Solution="*|ARM32" Project="ARM32" />
+		<Platform Solution="*|ARM64" Project="ARM64" />
+		<Platform Solution="*|x64" Project="x64" />
 	</Project>
-	<Project Path="src/DoomMapGuessr.Domain/DoomMapGuessr.Domain.csproj"
-	         Id="52b1fb1b-4c0c-4f8b-95a9-715851beb2fc">
-		<Platform Solution="*|ARM32"
-		          Project="ARM32" />
-		<Platform Solution="*|ARM64"
-		          Project="ARM64" />
-		<Platform Solution="*|x64"
-		          Project="x64" />
+	<Project Path="src/DoomMapGuessr.Domain/DoomMapGuessr.Domain.csproj" Id="52b1fb1b-4c0c-4f8b-95a9-715851beb2fc">
+		<Platform Solution="*|ARM32" Project="ARM32" />
+		<Platform Solution="*|ARM64" Project="ARM64" />
+		<Platform Solution="*|x64" Project="x64" />
 	</Project>
-	<Project Path="src/DoomMapGuessr.Services/DoomMapGuessr.Services.csproj"
-	         Id="bb9c2f9a-f425-4011-bc4b-fdf43506240c">
-		<Platform Solution="*|ARM32"
-		          Project="ARM32" />
-		<Platform Solution="*|ARM64"
-		          Project="ARM64" />
-		<Platform Solution="*|x64"
-		          Project="x64" />
+	<Project Path="src/DoomMapGuessr.Services/DoomMapGuessr.Services.csproj" Id="bb9c2f9a-f425-4011-bc4b-fdf43506240c">
+		<Platform Solution="*|ARM32" Project="ARM32" />
+		<Platform Solution="*|ARM64" Project="ARM64" />
+		<Platform Solution="*|x64" Project="x64" />
 	</Project>
 </Solution>
