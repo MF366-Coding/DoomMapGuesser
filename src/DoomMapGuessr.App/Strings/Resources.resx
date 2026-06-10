@@ -168,8 +168,8 @@
   <data name="Settings.Color.MaintainColor" xml:space="preserve">
     <value>Original color</value>
   </data>
-  <data name="Settings.Color.Achromatopsia" xml:space="preserve">
-    <value>Achromatopsia (monochromacy)</value>
+  <data name="Settings.Color.Monochromacy" xml:space="preserve">
+    <value>Monochromacy</value>
   </data>
   <data name="Settings.Color.Tritanopia" xml:space="preserve">
     <value>Tritanopia (blue-blindness)</value>

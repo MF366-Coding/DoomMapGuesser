@@ -335,15 +335,6 @@ namespace DoomMapGuessr.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Achromatopsia (monochromacy).
-        /// </summary>
-        public static string Settings_Color_Achromatopsia {
-            get {
-                return ResourceManager.GetString("Settings.Color.Achromatopsia", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Deuteranopia (green-blindness).
         /// </summary>
         public static string Settings_Color_Deuteranopia {
@@ -358,6 +349,15 @@ namespace DoomMapGuessr.Strings {
         public static string Settings_Color_MaintainColor {
             get {
                 return ResourceManager.GetString("Settings.Color.MaintainColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Monochromacy.
+        /// </summary>
+        public static string Settings_Color_Monochromacy {
+            get {
+                return ResourceManager.GetString("Settings.Color.Monochromacy", resourceCulture);
             }
         }
         

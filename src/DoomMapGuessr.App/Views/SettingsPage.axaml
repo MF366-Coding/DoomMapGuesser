@@ -85,7 +85,7 @@
 							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
 							             Content="{x:Static strings:Resources.Settings_Color_Tritanopia}" />
 							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
-							             Content="{x:Static strings:Resources.Settings_Color_Achromatopsia}" />
+							             Content="{x:Static strings:Resources.Settings_Color_Monochromacy}" />
 						</StackPanel>
 						<TextBlock Classes="h3" Margin="24,8,0,8"
 						           Text="{x:Static strings:Resources.Settings_DoomScreenshots_SourceBlacklist}" />

@@ -25,7 +25,7 @@ screenshots and WADs!
 Currently in development, version 3 will include several new exciting features, such as:
 
 * **Precision game mode.** Now, instead of having to simply guess what's the game, the episode and the map, you can guess
-  exactly where it was taken, and coordinates count! Just drop your pin in the map and see how close you were to the actual location.</li>
+  exactly where it was taken, and coordinates count! Just drop your pin in the map and see how close you were to the actual location.
 * **Inclusion of [Legacy of Rust](https://doomwiki.org/wiki/Legacy_of_Rust).** Legacy of Rust will be included as a game
   in this major update.
 * **Language and Accessibility settings.** How awesome would it be to play DoomMapGuessr in your mother tongue? Pretty
