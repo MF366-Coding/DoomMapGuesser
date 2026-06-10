@@ -3,6 +3,7 @@
 using CommunityToolkit.Mvvm.Input;
 
 using DoomMapGuessr.Helpers;
+using DoomMapGuessr.Services;
 using DoomMapGuessr.Strings;
 
 using Octokit;
@@ -52,13 +53,13 @@ namespace DoomMapGuessr.ViewModels
             };
 
         [RelayCommand]
-        private void NavigateToUnlockables() => ApplicationServices.NavigationService.NavigateTo("AchievementsUnlockables");
+        private static void NavigateToUnlockables() => ApplicationServices.Get<INavigationService>().NavigateTo("AchievementsUnlockables");
 
         [RelayCommand]
-        private void NavigateToClassicMode() => ApplicationServices.NavigationService.NavigateTo("ClassicMode");
+        private static void NavigateToClassicMode() => ApplicationServices.Get<INavigationService>().NavigateTo("ClassicMode");
 
         [RelayCommand]
-        private void OpenGitHubRepo()
+        private static void OpenGitHubRepo()
         {
 
             if (ApplicationServices.Get<Release>().HtmlUrl is null)

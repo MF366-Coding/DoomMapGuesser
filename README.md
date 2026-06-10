@@ -2,7 +2,7 @@
 <!--suppress HtmlDeprecatedAttribute, CheckImageSize -->
 <img src="assets/Logo.png" alt="DoomMapGuessr's logo" align="right" width="150" height="150">
 
-> **DoomMapGuessr - the GeoGuesser of Doom.** Guess the game, the episode, the map and the exact location...
+> **DoomMapGuessr - the geo-guessing game of Doom.** Guess the game, the episode, the map and the exact location...
 
 [![Latest Version](https://img.shields.io/github/v/release/matty-the-dev/DoomMapGuessr?sort=semver&display_name=tag&style=for-the-badge&logo=github&color=red)](https://github.com/matty-the-dev/DoomMapGuessr/releases/latest)
 [![License](https://img.shields.io/github/license/matty-the-dev/DoomMapGuessr?style=for-the-badge&color=blue)](https://raw.githubusercontent.com/matty-the-dev/DommMapGuesser/main/LICENSE)
@@ -15,7 +15,7 @@
 > to [Installation](#installation).
 
 ## What is DoomMapGuessr?
-**DoomMapGuessr** is a [GeoGuessr](https://www.geoguessr.com/)-style game where, instead of guessing in which part of
+**DoomMapGuessr** is a **geo-guessing game** where, instead of guessing in which part of
 the world you are, you try to guess where the screenshot being shown to you was taken, in the Classic DOOM franchise and
 some extra WADs.
 DoomMapGuessr allows for fun gameplay with customization settings available, such as being able to pick your own
@@ -24,8 +24,8 @@ screenshots and WADs!
 ### Version 3 *(WIP - coming out soon!)*
 Currently in development, version 3 will include several new exciting features, such as:
 
-* **GeoGuessr game mode.** Now, instead of having to simply guess what's the game, the episode and the map, you can guess
-  exactly where it was taken, and coordinates count!</li>
+* **Precision game mode.** Now, instead of having to simply guess what's the game, the episode and the map, you can guess
+  exactly where it was taken, and coordinates count! Just drop your pin in the map and see how close you were to the actual location.</li>
 * **Inclusion of [Legacy of Rust](https://doomwiki.org/wiki/Legacy_of_Rust).** Legacy of Rust will be included as a game
   in this major update.
 * **Language and Accessibility settings.** How awesome would it be to play DoomMapGuessr in your mother tongue? Pretty

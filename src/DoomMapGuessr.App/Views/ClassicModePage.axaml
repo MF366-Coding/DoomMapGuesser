@@ -1,54 +1,91 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:DoomMapGuessr.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="DoomMapGuessr.Views.ClassicModePage"
-             x:DataType="vm:ClassicModeViewModel">
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="clr-namespace:DoomMapGuessr.ViewModels"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 x:Class="DoomMapGuessr.Views.ClassicModePage"
+			 x:DataType="vm:ClassicModeViewModel">
 	<Design.DataContext>
 		<vm:ClassicModeViewModel />
 	</Design.DataContext>
 
-	<SplitView IsPaneOpen="true" PanePlacement="Bottom" PaneBackground="{DynamicResource Brush.Translucid}">
-		<Border>
-			<!-- ReSharper disable once Xaml.PathError (no error here this shit hallucinating) -->
-			<Image x:Name="DoomScreenshot" Source="avares://DoomMapGuessr.App/Assets/backgrounds/DOOM_TITLEPIC.png"
-			       Stretch="UniformToFill" />
-		</Border>
+	<SplitView IsPaneOpen="{Binding IsGuessingPaneOpen, Mode=TwoWay}"
+			   PanePlacement="Right"
+			   PaneBackground="{DynamicResource Brush.Translucid}"
+			   CompactPaneLength="50"
+			   DisplayMode="CompactInline">
+		<!--
+		hey small reminder from past matthew
+		***
+		fuck you.
+
+		anyways if you set CompactInline all good but the background
+		being translucid makes zero difference
+
+		if you set CompactOverlay the translucid background
+		looks beautiful but it leads to buggy behavior
+		regarding pane open/close
+		-->
+
+		<SplitView.Content>
+			<Border>
+				<Border.Effect>
+					<BlurEffect Radius="{Binding ContentBlurRadius, Mode=OneWay}" />
+				</Border.Effect>
+
+				<!-- ReSharper disable once Xaml.PathError (no error here this shit hallucinating) -->
+				<Image x:Name="DoomScreenshot" Source="avares://DoomMapGuessr.App/Assets/backgrounds/DOOM_TITLEPIC.png"
+					   Stretch="UniformToFill" />
+			</Border>
+		</SplitView.Content>
 
 		<SplitView.Pane>
-			<ScrollViewer>
-				<Grid Margin="16" RowDefinitions="Auto, Auto" HorizontalAlignment="Center" VerticalAlignment="Center">
-					<Grid Grid.Row="0" Margin="8" ColumnDefinitions="Auto, Auto" RowDefinitions="Auto, Auto">
-						<StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical" Spacing="4" Margin="16">
-							<TextBlock TextAlignment="Center" Classes="h2">Game or WAD</TextBlock>
-							<ComboBox HorizontalAlignment="Stretch" PlaceholderText="Select a game" />
-						</StackPanel>
-						<StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical" Spacing="4" Margin="16">
-							<TextBlock TextAlignment="Center" Classes="h2">Episode</TextBlock>
-							<ComboBox HorizontalAlignment="Stretch" PlaceholderText="Select an episode" />
-						</StackPanel>
-						<StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical" Spacing="4" Margin="16">
-							<TextBlock TextAlignment="Center" Classes="h2">Map</TextBlock>
-							<ComboBox HorizontalAlignment="Stretch" PlaceholderText="Select a map" />
-						</StackPanel>
-						<StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" Spacing="4" Margin="16">
-							<TextBlock TextAlignment="Center" Classes="h2">Secrets</TextBlock>
-							<StackPanel Orientation="Horizontal" Spacing="2" HorizontalAlignment="Stretch">
-								<Button>&#x2212;</Button>
-								<Button Classes="h2">Secret Count</Button>
-								<Button>&#x002B;</Button>
-							</StackPanel>
-						</StackPanel>
-					</Grid>
-					<Grid Grid.Row="1" HorizontalAlignment="Center" ColumnDefinitions="Auto, Auto" Margin="4">
-						<StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="4">
-							<Button Classes="destructive">Give Up</Button>
-							<Button>Hint</Button>
-							<Button Classes="primary">Submit</Button>
-						</StackPanel>
-					</Grid>
+			<ScrollViewer PointerEntered="OnPointerEnteredPane" PointerExited="OnPointerExitedPane">
+				<ScrollViewer.Effect>
+					<BlurEffect Radius="0" />
+				</ScrollViewer.Effect>
+				<Grid Grid.Column="0" Margin="0,16,16,16" RowDefinitions="Auto, Auto, Auto, Auto, Auto" ColumnDefinitions="Auto, *, *" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+					<Button Classes="nav" Grid.Column="0" Grid.RowSpan="5" Command="{Binding ToggleGuessingPaneCommand}" Margin="8">
+						<!-- todo: replace this icon -->
+						<PathIcon Data="{DynamicResource Geometry.Upcoming600}" Width="16" Height="16" />
+					</Button>
+					<StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" Spacing="4" Margin="8" IsVisible="{Binding IsGuessingPaneOpen}">
+						<TextBlock TextAlignment="Center" Classes="h3">WAD</TextBlock>
+						<ComboBox HorizontalAlignment="Stretch" PlaceholderText="Select a game" />
+					</StackPanel>
+					<StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical" Spacing="4" Margin="8" IsVisible="{Binding IsGuessingPaneOpen}">
+						<TextBlock TextAlignment="Center" Classes="h3">Episode</TextBlock>
+						<ComboBox HorizontalAlignment="Stretch" PlaceholderText="Select an episode" />
+					</StackPanel>
+					<StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Vertical" Spacing="4" Margin="8" IsVisible="{Binding IsGuessingPaneOpen}">
+						<TextBlock TextAlignment="Center" Classes="h3">Map</TextBlock>
+						<ComboBox HorizontalAlignment="Stretch" PlaceholderText="Select a map" />
+					</StackPanel>
+					<StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Vertical" Spacing="4" Margin="8" HorizontalAlignment="Stretch" IsVisible="{Binding IsGuessingPaneOpen}">
+						<TextBlock TextAlignment="Center" Classes="h3" Text="Secrets" />
+
+						<!--
+						<Slider HorizontalAlignment="Stretch"
+								Minimum="0"
+								Maximum="50"
+								TickFrequency="1"
+								IsSnapToTickEnabled="True"
+								TickPlacement="BottomRight"
+								DoubleTapped="OnSecretSliderDoubleTapped"
+								Value="{Binding UserInput_SecretCount, Mode=TwoWay}"
+								ValueChanged="OnSliderValueChanged">
+						</Slider>
+						-->
+
+						<NumericUpDown Name="secretCounter" Minimum="0" Maximum="1000" Increment="1" FormatString="0" Value="{Binding UserInput_SecretCount, Mode=TwoWay}" />
+					</StackPanel>
+
+					<StackPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" Spacing="4" Margin="8" HorizontalAlignment="Center" IsVisible="{Binding IsGuessingPaneOpen}">
+						<Button Classes="destructive">Give Up</Button>
+						<Button>Hint</Button>
+						<Button Classes="primary">Submit</Button>
+					</StackPanel>
 				</Grid>
 			</ScrollViewer>
 		</SplitView.Pane>

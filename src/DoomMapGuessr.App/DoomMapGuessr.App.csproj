@@ -89,6 +89,9 @@
 			<AutoGen>True</AutoGen>
 			<DependentUpon>Resources.resx</DependentUpon>
 		</Compile>
+		<Compile Update="Views\PrecisionModePage.axaml.cs">
+		  <DependentUpon>PrecisionModePage.axaml</DependentUpon>
+		</Compile>
 
 		<!-- Languages must be dependent on neutral strings -->
 		<EmbeddedResource Update="Strings\Resources.pt-PT.resx">
@@ -140,12 +143,6 @@
 		<ProjectReference Include="..\DoomMapGuessr.Common\DoomMapGuessr.Common.csproj" />
 		<ProjectReference Include="..\DoomMapGuessr.Data\DoomMapGuessr.Data.csproj" />
 		<ProjectReference Include="..\DoomMapGuessr.Services\DoomMapGuessr.Services.csproj" />
-	</ItemGroup>
-
-
-	<!-- Others -->
-	<ItemGroup>
-		<UpToDateCheckInput Remove="Resources\Fonts.axaml" />
 	</ItemGroup>
 
 </Project>

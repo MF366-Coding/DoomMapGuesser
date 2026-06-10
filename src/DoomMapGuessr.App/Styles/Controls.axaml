@@ -293,16 +293,6 @@
 			<Setter Property="TextWrapping" Value="Wrap" />
 		</Style>
 		-->
-		<!-- Icon -->
-		<Style Selector="^.icon">
-			<Setter Property="FontFamily" Value="{StaticResource MaterialSharp}" />
-			<Setter Property="FontWeight" Value="Bold" />
-		</Style>
-	</Style>
-	<!-- Icon (inside Run) -->
-	<Style Selector="TextBlock > Run.icon">
-		<Setter Property="FontFamily" Value="{StaticResource MaterialSharp}" />
-		<Setter Property="FontWeight" Value="Bold" />
 	</Style>
 
 
@@ -367,7 +357,6 @@
 		</Style>
 	</Style>
 
-
 	<!-- ToggleButton -->
 	<Style Selector="ToggleButton">
 		<Setter Property="FontWeight" Value="{DynamicResource Font.IdealWeight}" />
@@ -407,5 +396,10 @@
 			<Setter Property="BorderThickness" Value="1" />
 			<Setter Property="BorderBrush" Value="Transparent" />
 		</Style>
+	</Style>
+
+	<!-- Any -->
+	<Style Selector=":is(TextElement)">
+		<Setter Property="FontSize" Value="14"></Setter>
 	</Style>
 </Styles>

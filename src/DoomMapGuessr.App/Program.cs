@@ -9,7 +9,7 @@
  * Copyright (c) 2024-2026 Matthew
  * MIT License
  *
- * DoomMapGuessr - the GeoGuessr of DOOM
+ * DoomMapGuessr - the geo-guessing game of DOOM
  *
  */
 
@@ -25,6 +25,7 @@ using Avalonia;
 
 using DoomMapGuessr.Data.Connection;
 using DoomMapGuessr.Helpers;
+using DoomMapGuessr.Services;
 using DoomMapGuessr.Services.Cache;
 using DoomMapGuessr.Services.Cache.Abstractions;
 using DoomMapGuessr.Services.Settings;
@@ -85,14 +86,16 @@ namespace DoomMapGuessr
                                             services.AddSingleton<IFullCachingService>(_ => new CachingService(Path.Join(AppDataDirectory, "AppCache")));
 
                                             services.AddSingleton<MainWindowViewModel>();
-                                            services.AddSingleton<MainWindowViewModel>();
                                             services.AddSingleton<HomePageViewModel>();
                                             services.AddSingleton<ClassicModeViewModel>();
-                                            services.AddSingleton<GeoModeViewModel>();
+                                            services.AddSingleton<PrecisionModeViewModel>();
                                             services.AddSingleton<AchievementsUnlockablesViewModel>();
                                             services.AddSingleton<SettingsPageViewModel>();
 
                                             services.AddSingleton<SqLiteConnectionFactory>();
+
+                                            // MainWindowViewModel is both the view model and the navigation service
+                                            services.AddSingleton<INavigationService>(s => s.GetRequiredService<MainWindowViewModel>());
 
                                         }
                      );

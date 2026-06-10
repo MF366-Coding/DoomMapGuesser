@@ -70,7 +70,7 @@ namespace DoomMapGuessr.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The GeoGuessr of Doom..
+        ///   Looks up a localized string similar to The geo-guessing game of DOOM..
         /// </summary>
         public static string App_ShortDescription {
             get {
@@ -241,20 +241,20 @@ namespace DoomMapGuessr.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to GeoGuessr Mode.
-        /// </summary>
-        public static string Menu_GeoGuessrMode {
-            get {
-                return ResourceManager.GetString("Menu.GeoGuessrMode", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string Menu_Home {
             get {
                 return ResourceManager.GetString("Menu.Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Precision Mode.
+        /// </summary>
+        public static string Menu_PrecisionMode {
+            get {
+                return ResourceManager.GetString("Menu.PrecisionMode", resourceCulture);
             }
         }
         

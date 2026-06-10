@@ -5,15 +5,15 @@ namespace DoomMapGuessr.Views
 {
 
     /// <summary>
-    /// Page for playing the DoomMapGuessr - GeoGuessr of DOOM mode.
+    /// Page for playing the precision mode.
     /// </summary>
-    public partial class GeoModePage : UserControl
+    public partial class PrecisionModePage : UserControl
     {
 
         /// <summary>
         /// Initializes the page.
         /// </summary>
-        public GeoModePage() => InitializeComponent();
+        public PrecisionModePage() => InitializeComponent();
 
     }
 

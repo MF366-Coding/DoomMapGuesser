@@ -7,6 +7,7 @@ using Avalonia.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
+using DoomMapGuessr.Enums;
 using DoomMapGuessr.Services.Settings;
 using DoomMapGuessr.Strings;
 
@@ -24,12 +25,9 @@ namespace DoomMapGuessr.ViewModels
         );
 
         [ObservableProperty]
-        public partial int Proportions { get; set; } = Math.Min(
-            Math.Clamp(
-                ApplicationServices.Get<ISettingsService>().GetInt32("Screenshots.Proportions"),
-                0, 3
-            ),
-            0
+        public partial Proportions Screenshots_Proportions { get; set; } = (Proportions)Math.Clamp(
+            ApplicationServices.Get<ISettingsService>().GetInt32("Screenshots.Proportions"),
+            0, 3
         );
 
         [ObservableProperty]
@@ -57,6 +55,9 @@ namespace DoomMapGuessr.ViewModels
 			"Português (Portugal)"                    // Portuguese (Portugal)			// pt // por // PTG // 2070
 
 		];
+
+        [ObservableProperty]
+        public partial int Screenshot_ColorBlindnessSetting { get; set; } = ApplicationServices.Get<ISettingsService>().GetInt32("Screenshots.ColorBlindness");
 
         private void RunLanguageChangeProtocol()
         {

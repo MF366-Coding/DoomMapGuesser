@@ -19,11 +19,6 @@ namespace DoomMapGuessr
     {
 
         /// <summary>
-        /// The navigation service used throughout the app.
-        /// </summary>
-        public static INavigationService NavigationService => Get<MainWindowViewModel>();
-
-        /// <summary>
         /// The Service Provider.
         /// </summary>
         public static IServiceProvider Root { get; internal set; } = null!;

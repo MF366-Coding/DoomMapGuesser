@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:DoomMapGuessr.ViewModels"
+			 xmlns:enums="using:DoomMapGuessr.Enums"
              xmlns:strings="clr-namespace:DoomMapGuessr.Strings"
              mc:Ignorable="d" d:DesignWidth="1030" d:DesignHeight="720"
              x:Class="DoomMapGuessr.Views.SettingsPage"
@@ -58,10 +59,20 @@
 						<TextBlock Classes="h3" Margin="24,8,0,8" Text="{x:Static strings:Resources.Settings_AspectRatio}" />
 						<StackPanel Orientation="Horizontal" Spacing="8">
 							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
-							             Content="{x:Static strings:Resources.Settings_AspectRatio_MaintainProportions}" />
-							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center">16:9</RadioButton>
-							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center">4:3</RadioButton>
-							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center">1:1</RadioButton>
+							             Content="{x:Static strings:Resources.Settings_AspectRatio_MaintainProportions}"
+										 IsChecked="{Binding Screenshots_Proportions, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:Proportions.Maintain}}" />
+							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
+										 IsChecked="{Binding Screenshots_Proportions, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:Proportions.Landscape16_9}}">
+								16:9
+							</RadioButton>
+							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
+										 IsChecked="{Binding Screenshots_Proportions, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:Proportions.Landscape4_3}}">
+								4:3
+							</RadioButton>
+							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
+										 IsChecked="{Binding Screenshots_Proportions, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:Proportions.Square1_1}}">
+								1:1
+							</RadioButton>
 						</StackPanel>
 						<TextBlock Classes="h3" Margin="24,8,0,8" Text="{x:Static strings:Resources.Generics_Color}" />
 						<StackPanel Orientation="Vertical" Spacing="8">

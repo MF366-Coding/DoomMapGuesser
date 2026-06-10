@@ -56,10 +56,10 @@ namespace DoomMapGuessr.ViewModels
 
                     break;
 
-                case "GeoMode":
-                    CurrentPage = new GeoModePage
+                case "PrecisionMode":
+                    CurrentPage = new PrecisionModePage
                     {
-                        DataContext = ApplicationServices.Get<GeoModeViewModel>()
+                        DataContext = ApplicationServices.Get<PrecisionModeViewModel>()
                     };
 
                     break;

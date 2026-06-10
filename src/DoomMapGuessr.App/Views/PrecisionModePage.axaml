@@ -4,10 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:DoomMapGuessr.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="DoomMapGuessr.Views.GeoModePage"
-             x:DataType="vm:GeoModeViewModel">
+             x:Class="DoomMapGuessr.Views.PrecisionModePage"
+             x:DataType="vm:PrecisionModeViewModel">
 	<Design.DataContext>
-		<vm:GeoModeViewModel />
+		<vm:PrecisionModeViewModel />
 	</Design.DataContext>
 	Coming soon (maybe? hopefully!!)
 </UserControl>
