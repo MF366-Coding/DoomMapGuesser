@@ -100,13 +100,8 @@ namespace DoomMapGuessr
                                         }
                      );
 
-        public static void PrepareApplicationSettings(
-                    ISettingsService settings
-                )
+        private static void PrepareApplicationSettingsInternally(ISettingsService settings)
         {
-
-            if (settings is IniSettingsService { IsIniParsed: false } ini)
-                ini.Load().Parse();
 
             #region Language Settings
 
@@ -157,8 +152,8 @@ namespace DoomMapGuessr
 
             int periodicity = settings.GetInt32("Database.CheckPeriodicityMode");
 
-            if (!settings.Contains("Database.CheckPeriodicityMode") || periodicity < 1 || periodicity > 9)
-                settings.Set("Database.CheckPeriodicityMode", 4); // check weekly
+            if (!settings.Contains("Database.CheckPeriodicityMode") || periodicity < 1 || periodicity > 8)
+                settings.Set("Database.CheckPeriodicityMode", 3); // check weekly
 
             if (!settings.Contains("Database.DateOfLastCheck") || settings.GetInt64("Database.DateOfLastCheck") == -1)
                 settings.Set("Database.DateOfLastCheck", new DateTime(0).Ticks.ToString());
@@ -170,10 +165,14 @@ namespace DoomMapGuessr
             if (!settings.Contains("Screenshots.?"))
                 settings.Set<string?>("Screenshots.*", null);
 
-            if (!settings.Contains("Screenshots.AspectRatio"))
+            int aspectRatio = settings.GetInt32("Screenshots.AspectRatio");
+
+            if (!settings.Contains("Screenshots.AspectRatio") || aspectRatio < 0 || aspectRatio > 3)
                 settings.Set("Screenshots.AspectRatio", 0);
 
-            if (!settings.Contains("Screenshots.ColorBlindness"))
+            int colorBlindness = settings.GetInt32("Screenshots.ColorBlindness");
+
+            if (!settings.Contains("Screenshots.ColorBlindness") || colorBlindness < 0 || colorBlindness > 4)
                 settings.Set("Screenshots.ColorBlindness", 0);
 
             #endregion
@@ -189,6 +188,18 @@ namespace DoomMapGuessr
                 settings.Set("Update.Check", 1); // 1 for always check, 0 for never check
 
             #endregion
+
+        }
+
+        public static void PrepareApplicationSettings(
+            ISettingsService settings
+        )
+        {
+
+            if (settings is IniSettingsService { IsIniParsed: false } ini)
+                ini.Load().Parse();
+
+            PrepareApplicationSettingsInternally(settings);
 
             settings.Save();
 
@@ -202,87 +213,7 @@ namespace DoomMapGuessr
             if (settings is IniSettingsService { IsIniParsed: false } ini)
                 ini.Load().Parse();
 
-            #region Language Settings
-
-            if (!settings.Contains("Language.?"))
-                settings.Set<string?>("Language.*", null);
-
-            if (!settings.Contains("Language.Culture") ||
-                !CultureInfo.GetCultures(CultureTypes.AllCultures)
-                    .Any(
-                        c => String.Equals(settings.GetString("Language.Culture"),
-                            c.Name,
-                            StringComparison.OrdinalIgnoreCase)
-                    )
-                )
-            {
-
-                settings.Set(
-                    "Language.Culture", App.AllowedCultures.Contains(App.SystemCulture.Name, StringComparer.OrdinalIgnoreCase)
-                                            ? App.SystemCulture.Name
-                                            : App.AllowedCultures[0]
-                );
-
-            }
-
-            #endregion
-
-            #region GUI Settings
-
-            if (!settings.Contains("GUI.?"))
-                settings.Set<string?>("GUI.*", null);
-
-            string? followSystem = settings.GetString("GUI.FollowSystem");
-
-            if (!settings.Contains("GUI.FollowSystem") || (followSystem != FALSE && followSystem != TRUE))
-                settings.Set("GUI.FollowSystem", 1);
-
-            string? darkTheme = settings.GetString("GUI.DarkTheme");
-
-            if (!settings.Contains("GUI.DarkTheme") || (darkTheme != FALSE && darkTheme != TRUE))
-                settings.Set("GUI.DarkTheme", 1);
-
-            #endregion
-
-            #region Database Settings
-
-            if (!settings.Contains("Database.?"))
-                settings.Set<string?>("Database.*", null);
-
-            int periodicity = settings.GetInt32("Database.CheckPeriodicityMode");
-
-            if (!settings.Contains("Database.CheckPeriodicityMode") || periodicity < 1 || periodicity > 9)
-                settings.Set("Database.CheckPeriodicityMode", 4); // check weekly
-
-            if (!settings.Contains("Database.DateOfLastCheck") || settings.GetInt64("Database.DateOfLastCheck") == -1)
-                settings.Set("Database.DateOfLastCheck", new DateTime(0).Ticks.ToString());
-
-            #endregion
-
-            #region Screenshot Settings
-
-            if (!settings.Contains("Screenshots.?"))
-                settings.Set<string?>("Screenshots.*", null);
-
-            if (!settings.Contains("Screenshots.AspectRatio"))
-                settings.Set("Screenshots.AspectRatio", 0);
-
-            if (!settings.Contains("Screenshots.ColorBlindness"))
-                settings.Set("Screenshots.ColorBlindness", 0);
-
-            #endregion
-
-            #region Update Settings
-
-            if (!settings.Contains("Update.?"))
-                settings.Set<string?>("Update.*", null);
-
-            string? checkUpd = settings.GetString("Update.Check");
-
-            if (!settings.Contains("Update.Check") || (checkUpd != TRUE && checkUpd != FALSE))
-                settings.Set("Update.Check", 1); // 1 for always check, 0 for never check
-
-            #endregion
+            PrepareApplicationSettingsInternally(settings);
 
             await settings.SaveAsync();
 
@@ -307,18 +238,24 @@ namespace DoomMapGuessr
                 string dbSource = dbSourceOverride ?? DB_URL;
                 byte[] databaseBytes = await DatabaseFetcher.FetchBytesAsync(dbSource, default);
                 await cache.SetAsync(CACHED_DB_ENTRYNAME, databaseBytes, CacheTarget.Persistent);
-                settings.Set("Database.DateOfLastCheck", DateTime.Now.Ticks);
+				settings.Set("Database.DateOfLastCheck", DateTime.Now.Ticks);
 
-            }
+                await settings.SaveAsync();
+
+			}
             catch (Exception ex) when (ex is HttpRequestException or OverflowException or FormatException or DummyException)
             {
 
-                if (await cache.GetBytesAsync(CACHED_DB_ENTRYNAME) is null)
+				settings.Set("Database.DateOfLastCheck", DateTime.Now.Ticks);
+
+                await settings.SaveAsync();
+
+				if (await cache.GetBytesAsync(CACHED_DB_ENTRYNAME) is null)
                     return DatabaseFetchResult.CheckErrorNoCache; // critical error
 
             }
-
-            return DatabaseFetchResult.CheckAndCache;
+			
+			return DatabaseFetchResult.CheckAndCache;
 
         }
 

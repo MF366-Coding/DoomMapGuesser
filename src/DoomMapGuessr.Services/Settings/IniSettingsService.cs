@@ -264,7 +264,7 @@ namespace DoomMapGuessr.Services.Settings
                 actualIni.Sections.AddSection(split[0]); // value is ignored
 
             else
-                actualIni[split[0]][split[1]] = value?.ToString() ?? "null";
+                actualIni[split[0]][split[1]] = value is null ? "null" : value.ToString();
 
         }
 

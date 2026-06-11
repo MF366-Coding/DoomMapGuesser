@@ -18,122 +18,122 @@
 			<TextBlock Classes="h1" Text="{x:Static strings:Resources.Menu_Settings}" />
 		</StackPanel>
 		<ScrollViewer Grid.Row="1">
-			<Grid RowDefinitions="Auto, Auto, Auto, *">
-				<Border Grid.Row="0" Classes="card" Padding="16">
-					<StackPanel Orientation="Vertical" Spacing="2">
-						<StackPanel Orientation="Horizontal" Spacing="8">
-							<PathIcon Data="{DynamicResource Geometry.Globe400}" Width="24" Height="24" />
-							<TextBlock Classes="h2" Text="{x:Static strings:Resources.Generics_Language}" />
+			<Grid ColumnDefinitions="*, *">
+				<Grid Grid.Column="0" RowDefinitions="Auto, Auto, Auto, *">
+					<Border Grid.Row="0" Classes="card" Padding="8">
+						<StackPanel Orientation="Vertical" Spacing="2">
+							<StackPanel Orientation="Horizontal" Spacing="8">
+								<PathIcon Data="{DynamicResource Geometry.Globe400}" Width="24" Height="24" />
+								<TextBlock Classes="h2" Text="{x:Static strings:Resources.Generics_Language}" />
+							</StackPanel>
+							<ComboBox Margin="24,8,0,0" SelectedIndex="{Binding Language_CurrentIndex}" ItemsSource="{Binding Language_ComboBoxItems}" />
 						</StackPanel>
-						<StackPanel Orientation="Horizontal" Spacing="8">
-							<TextBlock Margin="24,8,0,0" VerticalAlignment="Center" TextAlignment="Right"
-									   Text="{x:Static strings:Resources.Settings_Language_InputFieldPrompt}" />
-							<ComboBox Margin="0,8,0,0" SelectedIndex="{Binding Language_CurrentIndex}" ItemsSource="{Binding Language_ComboBoxItems}" />
+					</Border>
+					<Border Grid.Row="1" Classes="card" Padding="8">
+						<StackPanel Orientation="Vertical" Spacing="2">
+							<StackPanel Orientation="Horizontal" Spacing="8">
+								<PathIcon Data="{DynamicResource Geometry.Brush400}" Width="24" Height="24" />
+								<TextBlock Classes="h2" Text="{x:Static strings:Resources.Settings_UI}" />
+							</StackPanel>
+							<StackPanel Orientation="Vertical" Spacing="2">
+								<ToggleSwitch Margin="24,8,0,0" OnContent="{x:Static strings:Resources.Settings_UI_UseCustomTheme}"
+											  OffContent="{x:Static strings:Resources.Settings_UI_UseCustomTheme}"
+											  IsChecked="{Binding GUI_CustomTheme}" />
+								<ToggleSwitch Name="DarkThemeToggleSwitch" Margin="48,0,0,0"
+											  OnContent="{x:Static strings:Resources.Settings_UI_DarkTheme}"
+											  OffContent="{x:Static strings:Resources.Settings_UI_DarkTheme}"
+											  IsChecked="{Binding GUI_DarkTheme}"
+											  IsEnabled="{Binding GUI_CustomTheme}" />
+							</StackPanel>
 						</StackPanel>
-					</StackPanel>
-				</Border>
-				<Border Grid.Row="1" Classes="card" Padding="16">
-					<StackPanel Orientation="Vertical" Spacing="2">
-						<StackPanel Orientation="Horizontal" Spacing="8">
-							<PathIcon Data="{DynamicResource Geometry.Brush400}" Width="24" Height="24" />
-							<TextBlock Classes="h2" Text="{x:Static strings:Resources.Settings_UI}" />
+					</Border>
+				</Grid>
+				<Grid Grid.Column="1" RowDefinitions="Auto, Auto, Auto, *">
+					<Border Grid.Row="0" Classes="card" Padding="8">
+						<StackPanel Orientation="Vertical" Spacing="2">
+							<StackPanel Orientation="Horizontal" Spacing="8">
+								<PathIcon Data="{DynamicResource Geometry.Image400}" Width="24" Height="24" />
+								<TextBlock Classes="h2" Text="{x:Static strings:Resources.Settings_DoomScreenshots}" />
+							</StackPanel>
+							<TextBlock Classes="h3" Margin="24,8,0,8" Text="{x:Static strings:Resources.Settings_AspectRatio}" />
+							<StackPanel Orientation="Vertical" Spacing="2">
+								<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
+											 Content="{x:Static strings:Resources.Settings_AspectRatio_MaintainProportions}"
+											 IsChecked="{Binding Screenshots_AspectRatio, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:AspectRatio.Maintain}}" />
+								<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
+											 IsChecked="{Binding Screenshots_AspectRatio, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:AspectRatio.Landscape16_9}}">
+									16:9
+								</RadioButton>
+								<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
+											 IsChecked="{Binding Screenshots_AspectRatio, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:AspectRatio.Landscape4_3}}">
+									4:3
+								</RadioButton>
+								<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
+											 IsChecked="{Binding Screenshots_AspectRatio, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:AspectRatio.Square1_1}}">
+									1:1
+								</RadioButton>
+							</StackPanel>
+							<TextBlock Classes="h3" Margin="24,8,0,8" Text="{x:Static strings:Resources.Generics_Color}" />
+							<StackPanel Orientation="Vertical" Spacing="2">
+								<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
+											 Content="{x:Static strings:Resources.Settings_Color_MaintainColor}"
+											 IsChecked="{Binding Screenshots_ColorBlindness, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ColorBlindness.MaintainColor}}" />
+								<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
+											 Content="{x:Static strings:Resources.Settings_Color_Protanopia}"
+											 IsChecked="{Binding Screenshots_ColorBlindness, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ColorBlindness.Protanopia}}" />
+								<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
+											 Content="{x:Static strings:Resources.Settings_Color_Deuteranopia}"
+											 IsChecked="{Binding Screenshots_ColorBlindness, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ColorBlindness.Deuteranopia}}" />
+								<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
+											 Content="{x:Static strings:Resources.Settings_Color_Tritanopia}"
+											 IsChecked="{Binding Screenshots_ColorBlindness, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ColorBlindness.Tritanopia}}" />
+								<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
+											 Content="{x:Static strings:Resources.Settings_Color_Monochromacy}"
+											 IsChecked="{Binding Screenshots_ColorBlindness, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ColorBlindness.Monochromacy}}" />
+							</StackPanel>
+							<TextBlock Classes="h3" Margin="24,8,0,8"
+									   Text="{x:Static strings:Resources.Settings_DoomScreenshots_SourceBlacklist}" />
+							<StackPanel Orientation="Vertical" Spacing="8" Margin="48,0,0,0">
+								<ListBox MinWidth="50" CornerRadius="10">
+									<ListBoxItem>example.com</ListBoxItem>
+									<ListBoxItem>some-random-unsafe-site.nope</ListBoxItem>
+								</ListBox>
+								<Grid ColumnDefinitions="Auto, Auto, *, Auto, Auto">
+									<Button Grid.Column="0" Margin="4">
+										<StackPanel Spacing="8">
+											<PathIcon Data="{DynamicResource Geometry.Add2400}" Width="16" Height="16" />
+											<TextBlock Text="{x:Static strings:Resources.Generics_Add}" />
+										</StackPanel>
+									</Button>
+									<Button Grid.Column="1" Margin="4">
+										<StackPanel Spacing="8">
+											<PathIcon Data="{DynamicResource Geometry.Edit400}" Width="16" Height="16" />
+											<TextBlock Text="{x:Static strings:Resources.Generics_Edit}" />
+										</StackPanel>
+									</Button>
+									<Button Grid.Column="3" Margin="4">
+										<StackPanel Spacing="8">
+											<PathIcon Data="{DynamicResource Geometry.Delete400}" Width="16" Height="16" />
+											<TextBlock Text="{x:Static strings:Resources.Generics_Remove}" />
+										</StackPanel>
+									</Button>
+									<Button Grid.Column="4" Classes="destructive" Margin="4">
+										<StackPanel Spacing="8">
+											<PathIcon Data="{DynamicResource Geometry.DeleteSweep400}" Width="16" Height="16" />
+											<TextBlock Text="{x:Static strings:Resources.Generics_RemoveAll}" />
+										</StackPanel>
+									</Button>
+								</Grid>
+							</StackPanel>
 						</StackPanel>
-						<StackPanel Orientation="Vertical" Spacing="8">
-							<ToggleSwitch Margin="24,8,0,0" OnContent="{x:Static strings:Resources.Settings_UI_UseCustomTheme}"
-										  OffContent="{x:Static strings:Resources.Settings_UI_UseCustomTheme}"
-										  IsChecked="{Binding GUI_CustomTheme}" />
-							<ToggleSwitch Name="DarkThemeToggleSwitch" Margin="48,0,0,0"
-										  OnContent="{x:Static strings:Resources.Settings_UI_DarkTheme}"
-										  OffContent="{x:Static strings:Resources.Settings_UI_DarkTheme}"
-										  IsChecked="{Binding GUI_DarkTheme}"
-										  IsEnabled="{Binding GUI_CustomTheme}" />
-						</StackPanel>
-					</StackPanel>
-				</Border>
-				<Border Grid.Row="2" Classes="card" Padding="16">
-					<StackPanel Orientation="Vertical" Spacing="2">
-						<StackPanel Orientation="Horizontal" Spacing="8">
-							<PathIcon Data="{DynamicResource Geometry.Image400}" Width="24" Height="24" />
-							<TextBlock Classes="h2" Text="{x:Static strings:Resources.Settings_DoomScreenshots}" />
-						</StackPanel>
-						<TextBlock Classes="h3" Margin="24,8,0,8" Text="{x:Static strings:Resources.Settings_AspectRatio}" />
-						<StackPanel Orientation="Horizontal" Spacing="8">
-							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
-										 Content="{x:Static strings:Resources.Settings_AspectRatio_MaintainProportions}"
-										 IsChecked="{Binding Screenshots_AspectRatio, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:AspectRatio.Maintain}}" />
-							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
-										 IsChecked="{Binding Screenshots_AspectRatio, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:AspectRatio.Landscape16_9}}">
-								16:9
-							</RadioButton>
-							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
-										 IsChecked="{Binding Screenshots_AspectRatio, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:AspectRatio.Landscape4_3}}">
-								4:3
-							</RadioButton>
-							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
-										 IsChecked="{Binding Screenshots_AspectRatio, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:AspectRatio.Square1_1}}">
-								1:1
-							</RadioButton>
-						</StackPanel>
-						<TextBlock Classes="h3" Margin="24,8,0,8" Text="{x:Static strings:Resources.Generics_Color}" />
-						<StackPanel Orientation="Vertical" Spacing="8">
-							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
-										 Content="{x:Static strings:Resources.Settings_Color_MaintainColor}"
-										 IsChecked="{Binding Screenshots_ColorBlindness, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ColorBlindness.MaintainColor}}" />
-							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
-										 Content="{x:Static strings:Resources.Settings_Color_Protanopia}"
-										 IsChecked="{Binding Screenshots_ColorBlindness, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ColorBlindness.Protanopia}}" />
-							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
-										 Content="{x:Static strings:Resources.Settings_Color_Deuteranopia}"
-										 IsChecked="{Binding Screenshots_ColorBlindness, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ColorBlindness.Deuteranopia}}" />
-							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
-										 Content="{x:Static strings:Resources.Settings_Color_Tritanopia}"
-										 IsChecked="{Binding Screenshots_ColorBlindness, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ColorBlindness.Tritanopia}}" />
-							<RadioButton Margin="48,0,0,0" VerticalAlignment="Center"
-										 Content="{x:Static strings:Resources.Settings_Color_Monochromacy}"
-										 IsChecked="{Binding Screenshots_ColorBlindness, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ColorBlindness.Monochromacy}}" />
-						</StackPanel>
-						<TextBlock Classes="h3" Margin="24,8,0,8"
-								   Text="{x:Static strings:Resources.Settings_DoomScreenshots_SourceBlacklist}" />
-						<StackPanel Orientation="Vertical" Spacing="8" Margin="48,0,0,0">
-							<ListBox MinWidth="50" CornerRadius="10">
-								<ListBoxItem>example.com</ListBoxItem>
-								<ListBoxItem>some-random-unsafe-site.nope</ListBoxItem>
-							</ListBox>
-							<Grid ColumnDefinitions="Auto, Auto, *, Auto, Auto">
-								<Button Grid.Column="0" Margin="4">
-									<StackPanel Spacing="8">
-										<PathIcon Data="{DynamicResource Geometry.Add2400}" Width="16" Height="16" />
-										<TextBlock Text="{x:Static strings:Resources.Generics_Add}" />
-									</StackPanel>
-								</Button>
-								<Button Grid.Column="1" Margin="4">
-									<StackPanel Spacing="8">
-										<PathIcon Data="{DynamicResource Geometry.Edit400}" Width="16" Height="16" />
-										<TextBlock Text="{x:Static strings:Resources.Generics_Edit}" />
-									</StackPanel>
-								</Button>
-								<Button Grid.Column="3" Margin="4">
-									<StackPanel Spacing="8">
-										<PathIcon Data="{DynamicResource Geometry.Delete400}" Width="16" Height="16" />
-										<TextBlock Text="{x:Static strings:Resources.Generics_Remove}" />
-									</StackPanel>
-								</Button>
-								<Button Grid.Column="4" Classes="destructive" Margin="4">
-									<StackPanel Spacing="8">
-										<PathIcon Data="{DynamicResource Geometry.DeleteSweep400}" Width="16" Height="16" />
-										<TextBlock Text="{x:Static strings:Resources.Generics_RemoveAll}" />
-									</StackPanel>
-								</Button>
-							</Grid>
-						</StackPanel>
-					</StackPanel>
-				</Border>
+					</Border>
+				</Grid>
 			</Grid>
 		</ScrollViewer>
 		<Button Grid.Row="2" Classes="primary" Margin="0,12,0,12" HorizontalAlignment="Right" Command="{Binding SaveSettingsCommand}">
-			<StackPanel Spacing="8">
+			<StackPanel Spacing="8" Orientation="Horizontal">
 				<PathIcon Data="{DynamicResource Geometry.Save400}" Width="16" Height="16" />
-				<TextBlock Text="{x:Static strings:Resources.Generics_Save}" />
+				<TextBlock VerticalAlignment="Bottom" Text="{x:Static strings:Resources.Generics_Save}" />
 			</StackPanel>
 		</Button>
 	</Grid>

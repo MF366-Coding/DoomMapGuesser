@@ -21,7 +21,7 @@
 	<SplitView
 		IsPaneOpen="{Binding IsSidebarOpen}"
 		OpenPaneLength="250"
-		CompactPaneLength="46.5"
+		CompactPaneLength="52"
 		DisplayMode="CompactInline">
 
 		<SplitView.Pane>
@@ -33,28 +33,28 @@
 				</Button>
 
 				<Button Grid.Row="1" Classes="nav" Command="{Binding NavigateTo}" CommandParameter="Home">
-					<StackPanel>
+					<StackPanel Spacing="12" HorizontalAlignment="Left">
 						<PathIcon Data="{DynamicResource Geometry.Home600}" Width="16" Height="16" />
 						<TextBlock Text="{x:Static strings:Resources.Menu_Home}" />
 					</StackPanel>
 				</Button>
 
 				<Button Grid.Row="2" Classes="nav" Command="{Binding NavigateTo}" CommandParameter="ClassicMode">
-					<StackPanel>
+					<StackPanel Spacing="12" HorizontalAlignment="Left">
 						<PathIcon Data="{DynamicResource Geometry.Image600}" Width="16" Height="16" />
 						<TextBlock Text="{x:Static strings:Resources.Menu_ClassicMode}" />
 					</StackPanel>
 				</Button>
 
 				<Button Grid.Row="3" Classes="nav" Command="{Binding NavigateTo}" CommandParameter="PrecisionMode">
-					<StackPanel>
+					<StackPanel Spacing="12" HorizontalAlignment="Left">
 						<PathIcon Data="{DynamicResource Geometry.LocationOn600}" Width="16" Height="16" />
 						<TextBlock Text="{x:Static strings:Resources.Menu_PrecisionMode}" />
 					</StackPanel>
 				</Button>
 
 				<Button Grid.Row="4" Classes="nav" Command="{Binding NavigateTo}" CommandParameter="AchievementsUnlockables">
-					<StackPanel>
+					<StackPanel Spacing="12" HorizontalAlignment="Left">
 						<PathIcon Data="{DynamicResource Geometry.Trophy600}" Width="16" Height="16" />
 						<TextBlock Text="{x:Static strings:Resources.Menu_Achievements}" />
 					</StackPanel>
@@ -62,7 +62,7 @@
 
 				<Button Grid.Row="5" Classes="nav" VerticalAlignment="Bottom" Command="{Binding NavigateTo}"
 				        CommandParameter="Settings">
-					<StackPanel>
+					<StackPanel Spacing="12" HorizontalAlignment="Left">
 						<PathIcon Data="{DynamicResource Geometry.Settings600}" Width="16" Height="16" />
 						<TextBlock Text="{x:Static strings:Resources.Menu_Settings}" />
 					</StackPanel>
