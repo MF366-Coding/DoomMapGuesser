@@ -10,6 +10,7 @@
 		<File Path=".github/workflows/release.yml" />
 		<File Path=".gitignore" />
 		<File Path="data/MAPDAT4.db" />
+		<File Path="data/MAPDAT4.dolu" />
 		<File Path="LICENSE.txt" />
 		<File Path="README.md" />
 	</Folder>

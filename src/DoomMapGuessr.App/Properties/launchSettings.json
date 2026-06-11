@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DoomMapGuessr.App": {
+      "commandName": "Project",
+      "commandLineArgs": "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuessr/refs/heads/v3.0.0-dev/data/MAPDAT4.db\r\nhttps://raw.githubusercontent.com/MF366-Coding/DoomMapGuessr/refs/heads/v3.0.0-dev/data/MAPDAT4.dolu"
+    }
+  }
+}

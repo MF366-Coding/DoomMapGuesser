@@ -45,7 +45,7 @@ namespace DoomMapGuessr
         private const string FALSE = "0";
 
         private const string DB_URL = "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuessr/refs/heads/main/data/MAPDAT4.db";
-        private const string DB_DOLU_URL = "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuessr/refs/heads/main/data/dolu.dt";
+        private const string DB_DOLU_URL = "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuessr/refs/heads/main/data/MAPDAT4.dolu";
         private const string CACHED_DB_ENTRYNAME = "B59A426";
 
         // DAY_TICKS constant was obtained using C# interactive mode and DateTime
@@ -288,7 +288,7 @@ namespace DoomMapGuessr
 
         }
 
-        private static async Task<DatabaseFetchResult> DownloadSqliteDatabase_CheckPeriodicallyAsync(bool cacheExists, long dateOfLastCheck, long tickDifference)
+        private static async Task<DatabaseFetchResult> DownloadSqliteDatabase_CheckPeriodicallyAsync(string? dbSourceOverride, string? doluSourceOverride, bool cacheExists, long dateOfLastCheck, long tickDifference)
         {
 
             var settings = ApplicationServices.Get<ISettingsService>();
@@ -297,13 +297,15 @@ namespace DoomMapGuessr
             try
             {
 
-                string doluString = (await DatabaseFetcher.FetchStringAsync(DB_DOLU_URL, default)).Trim();
+                string doluSource = doluSourceOverride ?? DB_DOLU_URL;
+                string doluString = (await DatabaseFetcher.FetchStringAsync(doluSource, default)).Trim();
                 long dateOfLastDatabaseUpdate = Int64.Parse(doluString);
 
                 if ((dateOfLastDatabaseUpdate - dateOfLastCheck) < tickDifference && cacheExists)
                     throw new DummyException("Use cached database instead");
 
-                byte[] databaseBytes = await DatabaseFetcher.FetchBytesAsync(DB_URL, default);
+                string dbSource = dbSourceOverride ?? DB_URL;
+                byte[] databaseBytes = await DatabaseFetcher.FetchBytesAsync(dbSource, default);
                 await cache.SetAsync(CACHED_DB_ENTRYNAME, databaseBytes, CacheTarget.Persistent);
                 settings.Set("Database.DateOfLastCheck", DateTime.Now.Ticks);
 
@@ -321,7 +323,7 @@ namespace DoomMapGuessr
         }
 
 
-        public static async Task<DatabaseFetchResult> DownloadSqliteDatabaseAsync()
+        public static async Task<DatabaseFetchResult> DownloadSqliteDatabaseAsync(string? dbSourceOverride = null, string? doluSourceOverride = null)
         {
 
             var settings = ApplicationServices.Get<ISettingsService>();
@@ -337,24 +339,24 @@ namespace DoomMapGuessr
                 // ticks = 0 is not guaranteed to mean that it's the first time playing
                 // but it's a good aproximation
                 // also who the fuck playing DoomMapGuessr in the big 0001 :sob:
-                return await DownloadSqliteDatabase_CheckPeriodicallyAsync(databaseCacheExists, dateOfLastCheck, 1);
+                return await DownloadSqliteDatabase_CheckPeriodicallyAsync(dbSourceOverride, doluSourceOverride, databaseCacheExists, dateOfLastCheck, 1);
 
             }
 
             return ApplicationServices.Get<ISettingsService>().GetInt32("Database.CheckPeriodicityMode") switch
             {
 
-                2 => await DownloadSqliteDatabase_CheckPeriodicallyAsync(databaseCacheExists, dateOfLastCheck, DAY_TICKS),
-                3 => await DownloadSqliteDatabase_CheckPeriodicallyAsync(databaseCacheExists, dateOfLastCheck, WEEK_TICKS),
-                4 => await DownloadSqliteDatabase_CheckPeriodicallyAsync(databaseCacheExists, dateOfLastCheck, MONTH_TICKS),
-                5 => await DownloadSqliteDatabase_CheckPeriodicallyAsync(databaseCacheExists, dateOfLastCheck, TRIMESTER_TICKS),
-                6 => await DownloadSqliteDatabase_CheckPeriodicallyAsync(databaseCacheExists, dateOfLastCheck, SEMESTER_TICKS),
-                7 => await DownloadSqliteDatabase_CheckPeriodicallyAsync(databaseCacheExists, dateOfLastCheck, YEAR_TICKS),
+                2 => await DownloadSqliteDatabase_CheckPeriodicallyAsync(dbSourceOverride, doluSourceOverride, databaseCacheExists, dateOfLastCheck, DAY_TICKS),
+                3 => await DownloadSqliteDatabase_CheckPeriodicallyAsync(dbSourceOverride, doluSourceOverride, databaseCacheExists, dateOfLastCheck, WEEK_TICKS),
+                4 => await DownloadSqliteDatabase_CheckPeriodicallyAsync(dbSourceOverride, doluSourceOverride, databaseCacheExists, dateOfLastCheck, MONTH_TICKS),
+                5 => await DownloadSqliteDatabase_CheckPeriodicallyAsync(dbSourceOverride, doluSourceOverride, databaseCacheExists, dateOfLastCheck, TRIMESTER_TICKS),
+                6 => await DownloadSqliteDatabase_CheckPeriodicallyAsync(dbSourceOverride, doluSourceOverride, databaseCacheExists, dateOfLastCheck, SEMESTER_TICKS),
+                7 => await DownloadSqliteDatabase_CheckPeriodicallyAsync(dbSourceOverride, doluSourceOverride, databaseCacheExists, dateOfLastCheck, YEAR_TICKS),
 
                 8 when databaseCacheExists is false => DatabaseFetchResult.CheckErrorNoCache, // in this case, not an error, but still falls into the same category 
 
                 // this is case 1 (previously case 2) which is the default
-                _ => await DownloadSqliteDatabase_CheckPeriodicallyAsync(databaseCacheExists, dateOfLastCheck, 1) // at least 1 tick of difference
+                _ => await DownloadSqliteDatabase_CheckPeriodicallyAsync(dbSourceOverride, doluSourceOverride, databaseCacheExists, dateOfLastCheck, 1) // at least 1 tick of difference
 
             };
 
@@ -375,6 +377,7 @@ namespace DoomMapGuessr
         )
         {
 
+            // DoomMapGuessr [DbZeroSource] [DoluZeroSource]
             await PrepareRequirementsAsync(args);
 
             BuildAvaloniaApp()
@@ -440,7 +443,12 @@ namespace DoomMapGuessr
             if (ApplicationServices.Get<ISettingsService>().GetBoolean("Update.Check"))
                 ApplicationServices.SavedRelease = await ReleaseFetcher.FetchLatestAsync("mf366-dev", "DoomMapGuessr");
 
+#if DEBUG
+            bool argsExist = args.Length >= 2;
+            await DownloadSqliteDatabaseAsync(argsExist ? args[0] : DB_URL, args.Length != 0 ? args[1] : DB_DOLU_URL);
+#else
             await DownloadSqliteDatabaseAsync();
+#endif
 
         }
 
