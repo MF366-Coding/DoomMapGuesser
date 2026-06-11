@@ -46,7 +46,7 @@ namespace DoomMapGuessr
 
         private const string DB_URL = "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuessr/refs/heads/main/data/MAPDAT4.db";
         private const string DB_DOLU_URL = "https://raw.githubusercontent.com/MF366-Coding/DoomMapGuessr/refs/heads/main/data/MAPDAT4.dolu";
-        private const string CACHED_DB_ENTRYNAME = "B59A426";
+        private const string CACHED_DB_ENTRYNAME = "__0";
 
         // DAY_TICKS constant was obtained using C# interactive mode and DateTime
         private const long DAY_TICKS = 864000000000;

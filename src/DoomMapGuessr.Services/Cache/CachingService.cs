@@ -47,7 +47,7 @@ namespace DoomMapGuessr.Services.Cache
         /// <summary>
         /// The directory used for persistent cache.
         /// </summary>
-        public DirectoryInfo PersistentCacheDirectory { get; } = Directory.CreateDirectory(Path.Join(cacheDirectory, "_Persistent"));
+        public DirectoryInfo PersistentCacheDirectory { get; } = Directory.CreateDirectory(Path.Join(cacheDirectory, "Persistent"));
 
         /// <inheritdoc />
         public void Clear(
