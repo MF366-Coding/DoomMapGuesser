@@ -93,31 +93,32 @@
 							</StackPanel>
 							<TextBlock Classes="h3" Margin="24,8,0,8"
 									   Text="{x:Static strings:Resources.Settings_DoomScreenshots_SourceBlacklist}" />
-							<StackPanel Orientation="Vertical" Spacing="8" Margin="48,0,0,0">
+							<StackPanel Orientation="Vertical" Spacing="2" Margin="48,0,0,0">
+								<ToggleSwitch OnContent="Treat blacklist as whitelist" OffContent="Treat blacklist as whitelist" IsChecked="{Binding Screenshots_BlacklistIsWhitelist}" />
 								<ListBox MinWidth="50" CornerRadius="10">
 									<ListBoxItem>example.com</ListBoxItem>
 									<ListBoxItem>some-random-unsafe-site.nope</ListBoxItem>
 								</ListBox>
-								<Grid ColumnDefinitions="Auto, Auto, *, Auto, Auto">
-									<Button Grid.Column="0" Margin="4">
+								<Grid ColumnDefinitions="Auto, Auto, Auto, Auto">
+									<Button Grid.Column="0" Margin="2">
 										<StackPanel Spacing="8">
 											<PathIcon Data="{DynamicResource Geometry.Add2400}" Width="16" Height="16" />
 											<TextBlock Text="{x:Static strings:Resources.Generics_Add}" />
 										</StackPanel>
 									</Button>
-									<Button Grid.Column="1" Margin="4">
+									<Button Grid.Column="1" Margin="2">
 										<StackPanel Spacing="8">
 											<PathIcon Data="{DynamicResource Geometry.Edit400}" Width="16" Height="16" />
 											<TextBlock Text="{x:Static strings:Resources.Generics_Edit}" />
 										</StackPanel>
 									</Button>
-									<Button Grid.Column="3" Margin="4">
+									<Button Grid.Column="2" Margin="2">
 										<StackPanel Spacing="8">
 											<PathIcon Data="{DynamicResource Geometry.Delete400}" Width="16" Height="16" />
 											<TextBlock Text="{x:Static strings:Resources.Generics_Remove}" />
 										</StackPanel>
 									</Button>
-									<Button Grid.Column="4" Classes="destructive" Margin="4">
+									<Button Grid.Column="3" Classes="destructive" Margin="2">
 										<StackPanel Spacing="8">
 											<PathIcon Data="{DynamicResource Geometry.DeleteSweep400}" Width="16" Height="16" />
 											<TextBlock Text="{x:Static strings:Resources.Generics_RemoveAll}" />

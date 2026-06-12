@@ -175,11 +175,16 @@ namespace DoomMapGuessr
             if (!settings.Contains("Screenshots.ColorBlindness") || colorBlindness < 0 || colorBlindness > 4)
                 settings.Set("Screenshots.ColorBlindness", 0);
 
-            #endregion
+			string? blistIsWlist = settings.GetString("Screenshots.BlacklistIsWhitelist");
 
-            #region Update Settings
+			if (!settings.Contains("Screenshots.BlacklistIsWhitelist") || (blistIsWlist != TRUE && blistIsWlist != FALSE))
+				settings.Set("Screenshots.BlacklistIsWhitelist", false); // 1 for always check, 0 for never check
 
-            if (!settings.Contains("Update.?"))
+			#endregion
+
+			#region Update Settings
+
+			if (!settings.Contains("Update.?"))
                 settings.Set<string?>("Update.*", null);
 
             string? checkUpd = settings.GetString("Update.Check");

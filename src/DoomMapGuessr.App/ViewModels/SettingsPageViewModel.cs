@@ -62,7 +62,11 @@ namespace DoomMapGuessr.ViewModels
             0, 4
         );
 
-        private void RunLanguageChangeProtocol(ISettingsService settings)
+        [ObservableProperty]
+        public partial bool Screenshots_BlacklistIsWhitelist { get; set; } = ApplicationServices.Get<ISettingsService>().GetBoolean("Screenshots.BlacklistIsWhitelist");
+
+
+		private void RunLanguageChangeProtocol(ISettingsService settings)
         {
 
             string culture = Language_CurrentIndex == 0 // same as system
@@ -105,7 +109,9 @@ namespace DoomMapGuessr.ViewModels
 
             settings.Set("Screenshots.AspectRatio", (int)Screenshots_AspectRatio);
             settings.Set("Screenshots.ColorBlindness", (int)Screenshots_ColorBlindness);
-            settings.Save();
+			settings.Set("Screenshots.BlacklistIsWhitelist", Screenshots_BlacklistIsWhitelist ? "1" : "0");
+
+			settings.Save();
 
         }
 

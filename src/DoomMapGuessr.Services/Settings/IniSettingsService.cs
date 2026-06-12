@@ -174,7 +174,7 @@ namespace DoomMapGuessr.Services.Settings
             if (Boolean.TryParse(str, out bool b))
                 return b;
 
-            if (Double.TryParse(str, out double d) && Math.Abs(Math.Abs(d) - 1.0) < 0.01)
+            if (Double.TryParse(str, out double d) && Math.Abs(Math.Abs(d) - 1.0) < Double.Epsilon)
                 return true;
 
             return Int32.TryParse(str, out int i) && Math.Abs(i) != 0;
