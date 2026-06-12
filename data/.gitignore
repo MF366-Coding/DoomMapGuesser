@@ -1,4 +1,7 @@
 [Dd][Bb]-convert.py
 
-# DB Browser for SQLite Project Files
+# SQLite Project Files
 *.sqbpro
+
+# SQLite Temporary and Backup Files
+*.db-journal
