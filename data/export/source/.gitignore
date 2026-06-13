@@ -1,0 +1,5 @@
+# Ignore export data sources
+*.csv
+*.json
+*.db
+*.xls

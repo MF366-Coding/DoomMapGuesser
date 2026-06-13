@@ -1,0 +1,5 @@
+# This directory is supposed to contain stats and all.
+# Not supposed to contain actual Excel exports.
+*.xls
+*.xlsx
+*.xlsm
