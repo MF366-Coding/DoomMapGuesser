@@ -38,7 +38,11 @@ namespace DoomMapGuessr.ViewModels
         public partial bool GUI_DarkTheme { get; set; } = ApplicationServices.Get<ISettingsService>()
                                                                          .GetBoolean("GUI.DarkTheme");
 
-        [ObservableProperty]
+		[ObservableProperty]
+		public partial bool GUI_BlurEffects { get; set; } = ApplicationServices.Get<ISettingsService>()
+																		 .GetBoolean("GUI.BlurEffects");
+
+		[ObservableProperty]
         public partial string[] Language_ComboBoxItems { get; set; } =
         [
 
@@ -106,6 +110,8 @@ namespace DoomMapGuessr.ViewModels
 
             RunLanguageChangeProtocol(settings);
             RunThemeChangeProtocol(settings);
+
+			settings.Set("GUI.BlurEffects", GUI_BlurEffects ? "1" : "0");
 
             settings.Set("Screenshots.AspectRatio", (int)Screenshots_AspectRatio);
             settings.Set("Screenshots.ColorBlindness", (int)Screenshots_ColorBlindness);

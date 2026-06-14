@@ -45,6 +45,7 @@
 											  IsChecked="{Binding GUI_DarkTheme}"
 											  IsEnabled="{Binding GUI_CustomTheme}" />
 							</StackPanel>
+							<ToggleSwitch Margin="24,8,0,0" OnContent="Blur effects" OffContent="Blur effects" IsChecked="{Binding GUI_BlurEffects}" />
 						</StackPanel>
 					</Border>
 				</Grid>
