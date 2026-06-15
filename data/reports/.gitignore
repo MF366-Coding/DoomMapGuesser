@@ -1,0 +1,11 @@
+# Not for the public.
+[Dd]ashboard.xls
+[Dd]ashboard.xlsm
+[Dd]ashboard.xlsx
+
+# Outdated.
+old/**/*
+
+# Work in progress.
+[Ww][Ii][Pp].*
+*.wip
