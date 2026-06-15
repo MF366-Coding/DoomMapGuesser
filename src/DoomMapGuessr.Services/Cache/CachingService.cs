@@ -29,7 +29,6 @@ namespace DoomMapGuessr.Services.Cache
                 Clock = new SystemClock(),
                 CompactionPercentage = 0.5,
                 ExpirationScanFrequency = new(0, 3, 0),
-                SizeLimit = 1000,
                 TrackStatistics = true
             }
         );

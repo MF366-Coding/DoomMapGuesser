@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 
 namespace DoomMapGuessr.Services.Settings
@@ -125,6 +126,12 @@ namespace DoomMapGuessr.Services.Settings
             out T value
         );
 
-    }
+        /// <summary>
+        /// Event that's raised every time a setting
+        /// is altered.
+        /// </summary>
+        event SettingsChangedEventHandler<object?> SettingsChanged;
+
+	}
 
 }
