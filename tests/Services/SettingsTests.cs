@@ -5,7 +5,7 @@
 	public class SettingsTests
 	{
 
-
+		// todo: add tests
 
 	}
 
