@@ -9,6 +9,8 @@ namespace DoomMapGuessr.Tests.Services
 {
 
 	[TestClass]
+	[System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Refer to OceanApocalypseStudios coding conventions")]
+
 	public class CacheTests
 	{
 
@@ -160,6 +162,43 @@ namespace DoomMapGuessr.Tests.Services
 
 			svc.Set<string[]>("Cache_SetMemory_MemoryCanBeOverwritten_TestKey", ["Doom", "MapGuessr", "is", "awesome!"], CacheTarget.Memory);
 			Assert.IsTrue(svc.Get<object>("Cache_SetMemory_MemoryCanBeOverwritten_TestKey") is string[] newArray && newArray[3] == "awesome!");
+
+		}
+
+		[TestMethod]
+		public void Cache_ClearMemory_ClearsMemory()
+		{
+
+			var svc = CreateService();
+
+			svc.Set("Cache_ClearMemory_ClearsMemory_TestKey1", "DoomMapGuessr is nice!", CacheTarget.Memory);
+			Assert.IsTrue(svc.Get<object>("Cache_ClearMemory_ClearsMemory_TestKey1") is string value && value.EndsWith("nice!"));
+
+			svc.Set("Cache_ClearMemory_ClearsMemory_TestKey2", 30, CacheTarget.Memory);
+			Assert.AreEqual(30, svc.Get<int>("Cache_ClearMemory_ClearsMemory_TestKey2"));
+
+			svc.Clear(CacheTarget.Memory);
+
+			Assert.IsNull(svc.Get<object>("Cache_ClearMemory_ClearsMemory_TestKey1"));
+			Assert.IsNull(svc.Get<object>("Cache_ClearMemory_ClearsMemory_TestKey2"));
+
+		}
+
+		[TestMethod]
+		public void Cache_ClearMemory_DoesNotBlockMemoryUsage()
+		{
+
+			var svc = CreateService();
+
+			svc.Set("Cache_ClearMemory_DoesNotBlockMemoryUsage_TestKey1", "DoomMapGuessr is awesome really!", CacheTarget.Memory);
+			Assert.IsTrue(svc.Get<object>("Cache_ClearMemory_DoesNotBlockMemoryUsage_TestKey1") is string oldString && oldString.EndsWith("really!"));
+
+			svc.Clear(CacheTarget.Memory);
+
+			svc.Set("Cache_ClearMemory_DoesNotBlockMemoryUsage_TestKey2", "DoomMapGuessr is really awesome!", CacheTarget.Memory);
+
+			Assert.IsNull(svc.Get<object>("Cache_ClearMemory_DoesNotBlockMemoryUsage_TestKey1"));
+			Assert.IsTrue(svc.Get<object>("Cache_ClearMemory_DoesNotBlockMemoryUsage_TestKey2") is string newString && newString.EndsWith("awesome!"));
 
 		}
 
