@@ -248,7 +248,7 @@ namespace DoomMapGuessr
 				string dbSource = dbSourceOverride ?? DB_URL;
 				byte[] databaseBytes = await DatabaseFetcher.FetchBytesAsync(dbSource, default);
 				await cache.SetAsync(CACHED_DB_ENTRYNAME, databaseBytes, CacheTarget.Persistent);
-				settings.Set("Database.DateOfLastCheck", DateTime.Now.Ticks);
+				settings.Set("Database.DateOfLastCheck", DateTime.UtcNow.Ticks);
 
 				await settings.SaveAsync();
 
@@ -256,7 +256,7 @@ namespace DoomMapGuessr
 			catch (Exception ex) when (ex is HttpRequestException or OverflowException or FormatException or DummyException)
 			{
 
-				settings.Set("Database.DateOfLastCheck", DateTime.Now.Ticks);
+				settings.Set("Database.DateOfLastCheck", DateTime.UtcNow.Ticks);
 
 				await settings.SaveAsync();
 
