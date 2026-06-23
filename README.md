@@ -39,7 +39,7 @@ Currently in development, version 3 will include several new exciting features, 
 
 **Read more about what's coming to DoomMapGuessr
 v3.0.0 [right here](https://www.moddb.com/games/doommapguessr/news/whats-next24)** - we made it to the ModDB homepage!
-_(You can also read the same article [here](https://mf366.itch.io/doommapguessr/devlog/1483155/whats-next).)_
+_(You can also read the same article [on itch.io](https://mf366.itch.io/doommapguessr/devlog/1483155/whats-next).)_
 
 ## Official Database Contents
 The official database contains:
