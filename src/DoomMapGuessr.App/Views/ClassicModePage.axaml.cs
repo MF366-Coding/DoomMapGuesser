@@ -1,11 +1,10 @@
 using Avalonia.Controls;
-using Avalonia.Input;
 
 using DoomMapGuessr.ViewModels;
 
 
-namespace DoomMapGuessr.Views
-{
+namespace DoomMapGuessr.Views;
+
 
     /// <summary>
     /// Page for playing DoomMapGuessr Classic Mode.
@@ -36,5 +35,3 @@ namespace DoomMapGuessr.Views
         private void OnPointerExitedPane(object? sender, Avalonia.Input.PointerEventArgs e) => isOutsidePane = true;
 
     }
-
-}

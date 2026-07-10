@@ -1,5 +1,5 @@
-﻿namespace DoomMapGuessr.Data.Entities
-{
+﻿namespace DoomMapGuessr.Data.Entities;
+
 
     /// <summary>
     /// Episode of a game in the DOOM series.
@@ -14,5 +14,3 @@
         int RelativePosition,
         int GameId
     );
-
-}

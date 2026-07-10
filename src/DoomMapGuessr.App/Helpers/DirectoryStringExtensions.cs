@@ -2,8 +2,8 @@
 using System.IO;
 
 
-namespace DoomMapGuessr.Helpers
-{
+namespace DoomMapGuessr.Helpers;
+
 
     /// <summary>
     /// Generic extensions for <see cref="System.String" />s that represent directory paths.
@@ -30,5 +30,3 @@ namespace DoomMapGuessr.Helpers
             Directory.EnumerateFiles(directory);
 
     }
-
-}

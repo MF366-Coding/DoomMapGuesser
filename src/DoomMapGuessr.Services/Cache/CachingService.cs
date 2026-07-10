@@ -8,8 +8,8 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Internal;
 
 
-namespace DoomMapGuessr.Services.Cache
-{
+namespace DoomMapGuessr.Services.Cache;
+
 
     /// <summary>
     /// The caching service used by DoomMapGuessr.
@@ -413,5 +413,3 @@ namespace DoomMapGuessr.Services.Cache
             || File.Exists(Path.Join(PersistentCacheDirectory.FullName, key));
 
     }
-
-}

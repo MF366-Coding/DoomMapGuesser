@@ -1,8 +1,8 @@
 ﻿using Avalonia.Controls;
 
 
-namespace DoomMapGuessr.Views
-{
+namespace DoomMapGuessr.Views;
+
 
     /// <summary>
     /// DoomMapGuessr's home page.
@@ -46,5 +46,3 @@ namespace DoomMapGuessr.Views
         }
 
     }
-
-}

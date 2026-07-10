@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 
 
-namespace DoomMapGuessr.Services.Cache.Abstractions
-{
+namespace DoomMapGuessr.Services.Cache.Abstractions;
+
 
     /// <summary>
     /// An asynchronous caching service.
@@ -43,5 +43,3 @@ namespace DoomMapGuessr.Services.Cache.Abstractions
         );
 
     }
-
-}

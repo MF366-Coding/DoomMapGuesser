@@ -1,5 +1,5 @@
-﻿namespace DoomMapGuessr.Data.Entities
-{
+﻿namespace DoomMapGuessr.Data.Entities;
+
 
     /// <summary>
     /// Game in the DOOM series.
@@ -12,5 +12,3 @@
         string Title,
         string YearOfRelease
     );
-
-}

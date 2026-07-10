@@ -1,5 +1,5 @@
-﻿ namespace DoomMapGuessr.Data.Entities
-{
+﻿ namespace DoomMapGuessr.Data.Entities;
+
 
     /// <summary>
     /// Map in an episode in a game of the DOOM series.
@@ -24,5 +24,3 @@
         string? AutomapViewSource,
         int EpisodeId
     );
-
-}

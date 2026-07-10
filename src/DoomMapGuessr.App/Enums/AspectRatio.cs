@@ -1,5 +1,5 @@
-﻿namespace DoomMapGuessr.Enums
-{
+﻿namespace DoomMapGuessr.Enums;
+
 
     /// <summary>
     /// Supported image aspect ratios.
@@ -30,5 +30,3 @@
         Square1_1
 
     }
-
-}

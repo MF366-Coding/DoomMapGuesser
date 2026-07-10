@@ -1,5 +1,5 @@
-﻿namespace DoomMapGuessr.Services
-{
+﻿namespace DoomMapGuessr.Services;
+
 
     // todo: this should be an actual service
     // meaning MainWindowViewModel should not have
@@ -30,5 +30,3 @@
         );
 
     }
-
-}

@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 
 
-namespace DoomMapGuessr.Helpers
-{
+namespace DoomMapGuessr.Helpers;
+
 
     /// <summary>
     /// Helper class for default webbrowser usage.
@@ -72,5 +72,3 @@ namespace DoomMapGuessr.Helpers
         }
 
     }
-
-}

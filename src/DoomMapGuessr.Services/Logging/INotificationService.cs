@@ -1,8 +1,8 @@
 ﻿using System;
 
 
-namespace DoomMapGuessr.Services.Logging
-{
+namespace DoomMapGuessr.Services.Logging;
+
 
     /// <summary>
     /// A service for notifying the user of certain occurences.
@@ -45,5 +45,3 @@ namespace DoomMapGuessr.Services.Logging
         );
 
     }
-
-}

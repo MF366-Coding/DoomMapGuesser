@@ -82,9 +82,14 @@
 					</StackPanel>
 
 					<StackPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" Spacing="4" Margin="8" HorizontalAlignment="Center" IsVisible="{Binding IsGuessingPaneOpen}">
-						<Button Classes="destructive">Give Up</Button>
-						<Button>Hint</Button>
-						<Button Classes="primary">Submit</Button>
+						<Button Classes="destructive" Command="{Binding GiveUpCommand}">Give Up</Button>
+						<Button IsEnabled="False">
+							Hint
+							<ToolTip.Tip>
+								Hints are not available in the pre-release.
+							</ToolTip.Tip>
+						</Button>
+						<Button Classes="primary" Command="{Binding SubmitGuessCommand}">Submit</Button>
 					</StackPanel>
 				</Grid>
 			</ScrollViewer>

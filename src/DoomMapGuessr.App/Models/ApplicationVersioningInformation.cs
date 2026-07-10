@@ -2,8 +2,8 @@
 using System.Reflection;
 
 
-namespace DoomMapGuessr.Models
-{
+namespace DoomMapGuessr.Models;
+
 
     /// <summary>
     /// An immutable data structure containing information on an application's versioning.
@@ -46,5 +46,3 @@ namespace DoomMapGuessr.Models
         public bool IsDevVersion => AssemblyVersion?.Revision == 1;
 
     }
-
-}

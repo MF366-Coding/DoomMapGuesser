@@ -12,8 +12,8 @@ using DoomMapGuessr.Services.Settings;
 using DoomMapGuessr.Strings;
 
 
-namespace DoomMapGuessr.ViewModels
-{
+namespace DoomMapGuessr.ViewModels;
+
 
     public partial class SettingsPageViewModel : ViewModelBase
     {
@@ -38,11 +38,11 @@ namespace DoomMapGuessr.ViewModels
         public partial bool GUI_DarkTheme { get; set; } = ApplicationServices.Get<ISettingsService>()
                                                                          .GetBoolean("GUI.DarkTheme");
 
-		[ObservableProperty]
-		public partial bool GUI_BlurEffects { get; set; } = ApplicationServices.Get<ISettingsService>()
-																		 .GetBoolean("GUI.BlurEffects");
+	[ObservableProperty]
+	public partial bool GUI_BlurEffects { get; set; } = ApplicationServices.Get<ISettingsService>()
+																	 .GetBoolean("GUI.BlurEffects");
 
-		[ObservableProperty]
+	[ObservableProperty]
         public partial string[] Language_ComboBoxItems { get; set; } =
         [
 
@@ -70,7 +70,7 @@ namespace DoomMapGuessr.ViewModels
         public partial bool Screenshots_BlacklistIsWhitelist { get; set; } = ApplicationServices.Get<ISettingsService>().GetBoolean("Screenshots.BlacklistIsWhitelist");
 
 
-		private void RunLanguageChangeProtocol(ISettingsService settings)
+	private void RunLanguageChangeProtocol(ISettingsService settings)
         {
 
             string culture = Language_CurrentIndex == 0 // same as system
@@ -111,16 +111,14 @@ namespace DoomMapGuessr.ViewModels
             RunLanguageChangeProtocol(settings);
             RunThemeChangeProtocol(settings);
 
-			settings.Set("GUI.BlurEffects", GUI_BlurEffects ? "1" : "0");
+		settings.Set("GUI.BlurEffects", GUI_BlurEffects ? "1" : "0");
 
             settings.Set("Screenshots.AspectRatio", (int)Screenshots_AspectRatio);
             settings.Set("Screenshots.ColorBlindness", (int)Screenshots_ColorBlindness);
-			settings.Set("Screenshots.BlacklistIsWhitelist", Screenshots_BlacklistIsWhitelist ? "1" : "0");
+		settings.Set("Screenshots.BlacklistIsWhitelist", Screenshots_BlacklistIsWhitelist ? "1" : "0");
 
-			settings.Save();
+		settings.Save();
 
         }
 
     }
-
-}

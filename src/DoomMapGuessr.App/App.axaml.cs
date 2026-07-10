@@ -13,8 +13,8 @@ using DoomMapGuessr.ViewModels;
 using DoomMapGuessr.Views;
 
 
-namespace DoomMapGuessr
-{
+namespace DoomMapGuessr;
+
 
     /// <summary>
     /// Avalonia app.
@@ -97,5 +97,3 @@ namespace DoomMapGuessr
         }
 
     }
-
-}

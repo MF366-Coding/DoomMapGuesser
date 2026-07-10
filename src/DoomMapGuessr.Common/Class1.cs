@@ -1,6 +1,4 @@
-﻿namespace DoomMapGuessr.Common
-{
+﻿namespace DoomMapGuessr.Common;
+
 
     public class Class1 { }
-
-}

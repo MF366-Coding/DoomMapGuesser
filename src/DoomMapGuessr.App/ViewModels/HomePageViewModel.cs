@@ -9,8 +9,8 @@ using DoomMapGuessr.Strings;
 using Octokit;
 
 
-namespace DoomMapGuessr.ViewModels
-{
+namespace DoomMapGuessr.ViewModels;
+
 
     public partial class HomePageViewModel : ViewModelBase
     {
@@ -70,5 +70,3 @@ namespace DoomMapGuessr.ViewModels
         }
 
     }
-
-}

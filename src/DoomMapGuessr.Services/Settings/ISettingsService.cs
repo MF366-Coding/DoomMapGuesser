@@ -1,9 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 
-namespace DoomMapGuessr.Services.Settings
-{
+namespace DoomMapGuessr.Services.Settings;
+
 
     /// <summary>
     /// Abstraction for a service that stores and loads settings.
@@ -131,7 +130,5 @@ namespace DoomMapGuessr.Services.Settings
         /// is altered.
         /// </summary>
         event SettingsChangedEventHandler<object?> SettingsChanged;
-
-	}
 
 }

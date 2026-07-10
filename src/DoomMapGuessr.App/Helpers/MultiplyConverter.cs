@@ -4,8 +4,8 @@ using System.Globalization;
 using Avalonia.Data.Converters;
 
 
-namespace DoomMapGuessr.Helpers
-{
+namespace DoomMapGuessr.Helpers;
+
 
     /// <summary>
     /// A converter that multiplies two values.
@@ -50,5 +50,3 @@ namespace DoomMapGuessr.Helpers
                 : value;
 
     }
-
-}

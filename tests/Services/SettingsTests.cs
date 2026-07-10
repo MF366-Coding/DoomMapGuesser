@@ -1,12 +1,10 @@
-﻿namespace DoomMapGuessr.Tests.Services
+﻿namespace DoomMapGuessr.Tests.Services;
+
+
+[TestClass]
+public class SettingsTests
 {
 
-	[TestClass]
-	public class SettingsTests
-	{
-
-		// todo: add tests
-
-	}
+	// todo: add tests
 
 }

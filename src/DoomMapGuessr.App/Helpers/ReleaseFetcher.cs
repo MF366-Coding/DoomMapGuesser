@@ -3,8 +3,8 @@
 using Octokit;
 
 
-namespace DoomMapGuessr.Helpers
-{
+namespace DoomMapGuessr.Helpers;
+
 
     /// <summary>
     /// Helper class for fetching GitHub Releases.
@@ -53,5 +53,3 @@ namespace DoomMapGuessr.Helpers
             await client.Repository.Release.GetLatest(owner, repo);
 
     }
-
-}

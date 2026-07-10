@@ -1,16 +1,14 @@
 ﻿using System;
 
 using DoomMapGuessr.Models;
-using DoomMapGuessr.Services;
-using DoomMapGuessr.ViewModels;
 
 using Microsoft.Extensions.DependencyInjection;
 
 using Octokit;
 
 
-namespace DoomMapGuessr
-{
+namespace DoomMapGuessr;
+
 
     /// <summary>
     /// Helper class for getting required services (DI).
@@ -44,5 +42,3 @@ namespace DoomMapGuessr
             typeof(T) is null ? throw new NullReferenceException($"Service {typeof(T).FullName} is null") : Root.GetRequiredService<T>();
 
     }
-
-}

@@ -4,8 +4,8 @@ using System.Threading;
 using System.Threading.Tasks;
 
 
-namespace DoomMapGuessr.Helpers
-{
+namespace DoomMapGuessr.Helpers;
+
 
     /// <summary>
     /// Helper class for fetching the DoomMapGuessr official database, as well the DOLU file.
@@ -64,5 +64,3 @@ namespace DoomMapGuessr.Helpers
             await client.GetStringAsync(url, token);
 
     }
-
-}

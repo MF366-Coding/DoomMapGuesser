@@ -1,8 +1,8 @@
 using Avalonia.Controls;
 
 
-namespace DoomMapGuessr.Views
-{
+namespace DoomMapGuessr.Views;
+
 
     /// <summary>
     /// Page containing player's unlocked achievements and items.
@@ -16,5 +16,3 @@ namespace DoomMapGuessr.Views
         public AchievementsUnlockablesPage() => InitializeComponent();
 
     }
-
-}

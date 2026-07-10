@@ -1,8 +1,8 @@
 ﻿using System;
 
 
-namespace DoomMapGuessr.Services.Cache
-{
+namespace DoomMapGuessr.Services.Cache;
+
 
     /// <summary>
     /// The target for a cache operation.
@@ -28,5 +28,3 @@ namespace DoomMapGuessr.Services.Cache
         Persistent = 4
 
     }
-
-}

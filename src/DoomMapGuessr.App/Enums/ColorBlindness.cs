@@ -1,5 +1,5 @@
-﻿namespace DoomMapGuessr.Enums
-{
+﻿namespace DoomMapGuessr.Enums;
+
 
     /// <summary>
     /// Supported color blindness settings.
@@ -34,5 +34,3 @@
         Monochromacy
     
     }
-
-}

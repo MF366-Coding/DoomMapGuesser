@@ -1,8 +1,8 @@
 using Avalonia.Controls;
 
 
-namespace DoomMapGuessr.Views
-{
+namespace DoomMapGuessr.Views;
+
 
     /// <summary>
     /// Page for playing the precision mode.
@@ -16,5 +16,3 @@ namespace DoomMapGuessr.Views
         public PrecisionModePage() => InitializeComponent();
 
     }
-
-}

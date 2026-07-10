@@ -1,8 +1,8 @@
 ﻿using Microsoft.Data.Sqlite;
 
 
-namespace DoomMapGuessr.Data.Connection
-{
+namespace DoomMapGuessr.Data.Connection;
+
 
     /// <summary>
     /// Factory responsible for creating connections to SQLite databases.
@@ -19,5 +19,3 @@ namespace DoomMapGuessr.Data.Connection
         public SqliteConnection CreateConnection() => new(connectionString);
 
     }
-
-}

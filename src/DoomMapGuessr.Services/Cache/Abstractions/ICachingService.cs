@@ -1,5 +1,5 @@
-﻿namespace DoomMapGuessr.Services.Cache.Abstractions
-{
+﻿namespace DoomMapGuessr.Services.Cache.Abstractions;
+
 
     /// <summary>
     /// A synchronous caching service.
@@ -74,5 +74,3 @@
         );
 
     }
-
-}

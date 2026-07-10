@@ -6,8 +6,8 @@ using DoomMapGuessr.Services;
 using DoomMapGuessr.Views;
 
 
-namespace DoomMapGuessr.ViewModels
-{
+namespace DoomMapGuessr.ViewModels;
+
 
     /// <summary>
     /// View model for the <see cref="MainWindow" />.
@@ -107,5 +107,3 @@ namespace DoomMapGuessr.ViewModels
             NavigateTo(pageName);
 
     }
-
-}

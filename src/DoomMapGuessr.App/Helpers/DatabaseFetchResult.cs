@@ -1,5 +1,5 @@
-﻿namespace DoomMapGuessr.Helpers
-{
+﻿namespace DoomMapGuessr.Helpers;
+
 
     /// <summary>
     /// Possible outcomes of fetching the database.
@@ -36,5 +36,3 @@
         CheckErrorNoCache
 
     }
-
-}

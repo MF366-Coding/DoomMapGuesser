@@ -1,5 +1,5 @@
-﻿namespace DoomMapGuessr.Data.Entities
-{
+﻿namespace DoomMapGuessr.Data.Entities;
+
 
     /// <summary>
     /// Screenshot of a part of a map in a DOOM game.
@@ -20,5 +20,3 @@
         double Z,
         int MapId
     );
-
-}

@@ -1,5 +1,5 @@
-﻿namespace DoomMapGuessr.ViewModels
-{
+﻿namespace DoomMapGuessr.ViewModels;
+
 
     /// <summary>
     /// View model for precision mode page (precision page).
@@ -15,5 +15,3 @@
         // todo: handle the precision mode
 
     }
-
-}

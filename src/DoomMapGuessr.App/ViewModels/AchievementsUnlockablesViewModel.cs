@@ -1,5 +1,5 @@
-﻿namespace DoomMapGuessr.ViewModels
-{
+﻿namespace DoomMapGuessr.ViewModels;
+
 
     /// <summary>
     /// View model for the achievements page.
@@ -13,5 +13,3 @@
         public AchievementsUnlockablesViewModel() { }
 
     }
-
-}

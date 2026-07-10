@@ -1,6 +1,4 @@
-﻿namespace DoomMapGuessr.Domain
-{
+﻿namespace DoomMapGuessr.Domain;
+
 
     public class Class1 { }
-
-}
